@@ -1,7 +1,3 @@
-"""
-Funciones para extraer comentarios de un video de YouTube.
-"""
-
 from googleapiclient.errors import HttpError
 from youtube_client import get_youtube_client
 
