@@ -7,7 +7,6 @@ from comments import obtener_comentarios
 
 
 def slugify(texto):
-    """Convierte la query en un nombre de archivo seguro (sin espacios ni simbolos raros)."""
     texto = texto.strip().lower()
     texto = re.sub(r"[^a-z0-9\s-]", "", texto)
     texto = re.sub(r"[\s]+", "_", texto)
@@ -21,7 +20,7 @@ def exportar_json(data, nombre_archivo):
 
 
 def main():
-    query = "rpp elecciones"  # cambia esto por tu busqueda
+    query = "rpp elecciones"
     max_videos = 100
     max_comentarios_por_video = 10000
 

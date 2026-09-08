@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-# Carga las variables definidas en el archivo .env
 load_dotenv()
 
 API_KEY = os.getenv("YOUTUBE_API_KEY")
