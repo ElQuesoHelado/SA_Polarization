@@ -20,8 +20,9 @@ def exportar_json(data, nombre_archivo):
 
 
 def main():
-    query = "rpp elecciones"
-    max_videos = 100
+    # query = "rpp elecciones"
+    query = "america peru elecciones"
+    max_videos = 200
     max_comentarios_por_video = 10000
 
     print(f"Buscando videos para: '{query}'...\n")
