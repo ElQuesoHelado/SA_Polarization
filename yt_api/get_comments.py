@@ -30,13 +30,13 @@ from filter_on_channels import obtener_videos_canal
 from comments import obtener_comentarios
 
 CANALES = {
-    # "izquierda": [
-    #     "@pavelyachay",
-    #     "@leonmoya",
-    #     "@canalYAAAAA",
-    #     "@curwen",
-    #     "@unanchatvoficial",
-    # ],
+    "izquierda": [
+        "@pavelyachay",
+        "@leonmoya",
+        "@canalYAAAAA",
+        "@curwen",
+        "@unanchatvoficial",
+    ],
     "derecha": [
         "@LaRoroNetworkOficial",
         "@todogoodpe",
@@ -55,7 +55,7 @@ ETAPAS = {
     "despues": ("2026-05-01T00:00:00Z", "2026-06-30T23:59:59Z"),
 }
 
-MAX_COMENTARIOS_POR_VIDEO = 5000
+MAX_COMENTARIOS_POR_VIDEO = 10000
 
 OUTPUT_DIR = Path("raw_data")
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -84,7 +84,7 @@ def procesar_piscina(nombre_piscina, canales):
         print(f"\n[{nombre_piscina}] Procesando canal: {canal}")
         try:
             videos = obtener_videos_canal(
-                canal, rango_global_inicio, rango_global_fin, 200
+                canal, rango_global_inicio, rango_global_fin, 400
             )
         except ValueError as e:
             print(f"  [AVISO] {e} - se omite este canal")
