@@ -6,8 +6,8 @@ from typing import Sequence
 
 from .analysis import analyze
 from .config import DEFAULT_CONFIG, load_config
-from .kaggle import infer, pull_dataset, publish_dataset
-from .preprocess import preprocess
+from .kaggle import infer, pull_dataset, pull_neutral_data, publish_dataset
+from .preprocess import preprocess, require_neutral_rows
 from .smoke_test import run_smoke_test
 from .youtube import collect
 
@@ -22,7 +22,7 @@ def build_parser() -> argparse.ArgumentParser:
     for name, help_text in (
         ("collect", "Recolecta comentarios de canales y periodos configurados"),
         ("preprocess", "Normaliza los JSON raw a un CSV"),
-        ("prepare-data", "Recolecta datos de YouTube y los preprocesa localmente"),
+        ("prepare-data", "Sincroniza neutral, recolecta YouTube y preprocesa localmente"),
         ("infer-results", "Publica los datos, ejecuta inferencia y genera resultados"),
         ("data-pull", "Descarga JSON y CSV desde el dataset Kaggle"),
         ("infer", "Publica y ejecuta el kernel GPU en Kaggle, y descarga sus resultados"),
@@ -72,9 +72,14 @@ def run_command(args: argparse.Namespace) -> None:
             create_dataset=args.create_dataset,
         )
     elif args.command == "prepare-data":
+        pull_neutral_data(config)
         collect(config)
-        preprocess(config)
+        output = preprocess(config)
+        print(f"Validación: {require_neutral_rows(output)} comentarios neutrales incluidos.")
     elif args.command == "infer-results":
+        processed_file = config["paths"]["processed"] / config["preprocess"]["comments_file"]
+        neutral_count = require_neutral_rows(processed_file)
+        print(f"Validación: se publicarán {neutral_count} comentarios neutrales para inferencia.")
         publish_dataset(config, args.message)
         infer(config)
         analyze(config)

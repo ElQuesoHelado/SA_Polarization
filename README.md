@@ -34,7 +34,7 @@ sa-polarization prepare-data
 sa-polarization infer-results --message "Nueva inferencia"
 ```
 
-`prepare-data` usa canales y periodos de `config/pipeline.toml`. `infer-results` crea una versión del dataset Kaggle con los datos locales, ejecuta el kernel GPU y genera resultados en `outputs/`.
+`prepare-data` primero sincroniza `neutral.json` desde Kaggle, luego usa canales y periodos de `config/pipeline.toml` y preprocesa izquierda, derecha y neutral. Requiere credenciales de YouTube y Kaggle. El grupo de origen `party=neutral` es distinto de la predicción `sentimiento=neutral`. `infer-results` crea una versión del dataset Kaggle con los datos locales, ejecuta el kernel GPU y genera resultados en `outputs/`.
 
 Para ejecutar ambas etapas de corrido existe `sa-polarization full-pipeline`. También puedes ejecutar tareas individuales: `collect`, `preprocess`, `data-publish`, `infer` y `analyze`. `data-pull` descarga los JSON/CSV de Kaggle a `data/raw/` y `data/processed/` cuando se quiere trabajar desde una copia local.
 

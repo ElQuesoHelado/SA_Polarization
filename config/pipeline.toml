@@ -18,7 +18,7 @@ derecha = ["@LaRoroNetworkOficial", "@todogoodpe", "@PaoloBenzaR", "@mirinconcit
 
 [preprocess]
 comments_file = "comentarios_consolidado.csv"
-file_party = { izquierda = "izquierda", derecha = "derecha", rpp_elecciones = "neutral", america_peru_elecciones = "neutral" }
+file_party = { izquierda = "izquierda", derecha = "derecha", neutral = "neutral", rpp_elecciones = "neutral", america_peru_elecciones = "neutral" }
 
 [model]
 id = "pyupeu/robertuito-peruvian-sentiment"
@@ -28,6 +28,7 @@ batch_size = 32
 dataset_id = "josealvacornejo/sa-polarization-dat"
 kernel_id = "josealvacornejo/sa-polarization-inference"
 timeout_seconds = 10800
+neutral_file = "neutral.json"
 
 [smoke_test]
 source_raw = "raw_data"

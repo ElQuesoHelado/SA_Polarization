@@ -6,10 +6,11 @@ Mantener un pipeline reproducible de análisis de sentimiento para comentarios p
 
 ## Flujo establecido
 
-- Las etapas principales son `prepare-data` (recolectar y preprocesar) e `infer-results` (publicar los datos preparados, inferir y analizar). `full-pipeline` ejecuta ambas; los comandos individuales siguen disponibles. Consulta `README.md` antes de operar servicios externos.
+- Las etapas principales son `prepare-data` (sincronizar el grupo neutral desde Kaggle, recolectar y preprocesar) e `infer-results` (publicar los datos preparados, inferir y analizar). `full-pipeline` ejecuta ambas; los comandos individuales siguen disponibles. Consulta `README.md` antes de operar servicios externos.
 - La extracción oficial usa canales y periodos de `config/pipeline.toml`. No cambies canales, periodos ni etiquetas sin indicación explícita.
 - Kaggle Datasets es la fuente canónica y conserva los JSON y CSV en la raíz. `data/raw/` y `data/processed/` son las carpetas locales que la CLI crea al descargar o recolectar.
 - El kernel usa `pyupeu/robertuito-peruvian-sentiment` y conserva etiquetas `negative`, `neutral`, `positive`.
+- `party` identifica el grupo de origen (izquierda, derecha o neutral); `sentimiento` contiene la predicción del modelo. No los confundas ni elimines filas neutrales antes de inferir.
 - El kernel necesita descargar el modelo desde Hugging Face. Antes de inferir, comprueba que Internet esté habilitado en los ajustes de sesión de Kaggle; `enable_internet=true` en `kernel-metadata.json` por sí solo no garantiza conectividad efectiva.
 - Los resultados de inferencia se descargan a `outputs/`; las métricas AP, AP_In, AP_Out, spread y sus gráficas se generan allí.
 
@@ -23,7 +24,7 @@ Mantener un pipeline reproducible de análisis de sentimiento para comentarios p
 
 ## Operaciones remotas
 
-- `data-create`, `data-publish`, `infer`, `infer-results`, `full-pipeline` y `smoke-test` crean recursos, versiones o ejecuciones en Kaggle. Ejecútalos solo cuando la solicitud del usuario incluya esa operación.
+- `prepare-data` consulta Kaggle para sincronizar `neutral.json` y YouTube para recolectar; `data-create`, `data-publish`, `infer`, `infer-results`, `full-pipeline` y `smoke-test` crean recursos, versiones o ejecuciones en Kaggle. Ejecútalos solo cuando la solicitud del usuario incluya esas operaciones.
 - Mantén privados el dataset y el kernel salvo instrucción explícita.
 - No publiques resultados ni envíes mensajes a servicios externos distintos de las operaciones Kaggle del pipeline.
 

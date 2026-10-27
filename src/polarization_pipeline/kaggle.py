@@ -84,6 +84,29 @@ def pull_dataset(config: dict[str, Any]) -> None:
             print(f"Se omitieron {len(ignored)} archivos no compatibles.")
 
 
+def pull_neutral_data(config: dict[str, Any]) -> Path:
+    """Refresh the fixed neutral reference file from the canonical Kaggle dataset."""
+    env = _env_for_kaggle(config)
+    dataset_id = config["kaggle"]["dataset_id"]
+    filename = config["kaggle"].get("neutral_file", "neutral.json")
+    raw_target: Path = config["paths"]["raw"]
+    raw_target.mkdir(parents=True, exist_ok=True)
+    destination = raw_target / filename
+    with tempfile.TemporaryDirectory(prefix="sa-polarization-neutral-") as temp:
+        _run(
+            ["datasets", "download", "-d", dataset_id, "-f", filename, "-p", temp, "--unzip", "-o"],
+            env=env,
+        )
+        matches = list(Path(temp).rglob(filename))
+        if len(matches) != 1:
+            raise FileNotFoundError(
+                f"Kaggle no devolvió exactamente un {filename}; publica primero el archivo en {dataset_id}."
+            )
+        shutil.copy2(matches[0], destination)
+    print(f"Datos neutrales sincronizados desde Kaggle: {destination}")
+    return destination
+
+
 def _kaggle_directory(config: dict[str, Any], name: str, default: str) -> Path:
     path = Path(config["kaggle"].get(name, default))
     return path if path.is_absolute() else Path(config["_root"]) / path

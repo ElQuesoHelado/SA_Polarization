@@ -73,3 +73,11 @@ def preprocess(config: dict[str, Any]) -> Path:
     print(f"{len(result)} comentarios procesados en {output}")
     print(result["party"].value_counts(dropna=False).to_string())
     return output
+
+
+def require_neutral_rows(path: Path) -> int:
+    parties = pd.read_csv(path, usecols=["party"])["party"]
+    neutral_count = int(parties.eq("neutral").sum())
+    if neutral_count == 0:
+        raise ValueError(f"El consolidado {path} no contiene comentarios del grupo neutral.")
+    return neutral_count
