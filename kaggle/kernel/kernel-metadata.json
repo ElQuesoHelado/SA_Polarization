@@ -1,0 +1,13 @@
+{
+  "id": "josealvacornejo/sa-polarization-inference",
+  "title": "SA Polarization Inference",
+  "code_file": "kernel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["josealvacornejo/sa-polarization-dat"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

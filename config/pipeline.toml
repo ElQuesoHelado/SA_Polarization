@@ -1,0 +1,38 @@
+[paths]
+raw = "data/raw"
+processed = "data/processed"
+outputs = "outputs"
+
+[youtube]
+max_videos_per_channel = 400
+max_comments_per_video = 10000
+
+[youtube.periods]
+antes = ["2026-01-01T00:00:00Z", "2026-03-31T23:59:59Z"]
+durante = ["2026-04-01T00:00:00Z", "2026-04-30T23:59:59Z"]
+despues = ["2026-05-01T00:00:00Z", "2026-06-30T23:59:59Z"]
+
+[youtube.channels]
+izquierda = ["@pavelyachay", "@leonmoya", "@canalYAAAAA", "@curwen", "@unanchatvoficial"]
+derecha = ["@LaRoroNetworkOficial", "@todogoodpe", "@PaoloBenzaR", "@mirinconcitofavorito176", "@LibertandoPeru"]
+
+[preprocess]
+comments_file = "comentarios_consolidado.csv"
+file_party = { izquierda = "izquierda", derecha = "derecha", rpp_elecciones = "neutral", america_peru_elecciones = "neutral" }
+
+[model]
+id = "pyupeu/robertuito-peruvian-sentiment"
+batch_size = 32
+
+[kaggle]
+dataset_id = "josealvacornejo/sa-polarization-dat"
+kernel_id = "josealvacornejo/sa-polarization-inference"
+timeout_seconds = 10800
+
+[smoke_test]
+source_raw = "raw_data"
+fraction = 0.25
+seed = 42
+dataset_id = "josealvacornejo/sa-polarization-smoke-test"
+dataset_title = "SA Polarization Smoke Test Data"
+kernel_id = "josealvacornejo/sa-polarization-smoke-test-inference"

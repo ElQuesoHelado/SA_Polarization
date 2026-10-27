@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sa-polarization"
+version = "0.1.0"
+description = "YouTube sentiment analysis pipeline with Kaggle GPU inference"
+requires-python = ">=3.11"
+dependencies = [
+  "google-api-python-client>=2.100",
+  "matplotlib>=3.8",
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+kaggle = ["kaggle>=1.7"]
+inference = ["torch>=2.2", "transformers>=4.40", "huggingface-hub>=0.23"]
+
+[project.scripts]
+sa-polarization = "polarization_pipeline.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
