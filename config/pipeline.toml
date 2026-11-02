@@ -26,7 +26,7 @@ derecha = [
 # (party=neutral via preprocess.file_party). Nunca debe usar el nombre neutral.json.
 neutral_local = [
     "@cronicatv", "@panoramaptv", "@atvnoticias", "@latinanoticias", "@exitosape",
-    "@24horasperu", "@tvperunoticias", "@Panamericana-Noticias", "@rtp", "@radionacionaldelperu",
+    "@24horasperu", "@tvperunoticias", "@Panamericana-Noticias", "@tvperu", "@radionacionaldelperu",
 ]
 
 [preprocess]
