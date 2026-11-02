@@ -41,11 +41,30 @@ def _comment_rows(doc: dict[str, Any], source: Path, party: str) -> list[dict[st
                     "updated_at": comment.get("fecha_actualizacion", comment.get("updated_at")),
                     "reply_count": comment.get("cantidad_respuestas", comment.get("reply_count", 0)),
                     "stage": video.get("etapa", video.get("stage")),
-                    "party": doc.get("pool", party),
+                    "party": party,
                     "source_file": source.name,
                     "search_query": doc.get("query"),
                 })
     return rows
+
+
+def _resolve_party(doc: dict[str, Any], source: Path, mapping: dict[str, str]) -> str:
+    # The pool (or the file stem when the pool is absent) is mapped through file_party so
+    # auxiliary pools such as `neutral_local` collapse into the canonical party labels.
+    pool = doc.get("pool")
+    key = pool if isinstance(pool, str) and pool.strip() else source.stem
+    return mapping.get(key, key)
+
+
+def _drop_duplicated_comments(frame: pd.DataFrame) -> pd.DataFrame:
+    # The canonical Kaggle neutral.json and a local neutral pool can share videos.
+    identified = frame.loc[frame["comment_id"].notna()]
+    duplicated = identified.duplicated(subset=["comment_id"], keep="first")
+    if not duplicated.any():
+        return frame
+    keep = frame.index.difference(identified.index[duplicated])
+    print(f"Se omitieron {int(duplicated.sum())} comentarios duplicados por comment_id.")
+    return frame.loc[keep]
 
 
 def preprocess(config: dict[str, Any]) -> Path:
@@ -59,15 +78,15 @@ def preprocess(config: dict[str, Any]) -> Path:
     files = sorted(raw_dir.glob("*.json"))
     rows = []
     for path in files:
-        fallback_party = mapping.get(path.stem, path.stem)
         for document in _documents(path):
-            rows.extend(_comment_rows(document, path, fallback_party))
+            rows.extend(_comment_rows(document, path, _resolve_party(document, path, mapping)))
     if not rows:
         raise ValueError(f"No se encontraron comentarios en {raw_dir}")
 
     result = pd.DataFrame(rows)
     result["text"] = result["text"].fillna("").astype(str)
     result["likes"] = pd.to_numeric(result["likes"], errors="coerce").fillna(0).astype("int64")
+    result = _drop_duplicated_comments(result)
     output = processed_dir / config.get("preprocess", {}).get("comments_file", "comentarios_consolidado.csv")
     result.to_csv(output, index=False)
     print(f"{len(result)} comentarios procesados en {output}")

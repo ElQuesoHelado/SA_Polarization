@@ -5,7 +5,7 @@ outputs = "outputs"
 
 [youtube]
 max_videos_per_channel = 400
-max_comments_per_video = 10000
+max_comments_per_video = 2000
 
 [youtube.periods]
 antes = ["2026-01-01T00:00:00Z", "2026-03-31T23:59:59Z"]
@@ -13,12 +13,25 @@ durante = ["2026-04-01T00:00:00Z", "2026-04-30T23:59:59Z"]
 despues = ["2026-05-01T00:00:00Z", "2026-06-30T23:59:59Z"]
 
 [youtube.channels]
-izquierda = ["@pavelyachay", "@leonmoya", "@canalYAAAAA", "@curwen", "@unanchatvoficial"]
-derecha = ["@LaRoroNetworkOficial", "@todogoodpe", "@PaoloBenzaR", "@mirinconcitofavorito176", "@LibertandoPeru"]
+izquierda = [
+    "@pavelyachay", "@leonmoya", "@canalYAAAAA", "@curwen", "@unanchatvoficial",
+    "@hildebrandtensustreceOficial", "@prensaperulibre1465", "@JuntosTVoficial",
+    "@PartidoComunistaPeruano", "@veronikamendoza_peru",
+]
+derecha = [
+    "@LaRoroNetworkOficial", "@todogoodpe", "@PaoloBenzaR", "@mirinconcitofavorito176", "@LibertandoPeru",
+    "@willaxtv", "@DiarioExpreso_Peru", "@diariolarazon_peru", "@DiarioPeru21", "@FuerzaPopularPeru",
+]
+# Pool local de medios neutrales: se fusiona con el neutral.json canonico de Kaggle
+# (party=neutral via preprocess.file_party). Nunca debe usar el nombre neutral.json.
+neutral_local = [
+    "@cronicatv", "@panoramaptv", "@atvnoticias", "@latinanoticias", "@exitosape",
+    "@24horasperu", "@tvperunoticias", "@Panamericana-Noticias", "@rtp", "@radionacionaldelperu",
+]
 
 [preprocess]
 comments_file = "comentarios_consolidado.csv"
-file_party = { izquierda = "izquierda", derecha = "derecha", neutral = "neutral", rpp_elecciones = "neutral", america_peru_elecciones = "neutral" }
+file_party = { izquierda = "izquierda", derecha = "derecha", neutral = "neutral", neutral_local = "neutral", rpp_elecciones = "neutral", america_peru_elecciones = "neutral" }
 
 [model]
 id = "pyupeu/robertuito-peruvian-sentiment"

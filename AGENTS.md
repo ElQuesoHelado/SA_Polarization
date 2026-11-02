@@ -14,6 +14,17 @@ Mantener un pipeline reproducible de análisis de sentimiento para comentarios p
 - El kernel necesita descargar el modelo desde Hugging Face. Antes de inferir, comprueba que Internet esté habilitado en los ajustes de sesión de Kaggle; `enable_internet=true` en `kernel-metadata.json` por sí solo no garantiza conectividad efectiva.
 - Los resultados de inferencia se descargan a `outputs/`; las métricas AP, AP_In, AP_Out, spread y sus gráficas se generan allí.
 
+## Fuentes (canales) y criterio de clasificación
+
+- Un canal solo entra a `[youtube.channels]` de `config/pipeline.toml` si su línea editorial tiene **fuente citable** (es.wikipedia, Media Ownership Monitor, afiliación partidaria comprobable). La clasificación es decisión de investigación y queda documentada aquí; sin evidencia, el canal queda como pendiente y no se recolecta.
+- Grupos actuales y su evidencia:
+  - `izquierda`: Pavel Yachay, León Moya, Marco Sifuentes (`@canalYAAAAA`), Curwen, UNANCHA TV (lista original) + `@hildebrandtensustreceOficial` (Hildebrandt, "izquierdista… antiimperialista, anticapitalista", es.wikipedia *Mafia caviar*), `@prensaperulibre1465` (Perú Libre, "izquierda a extrema izquierda"), `@JuntosTVoficial` (Juntos por el Perú, "partido de izquierdas"), `@PartidoComunistaPeruano`, `@veronikamendoza_peru` (JP/Frente Amplio).
+  - `derecha`: La Roro, Todo Good, Paolo Benza, Mi rinconcito favorito, Libertando Perú (lista original) + `@willaxtv` (Willax, "tendencia conservadora", es.wikipedia), `@DiarioExpreso_Perú` y `@diariolarazon_peru` (es.wikipedia *Conservadurismo en el Perú*: "medios de corte mayormente conservador, como los diarios La Razón y Expreso, y el canal Willax"), `@DiarioPeru21` ("postura neoliberal", es.wikipedia *Perú 21*), `@FuerzaPopularPeru` ("derecha a extrema derecha", es.wikipedia).
+  - `neutral_local`: medios establecidos sin partido propio (`@cronicatv`, `@panoramaptv`, `@atvnoticias`, `@latinanoticias`, `@exitosape`, `@24horasperu`, `@tvperunoticias`, `@Panamericana-Noticias`, `@rtp`, `@radionacionaldelperu`).
+- **Pendientes de clasificar** (no agregar hasta documentar aquí la evidencia): `@IdeeleradioNHD` (Ideeleradio pertenece al IDL, no a un partido), `@SoloFonseca`, `@nosoymermelero`, `@wayka` (DDHH/culturales, sin línea partidista comprobable), `@antaurohumalaoficial` (etnocacerismo/etnonacionalismo, no encaja en izq/der), `@IDLReporterosperu`, `@convocape`, `@OjoPúblicoPE` (periodismo de investigación independiente), `@laizquierdadiariocom` (línea clara pero canal internacional, validar contenido peruano), `@pbo`, `@francogaleano8826`, `@TUESTASINFILTRO`, `@jaimebayly1`, `@elrinconpolitico` (sin fuente de línea editorial), `@LaRepublica` (Media Ownership Monitor: centro-izquierda) y `@DiarioElComercio` (Grupo El Comercio citado como conservador), `@nmas`, `@singuionlr`, `@ipe_peru`, `@Capital21_Tv`, `@EpicentroTV`, `@altoalcrimen`.
+- `neutral_local` es un pool local que `preprocess.file_party` traduce a `party=neutral` y que se fusiona con el `neutral.json` canónico de Kaggle; `collect` se niega a escribir sobre ese archivo canónico. El preprocesador deduplica por `comment_id` por si ambos comparten videos.
+- La recolección guarda `data/raw/<pool>.json` tras cada canal y corta con aviso ante `quotaExceeded`; al reejecutar `collect` solo se repiten los canales no listados en `canales_procesados`.
+
 ## Secretos y datos
 
 - Nunca leas, muestres, registres ni agregues a Git el contenido de `.env`, los tokens de Kaggle o las claves de API.
