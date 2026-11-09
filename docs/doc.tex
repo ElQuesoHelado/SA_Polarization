@@ -699,15 +699,16 @@ normalizada incorpora los puntajes de confianza del modelo.
 \centering
 \caption{Sentimiento predicho y favorabilidad por grupo de fuentes.}
 \label{tab:sentimiento_favorabilidad}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrr}
 \hline
-Grupo & Comentarios & Negativo (\%) & Neutro (\%) & Positivo (\%) & Favorabilidad neta & Ponderada norm. \\
+Métrica & Derecha & Izquierda & Neutral \\
 \hline
-Derecha & 116{,}111 & 49.34 & 35.10 & 15.56 & $-0.338$ & $-0.281$ \\
-Izquierda & 264{,}520 & 51.74 & 30.13 & 18.13 & $-0.336$ & $-0.282$ \\
-Neutral & 171{,}825 & 61.43 & 28.13 & 10.44 & $-0.510$ & $-0.422$ \\
-\hline
-Total & 552{,}456 & & & & & \\
+Comentarios & 116{,}111 & 264{,}520 & 171{,}825 \\
+Negativo (\%) & 49.34 & 51.74 & 61.43 \\
+Neutro (\%) & 35.10 & 30.13 & 28.13 \\
+Positivo (\%) & 15.56 & 18.13 & 10.44 \\
+Favorabilidad neta & $-0.338$ & $-0.336$ & $-0.510$ \\
+Ponderada norm. & $-0.281$ & $-0.282$ & $-0.422$ \\
 \hline
 \end{tabular}
 \end{table}
@@ -738,12 +739,16 @@ negativos; su umbral de nivel alto en esta corrida fue $1.940$.
 \centering
 \caption{Métricas individuales por grupo de afinidad operacional.}
 \label{tab:ap_spread}
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrr}
 \hline
-\textit{Ingroup} & Usuarios & AP$_{In}$ medio & AP$_{Out}$ medio & AP medio & \textit{Spread} medio & \textit{Spread} alto (\%) \\
+Métrica & Derecha & Izquierda \\
 \hline
-Derecha & 11{,}524 & 0.493 & $-0.991$ & 1.484 & 1.098 & 7.12 \\
-Izquierda & 22{,}865 & $-0.839$ & $-0.580$ & $-0.259$ & 1.133 & 10.21 \\
+Usuarios & 11{,}524 & 22{,}865 \\
+AP$_{In}$ medio & 0.493 & $-0.839$ \\
+AP$_{Out}$ medio & $-0.991$ & $-0.580$ \\
+AP medio & 1.484 & $-0.259$ \\
+\textit{Spread} medio & 1.098 & 1.133 \\
+\textit{Spread} alto (\%) & 7.12 & 10.21 \\
 \hline
 \end{tabular}
 \end{table}
@@ -801,19 +806,33 @@ asignarles un grupo. El universo de usuarios del análisis se forma tras
 filtrar comentarios neutrales, por lo que no incluye a quienes solo escribieron
 comentarios neutrales.
 
-\subsection{Contexto frente al estudio de referencia}
+\subsection{Comparación e interpretación de los resultados}
 
-Como referencia descriptiva, el estudio de Martínez-España et al.
-\cite{polariz} reporta AP$_{In}$ medios de $8.662$ para la derecha y $6.813$
-para la izquierda; los AP medios aproximados derivados de sus tablas son
-$9.885$ y $7.972$, respectivamente. En esta corrida, los valores de AP$_{In}$
-fueron $0.493$ y $-0.839$, y los de AP fueron $1.484$ y $-0.259$. Estas
-magnitudes no son directamente comparables: el estudio de referencia analiza
-interacciones de Twitter y cuatro grupos partidarios, mientras que aquí se
-analizan comentarios de YouTube clasificados por fuente, con dos grupos
-políticos y un pool neutral. También difieren los denominadores, las unidades
-de análisis y la selección de usuarios. La comparación, por tanto, no mide
-similitud metodológica ni calidad relativa, y no constituye una réplica.
+Al comparar estos patrones con los de Martínez-España et al. \cite{polariz},
+el AP$_{In}$ medio del estudio de referencia ($8.662$ para la derecha y
+$6.813$ para la izquierda) es positivo en ambos grupos; en esta corrida también
+es positivo para derecha ($0.493$), pero negativo para izquierda ($-0.839$).
+Los AP medios locales son $1.484$ y $-0.259$, respectivamente, frente a
+valores aproximados de $9.885$ y $7.972$ derivados de las tablas del paper.
+AP$_{Out}$ medio es negativo en ambos análisis: los valores aproximados del
+paper son $-1.223$ para la derecha y $-1.160$ para la izquierda, frente a
+$-0.991$ y $-0.580$ en esta corrida. La dirección del resultado coincide,
+pero las magnitudes difieren. En conjunto, estos patrones describen resultados
+distintos en las métricas observadas, pero no permiten concluir que una
+población presente más o menos polarización que la otra.
+
+El \textit{spread} medio local ($1.098$ para derecha y $1.133$ para izquierda)
+y la proporción local de nivel alto ($7.12\%$ y $10.21\%$) también son
+inferiores a los valores reportados en el paper ($1.874$ y $1.748$; $15.89\%$
+y $13.35\%$, respectivamente). Esta diferencia no constituye una comparación
+directa: el paper incluye cuatro grupos de Twitter y usa el total de
+interacciones como denominador de \textit{spread}, mientras que este análisis
+incluye comentarios de YouTube clasificados por fuente, dos grupos políticos
+y un pool neutral, y cuenta solo comentarios positivos o negativos en ese
+denominador. También difieren las poblaciones, las unidades de análisis y los
+umbrales para definir niveles altos. Por ello, las magnitudes y proporciones
+no deben interpretarse como un ranking entre estudios ni como una réplica
+metodológica.
 
 En conjunto, estos resultados caracterizan sentimiento predicho en los
 comentarios observados bajo las fuentes clasificadas y ofrecen métricas
