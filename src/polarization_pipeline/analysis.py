@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from .reporting import update_results_section, validate_results_section
+
 
 SENTIMENTS = ["negative", "neutral", "positive"]
 COLORS = {"negative": "#d62728", "neutral": "#7f7f7f", "positive": "#2ca02c"}
@@ -184,10 +186,13 @@ def _polarization(frame: pd.DataFrame, output: Path) -> None:
         _save(fig, output / filename)
 
 
-def analyze(config: dict[str, Any]) -> None:
+def analyze(config: dict[str, Any], *, update_context: bool = False) -> None:
     output: Path = config["paths"]["outputs"]
-    output.mkdir(parents=True, exist_ok=True)
     source = output / "datos_clasificados.csv"
+    agents_path = config["_root"] / "AGENTS.md"
+    if update_context:
+        validate_results_section(agents_path)
+    output.mkdir(parents=True, exist_ok=True)
     if not source.is_file():
         raise FileNotFoundError(f"No existe {source}; ejecuta infer o coloca ahí la salida de Kaggle.")
     frame = pd.read_csv(source)
@@ -197,4 +202,6 @@ def analyze(config: dict[str, Any]) -> None:
     frame["likes"] = pd.to_numeric(frame["likes"], errors="coerce").fillna(0)
     _sentiment_summary(frame, output)
     _polarization(frame, output)
+    if update_context:
+        update_results_section(agents_path, output, source)
     print(f"Análisis guardado en {output}")

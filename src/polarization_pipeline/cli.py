@@ -63,7 +63,7 @@ def run_command(args: argparse.Namespace) -> None:
     elif args.command == "infer":
         infer(config)
     elif args.command == "analyze":
-        analyze(config)
+        analyze(config, update_context=True)
     elif args.command == "smoke-test":
         run_smoke_test(
             config,
@@ -82,13 +82,13 @@ def run_command(args: argparse.Namespace) -> None:
         print(f"Validación: se publicarán {neutral_count} comentarios neutrales para inferencia.")
         publish_dataset(config, args.message)
         infer(config)
-        analyze(config)
+        analyze(config, update_context=True)
     elif args.command == "full-pipeline":
         collect(config)
         preprocess(config)
         publish_dataset(config, args.message)
         infer(config)
-        analyze(config)
+        analyze(config, update_context=True)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
