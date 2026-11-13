@@ -129,6 +129,7 @@ def _write_pool(path: Path, result: dict[str, Any]) -> None:
 
 def _new_pool(pool: str, channels: list[str]) -> dict[str, Any]:
     return {
+        "formato_version": 2,
         "pool": pool,
         "fecha_extraccion": datetime.now(timezone.utc).isoformat(),
         "canales": channels,
@@ -138,12 +139,7 @@ def _new_pool(pool: str, channels: list[str]) -> dict[str, Any]:
 
 
 def _resume_pool(path: Path, pool: str, channels: list[str]) -> dict[str, Any] | None:
-    """Reuse a pool file written by this same incremental format.
-
-    Only channels listed in `canales_procesados` are kept: a channel interrupted by a
-    quota error is collected again from scratch on the next run, so its videos cannot
-    duplicate. Legacy files without that key are ignored and rewritten as before.
-    """
+    """Load cached videos, preserving completed and interrupted work."""
     import json
     if not path.is_file():
         return None
@@ -151,23 +147,86 @@ def _resume_pool(path: Path, pool: str, channels: list[str]) -> dict[str, Any] |
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return None
-    if not isinstance(payload, dict) or not isinstance(payload.get("canales_procesados"), list):
+    if not isinstance(payload, dict) or not isinstance(payload.get("videos"), list):
         return None
-    processed = [channel for channel in payload["canales_procesados"] if channel in channels]
+    processed = [channel for channel in payload.get("canales_procesados", []) if channel in channels]
     done = set(processed)
-    videos = [
-        video for video in payload.get("videos", [])
-        if isinstance(video, dict) and video.get("canal_handle") in done
-    ]
-    if not processed:
-        return None
+    videos = []
+    for cached in payload["videos"]:
+        if not isinstance(cached, dict) or not cached.get("video_id"):
+            continue
+        video = dict(cached)
+        # Older files did not store per-video status. A video from a channel that
+        # finished successfully is complete; one from an interrupted channel retries.
+        video.setdefault("comentarios_completos", video.get("canal_handle") in done)
+        video.setdefault("comentarios", [])
+        videos.append(video)
     return {
+        "formato_version": 2,
         "pool": pool,
         "fecha_extraccion": payload.get("fecha_extraccion") or datetime.now(timezone.utc).isoformat(),
         "canales": channels,
         "canales_procesados": processed,
         "videos": videos,
     }
+
+
+def _unique_comment_ids(videos: list[dict[str, Any]]) -> set[str]:
+    return {
+        comment["comment_id"]
+        for video in videos
+        for comment in video.get("comentarios", [])
+        if isinstance(comment, dict) and comment.get("comment_id")
+    }
+
+
+def _cached_comment_ids(path: Path) -> set[str]:
+    """Read comment IDs from either a pool JSON or the canonical neutral list."""
+    import json
+
+    if not path.is_file():
+        return set()
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return set()
+    videos = payload.get("videos", []) if isinstance(payload, dict) else payload
+    if not isinstance(videos, list):
+        return set()
+    return _unique_comment_ids([v for v in videos if isinstance(v, dict)])
+
+
+def _cached_pool_count(path: Path) -> int:
+    return len(_cached_comment_ids(path))
+
+
+def _pool_targets(settings: dict[str, Any], raw_dir: Path, neutral_name: str) -> dict[str, int]:
+    """Allocate the total target using the current cached comment proportions."""
+    target = int(settings.get("target_total_comments", 1_000_000))
+    counts = {}
+    for pool in settings["channels"]:
+        count = _cached_pool_count(raw_dir / f"{pool}.json")
+        if pool == "neutral_local":
+            count += _cached_pool_count(raw_dir / neutral_name)
+        counts[pool] = count
+    total = sum(counts.values())
+    if total == 0:
+        # No local cache: split equally, with any rounding remainder assigned last.
+        names = list(counts)
+        base, remainder = divmod(target, max(1, len(names)))
+        return {name: base + (i < remainder) for i, name in enumerate(names)}
+    configured_shares = settings.get("target_group_shares")
+    if configured_shares:
+        shares = {pool: float(configured_shares.get(pool, 0)) for pool in counts}
+        share_total = sum(shares.values())
+        if share_total <= 0:
+            raise ValueError("youtube.target_group_shares debe sumar un valor mayor que cero")
+        targets = {pool: round(target * share / share_total) for pool, share in shares.items()}
+    else:
+        targets = {pool: round(target * count / total) for pool, count in counts.items()}
+    if targets:
+        targets[next(reversed(targets))] += target - sum(targets.values())
+    return targets
 
 
 def collect(config: dict[str, Any]) -> None:
@@ -188,6 +247,7 @@ def collect(config: dict[str, Any]) -> None:
             )
 
     api = client()
+    targets = _pool_targets(settings, raw_dir, neutral_name)
     for pool, channels in settings["channels"].items():
         path = raw_dir / f"{pool}.json"
 
@@ -199,10 +259,15 @@ def collect(config: dict[str, Any]) -> None:
         _write_pool(path, result)
 
         quota_exhausted = False
+        pool_target = targets[pool]
+        existing_ids = _unique_comment_ids(result["videos"])
+        if pool == "neutral_local":
+            existing_ids.update(_cached_comment_ids(raw_dir / neutral_name))
+        print(f"[{pool}] Meta asignada: {pool_target:,}; comentarios únicos guardados: {len(existing_ids):,}")
         for channel in channels:
-            if channel in result["canales_procesados"]:
-                print(f"[{pool}] {channel} (ya recolectado)")
-                continue
+            if len(existing_ids) >= pool_target:
+                print(f"[{pool}] Meta del grupo alcanzada")
+                break
             if quota_exhausted:
                 break
             print(f"[{pool}] {channel}")
@@ -213,32 +278,49 @@ def collect(config: dict[str, Any]) -> None:
                     raise
                 print(f"  [AVISO] Cuota de la API agotada al listar videos de {channel}: {exc}")
                 quota_exhausted = True
-                continue
+                break
             except ValueError as exc:
                 print(f"  [AVISO] {exc}; se omite el canal")
-                result["canales_procesados"].append(channel)
+                if channel not in result["canales_procesados"]:
+                    result["canales_procesados"].append(channel)
                 _write_pool(path, result)
                 continue
 
+            cached_by_id = {v["video_id"]: v for v in result["videos"] if v.get("canal_handle") == channel}
+            channel_complete = True
             for video in found:
                 video["etapa"] = stage_for(video["publicado"], periods)
                 video["canal_handle"] = channel
+                cached = cached_by_id.get(video["video_id"])
+                if cached and cached.get("comentarios_completos", False):
+                    continue
                 try:
                     video_comments = comments(api, video["video_id"], max_comments)
                 except QuotaExceeded as exc:
                     video_comments = exc.partial
                     video["cantidad_comentarios"] = len(video_comments)
                     video["comentarios"] = video_comments
+                    video["comentarios_completos"] = False
+                    if cached:
+                        result["videos"].remove(cached)
                     result["videos"].append(video)
+                    existing_ids.update(_unique_comment_ids([video]))
+                    channel_complete = False
                     quota_exhausted = True
                     print(f"  [AVISO] {exc}; se guardan {len(video_comments)} comentarios parciales de {video['video_id']}")
                     break
                 video["cantidad_comentarios"] = len(video_comments)
                 video["comentarios"] = video_comments
+                video["comentarios_completos"] = True
+                if cached:
+                    result["videos"].remove(cached)
                 result["videos"].append(video)
+                existing_ids.update(_unique_comment_ids([video]))
                 print(f"  {video['titulo']}: {len(video_comments)} comentarios")
+                if len(existing_ids) >= pool_target:
+                    break
 
-            if not quota_exhausted:
+            if channel_complete and channel not in result["canales_procesados"]:
                 result["canales_procesados"].append(channel)
             # Persist after every channel so a quota error never loses finished work.
             _write_pool(path, result)

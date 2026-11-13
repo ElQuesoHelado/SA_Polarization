@@ -64,12 +64,23 @@ Mantener un pipeline reproducible de análisis de sentimiento para comentarios p
 - Si agregas, retiras o reclasificas una referencia, actualiza en el mismo cambio el índice y su nota. Las notas distinguen hallazgos citables (con su tabla/sección de origen) de los límites de transferencia al pipeline.
 - La fuente principal sigue siendo Martínez-España et al. (2024); las demás referencias son contexto o antecedentes, no benchmarks numéricos.
 
+## Correcciones interpretativas pendientes para el paper
+
+En la siguiente revisión de `docs/doc.tex`, corregir la interpretación de resultados antes de cerrar el manuscrito. Esta lista registra cambios pendientes; no modificar automáticamente las conclusiones ni recalcular métricas por estas observaciones.
+
+- No describir AP$_{Out}$ negativo como animosidad, rechazo ni hostilidad hacia el partido rival o los medios: el clasificador estima valencia general y AP$_{Out}$ agrega grupos externos, incluido el pool neutral.
+- Retirar explicaciones no medidas que vinculan AP/AP$_{In}$ con cohesión, defensa discursiva, autocrítica, desencanto o movilización electoral; tampoco atribuir los patrones a la victoria de un bloque.
+- No asociar usuarios `Undetermined` con abstención, voto blanco/nulo, desafección ni rechazo de adscripción. La categoría solo refleja la regla operacional de asignación de afinidad en los comentarios observados.
+- No interpretar la favorabilidad negativa de fuentes neutrales como evidencia de descrédito, desconfianza o sesgo percibido hacia la prensa.
+- En la comparación con Martínez-España et al., presentar las diferencias como descriptivas y no atribuirlas causalmente al denominador o a la plataforma. Las diferencias de muestras, unidades, grupos y definiciones limitan la comparabilidad.
+- Mantener las conclusiones interpretativas acotadas a la valencia predicha y los balances calculados para los comentarios y fuentes observados; no generalizar a votantes o a la población peruana.
+
 ## Evaluación de calidad y mejoras recomendadas
 
-- **Juicio general**: los resultados actuales son reproducibles y describen un corpus grande (552,456 comentarios); la última salida de Kaggle y los artefactos locales fueron verificados byte por byte el 2026-11-07. Esto respalda la integridad del procesamiento, no la validez sustantiva de AP. Como descripción exploratoria del sentimiento predicho en comentarios recolectados de canales etiquetados, los resultados son útiles. No alcanzan para afirmar que una audiencia partidaria siente afecto o rechazo hacia el grupo del canal, ni para concluir qué grupo tiene más polarización.
-- **Validez del constructo (riesgo principal)**: `pyupeu/robertuito-peruvian-sentiment` clasifica la valencia general del texto; el código usa esa etiqueta como interacción positiva/negativa dirigida al grupo asociado al canal del video. Un comentario sobre una noticia, un tercero, sarcasmo o una crítica al propio canal no necesariamente expresa actitud hacia la izquierda/derecha. La literatura distingue análisis de sentimiento general de opinión/stance dirigida a un objetivo; ver [Sentiment Is Not Stance](https://www.cambridge.org/core/journals/political-analysis/article/sentiment-is-not-stance-targetaware-opinion-classification-for-political-text-analysis/743A9DD62DF3F2F448E199BDD1C37C8D). Por eso la inversión entre el AP_In de derecha (+0.493) e izquierda (−0.839) no debe interpretarse aún como que la primera apoya a su endogrupo y la segunda lo rechaza: también puede reflejar los temas y textos de los videos o errores de valencia.
-- **Comparación numérica, no ranking de calidad**: AP medio local (derecha 1.484; izquierda −0.259) queda por debajo de los valores derivados de Tabla 4 del paper (9.885; 7.972), pero AP conserva conteos y la muestra, unidades y grupos difieren; la diferencia no significa menor polarización. AP_Out es negativo en ambos estudios, pero local agrega `neutral` a los grupos externos y el paper suma tres partidos externos. Spread local (1.098; 1.133) frente a Tabla 6 (1.874; 1.748), y porcentaje alto local (7.12%; 10.21%) frente a Tabla 5 (15.89%; 13.35%), tampoco son comparables: el pipeline calcula el denominador usando solo comentarios positive/negative y define alto con su propio corte global 1.940; el paper usa total de interacciones y corte 2.68. No comparar porcentajes de nivel sin armonizar métrica, población y corte.
-- **Usuarios indeterminados**: la corrida local reporta 100,870/135,259 (74.58%) frente a 55% en el paper. La diferencia no estima una mejora o empeoramiento de clasificación: `analysis.py` construye el universo de usuarios después de filtrar sentimientos `positive`/`negative`, por lo que excluye a usuarios con comentarios exclusivamente neutrales; además, YouTube/canales y Twitter/interacciones generan oportunidades de clasificación distintas. La etiqueta `ingroup` es una afinidad operacional inferida por comentarios positivos, no ideología declarada.
+- **Juicio general**: la corrida más reciente contiene 827,287 comentarios. El log de Kaggle confirmó ese total y la salida descargada coincidió en filas y conteos por grupo con el CSV preparado; `analyze` regeneró tablas y figuras el 2026-11-10. Esto respalda la integridad del procesamiento, no la validez sustantiva de AP. Los resultados describen sentimiento predicho bajo fuentes clasificadas, pero no bastan para afirmar que una audiencia partidaria siente afecto o rechazo hacia el grupo del canal ni para concluir qué grupo tiene más polarización.
+- **Validez del constructo (riesgo principal)**: `pyupeu/robertuito-peruvian-sentiment` clasifica la valencia general del texto; el código usa esa etiqueta como interacción positiva/negativa dirigida al grupo asociado al canal del video. Un comentario sobre una noticia, un tercero, sarcasmo o una crítica al propio canal no necesariamente expresa actitud hacia la izquierda/derecha. La literatura distingue análisis de sentimiento general de opinión/stance dirigida a un objetivo; ver [Sentiment Is Not Stance](https://www.cambridge.org/core/journals/political-analysis/article/sentiment-is-not-stance-targetaware-opinion-classification-for-political-text-analysis/743A9DD62DF3F2F448E199BDD1C37C8D). En la corrida actual, AP_In medio fue +0.377 para derecha y −1.065 para izquierda; no debe interpretarse como apoyo al endogrupo o rechazo del otro, pues también puede reflejar los temas de los videos o errores de valencia.
+- **Comparación numérica, no ranking de calidad**: AP medio local (derecha 1.577; izquierda −0.109) queda por debajo de los valores derivados de Tabla 4 del paper (9.885; 7.972), pero AP conserva conteos y la muestra, unidades y grupos difieren; la diferencia no significa menor polarización. AP_Out fue negativo en ambos grupos (−1.200 y −0.956); local agrega `neutral` a los grupos externos y el paper suma tres partidos externos. Spread local (1.150; 1.189) frente a Tabla 6 (1.874; 1.748), y porcentaje alto local (8.21%; 10.53%) frente a Tabla 5 (15.89%; 13.35%), tampoco son comparables: el pipeline calcula el denominador usando solo comentarios positive/negative y define alto con su propio corte global 2.052; el paper usa total de interacciones y corte 2.68. No comparar porcentajes de nivel sin armonizar métrica, población y corte.
+- **Usuarios indeterminados**: la corrida local reporta 136,005/179,355 (75.83%) frente a 55% en el paper. La diferencia no estima una mejora o empeoramiento de clasificación: `analysis.py` construye el universo de usuarios después de filtrar sentimientos `positive`/`negative`, por lo que excluye a usuarios con comentarios exclusivamente neutrales; además, YouTube/canales y Twitter/interacciones generan oportunidades de clasificación distintas. La etiqueta `ingroup` es una afinidad operacional inferida por comentarios positivos, no ideología declarada.
 - **Qué muestran las tablas y figuras del paper**: Tablas 1–2 muestran más interacciones positivas hacia el endogrupo, pero también críticas internas y desviaciones estándar muy grandes; la Figura 2 es una distribución de usuarios detectados, no una estimación de la población ideológica. Figuras 3–5 muestran colas largas y valores extremos en AP/AP_In/AP_Out; el propio texto dice que las diferencias AP entre partidos son modestas. Figura 6 y Tablas 5–6 presentan spread en un rango más compacto, con un valor extremo y mayor porcentaje alto para la derecha. El paper informa ANOVA y Bonferroni, pero no da F ni valores p en el texto; sus conclusiones estadísticas no constituyen un patrón para copiar sin validación. El paper también tiene límites y no debe tratarse como verdad de referencia.
 - **Ruta priorizada para mejorar**:
   1. Sin etiquetado manual, mantener explícito que Robertuito predice valencia general y que `party` asigna el grupo de origen del video; no equiparar automáticamente esas variables con postura del comentario hacia un grupo político. Presentar AP como indicador exploratorio del corpus, no como medición validada de actitudes ciudadanas.
@@ -107,7 +118,18 @@ La literatura confirma que YouTube se usa para estudiar fenómenos relacionados 
 
 Para recomendaciones y prioridades específicas de interpretación peruana sin etiquetado manual, consultar [la revisión de literatura y plan analítico](docs/literatura_polarizacion_peru_youtube.md).
 
-## Última ejecución registrada (2026-11-03)
+## Inferencia remota completada (2026-11-09–10, America/Lima)
+
+El usuario autorizó continuar el pipeline sin revisión de resultados esta noche; debe quedar contexto para retomarlo mañana. No volver a recolectar ni sincronizar datos salvo que sea necesario: `prepare-data` terminó el 2026-11-09 y dejó `data/processed/comentarios_consolidado.csv` con **827,287 comentarios únicos** (izquierda 293,109; derecha 210,278; neutral 323,900). La meta de 1,000,000 no se alcanzó con las fuentes actuales; en esta etapa se ejecutará la inferencia con el corpus disponible, sin agregar canales.
+
+- **Publicación**: versión **6** del dataset `josealvacornejo/sa-polarization-dat`, mensaje `Inference for 827287 comments (2026-11-09)`; estado consultado `ready` el 2026-11-09 a las 21:13 (America/Lima). La publicación fue asíncrona; se verificó `current_version_number=6` antes de iniciar el kernel.
+- **Inferencia remota**: se envió `josealvacornejo/sa-polarization-inference` con `infer` el 2026-11-09 aproximadamente a las 21:14 (America/Lima), montando la versión 6 ya lista. El 2026-11-10 el kernel quedó `COMPLETE`; el log confirma la descarga del modelo y `Clasificados 827287 comentarios`.
+- **Conectividad del kernel**: `kernel-metadata.json` tiene `enable_internet=true`; no se inspeccionó por separado el ajuste efectivo de la sesión, pero el log de esta corrida confirma que Hugging Face descargó los siete archivos del modelo. Si una corrida futura falla, revisar el log y confirmar la conectividad efectiva antes de reintentar.
+- **Entrada**: `data/processed/comentarios_consolidado.csv` (mtime 2026-11-09 21:02 America/Lima; 314,797,766 bytes). La salida descargada `outputs/datos_clasificados.csv` contiene 827,287 filas (337,659,054 bytes) y coincide por conteos de `party`: derecha 210,278; izquierda 293,109; neutral 323,900. El SHA-256 y resumen de métricas están en el bloque comparativo generado abajo.
+- **Análisis local**: `analyze` terminó el 2026-11-10 alrededor de las 08:37 (America/Lima), regeneró los CSV/PNG en `outputs/` y actualizó el bloque `GENERATED RESULTS COMPARISON`. Las tablas y figuras locales ya corresponden a esta inferencia.
+- **Estado remoto final**: dataset versión 6 `ready`; kernel `COMPLETE`. No volver a enviar esta corrida. La meta de 1,000,000 comentarios no se alcanzó; ampliar canales requiere documentar evidencia citable para las nuevas fuentes.
+
+## Ejecución previa verificada (2026-11-03)
 
 > Corrida realizada el 2026-11-03; estado remoto comprobado en modo de solo lectura el 2026-11-07. Si se vuelve a ejecutar el pipeline, actualiza esta sección.
 
@@ -130,25 +152,25 @@ Para recomendaciones y prioridades específicas de interpretación peruana sin e
 ### Resultados de la corrida
 
 <!-- BEGIN GENERATED RESULTS COMPARISON -->
-**Actualizado:** 2026-11-07T12:08-05:00 (America/Lima).
-**Entrada analizada:** `datos_clasificados.csv`, 552,456 filas; SHA-256 `8acce58a23275e349767c50793c0dccb7b3834777ff914ec349e58ee568e24bf`.
+**Actualizado:** 2026-11-10T08:37-05:00 (America/Lima).
+**Entrada analizada:** `datos_clasificados.csv`, 827,287 filas; SHA-256 `e6934725ca02f7ec3af832279c40e0176a36bd090da81a70bab057607aba98db`.
 
 #### Sentimiento y favorabilidad por grupo
 
 | party | comentarios | % negativo | % neutro | % positivo | favorabilidad neta | favorabilidad ponderada normalizada |
 |---|---:|---:|---:|---:|---:|---:|
-| derecha | 116,111 | 49.34% | 35.10% | 15.56% | -0.338 | -0.281 |
-| izquierda | 264,520 | 51.74% | 30.13% | 18.13% | -0.336 | -0.282 |
-| neutral | 171,825 | 61.43% | 28.13% | 10.44% | -0.510 | -0.422 |
+| derecha | 210,278 | 45.46% | 37.33% | 17.21% | -0.282 | -0.238 |
+| izquierda | 293,109 | 52.70% | 29.90% | 17.39% | -0.353 | -0.296 |
+| neutral | 323,900 | 62.24% | 28.23% | 9.54% | -0.527 | -0.436 |
 
 #### Polarización por endogrupo asignado
 
-Usuarios en `ap_individual.csv`: 135,259; `Undetermined`: 100,870 (74.58%). AP global: 0.325 (DE 6.323); spread global: 1.121 (DE 0.819; nivel alto > 1.940).
+Usuarios en `ap_individual.csv`: 179,355; `Undetermined`: 136,005 (75.83%). AP global: 0.664 (DE 6.976); spread global: 1.171 (DE 0.882; nivel alto > 2.052).
 
 | ingroup | usuarios determinados | AP_In medio | AP_Out medio | AP medio | spread medio | spread alto |
 |---|---:|---:|---:|---:|---:|---:|
-| derecha | 11,524 | 0.493 | -0.991 | 1.484 | 1.098 | 7.12% |
-| izquierda | 22,865 | -0.839 | -0.580 | -0.259 | 1.133 | 10.21% |
+| derecha | 19,861 | 0.377 | -1.200 | 1.577 | 1.150 | 8.21% |
+| izquierda | 23,489 | -1.065 | -0.956 | -0.109 | 1.189 | 10.53% |
 
 #### Comparación descriptiva con el paper
 
@@ -156,15 +178,15 @@ Valores por par `paper / pipeline`. Derecha/Right e izquierda/Left son correspon
 
 | grupo aproximado | AP_In | AP_Out | AP | spread | spread alto |
 |---|---:|---:|---:|---:|---:|
-| Right (PP) ↔ derecha | 8.662 / 0.493 | -1.223 / -0.991 | 9.885 / 1.484 | 1.874 / 1.098 | 15.89% / 7.12% |
-| Left (PSOE) ↔ izquierda | 6.813 / -0.839 | -1.160 / -0.580 | 7.972 / -0.259 | 1.748 / 1.133 | 13.35% / 10.21% |
+| Right (PP) ↔ derecha | 8.662 / 0.377 | -1.223 / -1.200 | 9.885 / 1.577 | 1.874 / 1.150 | 15.89% / 8.21% |
+| Left (PSOE) ↔ izquierda | 6.813 / -1.065 | -1.160 / -0.956 | 7.972 / -0.109 | 1.748 / 1.189 | 13.35% / 10.53% |
 <!-- END GENERATED RESULTS COMPARISON -->
 
 ### Advertencias y límites de esta corrida
 
-- **Carrera de publicación (crítica)**: `kaggle datasets version` retorna antes de crear la versión y el `kernels push` inmediato puede montar la versión anterior. En la primera corrida el kernel procesó 325,050 filas viejas; se resolvió re-ejecutando `infer` (sin republicar) cuando la versión ya estaba lista. **El parche automático (validación de conteo + reintento) no está implementado** y el usuario pidió no hacerlo por ahora. Si se republica, compara las filas de `outputs/datos_clasificados.csv` con `data/processed/comentarios_consolidado.csv` (552,456) antes de aceptar las métricas.
-- **Métrica AP sensible al volumen**: AP y spread son diferencias de conteos de comentarios positivos/negativos, no tasas; no están acotadas y tienen colas largas (AP hasta ±220; spread hasta 14). Los usuarios con ≥5 comentarios concentran 62.3 % de los comentarios de izquierda, 37.4 % de derecha y 39.8 % de neutral; los promedios de AP pueden estar dominados por supercomentaristas. No cambies la definición sin una solicitud metodológica explícita.
-- **Asignación de endogrupo**: `ingroup` se infiere como el `party` con más comentarios positivos del usuario; empates o ausencia de positivos → `Undetermined` (100,870 usuarios). No es ideología declarada.
+- **Carrera de publicación (crítica)**: `kaggle datasets version` retorna antes de crear la versión y un `kernels push` inmediato puede montar la versión anterior. En esta ejecución se esperó a que la versión 6 quedara `ready` y el kernel clasificó las 827,287 filas esperadas. En una publicación futura, confirma primero el estado de la versión y compara las filas de `outputs/datos_clasificados.csv` con `data/processed/comentarios_consolidado.csv` antes de aceptar las métricas.
+- **Métrica AP sensible al volumen**: AP y spread son diferencias de conteos de comentarios positivos/negativos, no tasas; no están acotadas y tienen colas largas (en esta corrida, AP va de −202 a 218 y spread de 0 a 14.63). Los promedios de AP pueden estar dominados por usuarios muy activos. No cambies la definición sin una solicitud metodológica explícita.
+- **Asignación de endogrupo**: `ingroup` se infiere como el `party` con más comentarios positivos del usuario; empates o ausencia de positivos → `Undetermined` (136,005 usuarios en la corrida actual). No es ideología declarada.
 - El `DtypeWarning` de `search_query` en `analysis.py` es cosmético.
 - Canales sin datos útiles: `@prensaperulibre1465` no aportó videos en la ventana (solo 2 videos de 2021, fuera del periodo) y `@JuntosTVoficial` aportó 3 videos con 0 comentarios.
 - El paquete `kaggle` 2.2.5 requiere `six` instalado aparte en `.venv` (dependencia no declarada).

@@ -1,0 +1,28 @@
+---
+config:
+  layout: elk
+  theme: base
+  themeVariables:
+    fontSize: 14px
+---
+flowchart TB
+    A["Recolección<br>YouTube API"] -->|"Fuentes: izquierda · derecha · neutral"| B["Preprocesamiento<br>y grupo de fuente"]
+    B -->|"Comentarios + party"| C["Clasificación de sentimiento<br>RoBERTuito · Kaggle GPU"]
+
+    C -->|"Positivo · neutral · negativo"| D["Favorabilidad por grupo"]
+    D -->|"Neta · ponderada"| G["Resultados<br>Tablas y gráficas"]
+    C -->|"Sentimiento · usuario · party"| E["Ingroup por usuario"]
+    E -->|"Argmax(Pos) · izquierda/derecha"| F["Polarización individual"]
+    F -->|"AP_In · AP_Out · AP · spread"| G
+
+    classDef extract stroke:#fb923c,fill:#fff7ed
+    classDef process stroke:#a78bfa,fill:#f5f3ff
+    classDef model stroke:#38bdf8,fill:#f0f9ff
+    classDef output stroke:#4ade80,fill:#f0fdf4
+    classDef metric stroke:#f87171,fill:#fef2f2
+
+    class A extract
+    class B process
+    class C model
+    class D,E,F metric
+    class G output

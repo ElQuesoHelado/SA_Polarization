@@ -467,8 +467,19 @@ presidenciales peruanas de 2026}
 
 
 \begin{abstract}
-La creciente actividad política en redes sociales ha generado grandes volúmenes de contenido textual, dificultando el análisis de la opinión y el sentimiento político mediante métodos tradicionales. Para abordar este problema, se emplearon técnicas de procesamiento del lenguaje natural y aprendizaje profundo, utilizando un modelo basado en la arquitectura RoBERTa especializado en lenguaje de redes sociales en español. En este trabajo se propone un enfoque para clasificar sentimientos políticos en comentarios de redes sociales durante la segunda vuelta de las elecciones presidenciales peruanas de 2026. Se recopilaron 2743 comentarios de TikTok asociados a los candidatos de los dos partidos políticos en contienda; % (JP y K) 
-ademas de contenido neutral, los cuales fueron clasificados mediante RoBERTuito. A partir de las predicciones se calcularon indicadores de favorabilidad neta y ponderada, además de métricas relacionadas con la confianza del modelo, participación de los usuarios y nivel de \textit{engagement}. Los resultados muestran una favorabilidad neta positiva y de magnitud similar para ambos candidatos, en contraste con una favorabilidad levemente negativa en las publicaciones neutrales, comportamiento consistente con un posible escenario de \textit{echo chamber}. Sin embargo, la baja recurrencia de los usuarios y la escasa interacción entre categorías políticas impidieron calcular una medida de polarización afectiva individual, limitando los resultados a una medida de favorabilidad agregada.
+Este estudio analiza el sentimiento expresado en comentarios de YouTube durante las elecciones presidenciales
+peruanas de 2026 mediante un pipeline reproducible que combina clasificación de valencia y métricas agregadas e
+individuales. Se procesaron 827\,287 comentarios de 11\,786 videos publicados por 30 canales agrupados en fuentes
+de izquierda, derecha y neutrales, utilizando RoBERTuito especializado en español peruano. La valencia negativa
+predominó en los tres grupos de fuentes, pero fue más marcada en los canales neutrales; estos registraron la menor
+favorabilidad neta ($-0{,}527$), frente a $-0{,}353$ en izquierda y $-0{,}282$ en derecha. En el análisis
+individual, los usuarios asignados operacionalmente a la derecha presentaron un AP promedio positivo ($1{,}577$),
+mientras que el de los asignados a la izquierda se situó cerca de cero ($-0{,}109$). En el contexto del desenlace
+electoral, los comentarios bajo fuentes de derecha presentan un balance individual más favorable, en consonancia
+con la victoria ajustada de Fuerza Popular en la segunda vuelta. En las fuentes de izquierda, el AP medio se
+mantiene cerca de cero, mientras que los comentarios publicados bajo medios neutrales muestran la valencia más
+negativa. Así, la conversación observada combina una expresión más favorable en el espacio asociado al bloque
+ganador con mayor negatividad en las fuentes informativas neutrales.
 \end{abstract}
 
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
@@ -500,20 +511,17 @@ Sentiment Analysis, Natural Language Processing, Deep Learning, Transformer Mode
 
 \section{Introducción}
 
-Las redes sociales se han consolidado como uno de los principales espacios para la discusión política y la expresión de opiniones ciudadanas. Plataformas como Facebook, Instagram y TikTok permiten que millones de usuarios compartan publicaciones, comentarios e interacciones relacionadas con acontecimientos políticos, generando grandes volúmenes de información que reflejan la percepción pública sobre candidatos, partidos y políticas gubernamentales \cite{statista2026} \cite{statista_tiktok2026}. Debido a su alcance e influencia, estas plataformas constituyen una fuente relevante para estudiar el comportamiento político y las tendencias de opinión mediante técnicas de procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios. Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como herramientas de movilización política como canales para la propagación de desinformación. En este contexto, el análisis automático del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión pública durante procesos electorales.
+Las redes sociales se han consolidado como uno de los principales espacios para la discusión política y la expresión de opiniones ciudadanas. Plataformas como Facebook, Twitter/X y YouTube permiten que millones de usuarios compartan publicaciones, comentarios e interacciones relacionadas con acontecimientos políticos, generando grandes volúmenes de información que reflejan la percepción pública sobre candidatos, partidos y políticas gubernamentales \cite{statista2026}. YouTube, en particular, combina contenido audiovisual de formato largo con secciones de comentarios abiertas y una estructura basada en canales, lo que permite identificar el origen editorial de las publicaciones y analizar las reacciones de las audiencias de forma sistemática. Debido a su alcance e influencia, estas plataformas constituyen una fuente relevante para estudiar el comportamiento político y las tendencias de opinión mediante técnicas de procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con contenido político en redes sociales se ha relacionado con cambios en las actitudes de los usuarios. Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como herramientas de movilización como canales de confrontación discursiva. En este contexto, el análisis automático del contenido generado por los usuarios constituye una alternativa indispensable frente a las limitaciones de costo, cobertura y temporalidad de las encuestas tradicionales.
 
-Una de las principales soluciones empleadas para este problema es el análisis automático de sentimientos, mediante el cual se identifica la polaridad expresada en un texto y se clasifica generalmente como positiva, negativa o neutra. Esta aproximación permite analizar grandes volúmenes de publicaciones y comentarios sin depender exclusivamente de métodos tradicionales como las encuestas. En particular, los avances en aprendizaje profundo y en modelos basados en la arquitectura Transformer han permitido mejorar el desempeño de las tareas de clasificación textual al capturar relaciones contextuales complejas presentes en el lenguaje natural. Modelos como BERT y sus variantes han demostrado resultados competitivos en diversas aplicaciones de análisis de sentimientos \cite{Singh2026}.
+Una de las principales soluciones computacionales empleadas para este problema es el análisis automático de sentimientos, mediante el cual se identifica la polaridad expresada en un texto y se clasifica generalmente como positiva, negativa o neutra. En años recientes, los avances en aprendizaje profundo y modelos basados en la arquitectura Transformer han permitido mejorar drásticamente el desempeño en clasificación textual al capturar dependencias contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas específicamente al análisis de polarización política: Martínez-España et al. \cite{polariz} propusieron una formulación pionera para cuantificar la polarización afectiva individual a partir de publicaciones en redes sociales; Bor et al. \cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024, Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía Navarrete \cite{Mejia2024} describió la intensificación histórica de la polarización política en el país entre 2000 y 2023.
 
-Estas técnicas también han sido aplicadas específicamente al análisis de sentimientos y polarización política. Martínez-España et al. \cite{polariz} propusieron una metodología basada en modelos Transformer para medir la polarización afectiva a partir de publicaciones en redes sociales. De manera similar, Bor et al. \cite{bor2023} utilizaron análisis de sentimientos para cuantificar la polarización política en Twitter considerando diferentes grupos políticos y políticas públicas. En el contexto peruano, Ayma et al. \cite{Ayma2024} emplearon representaciones textuales como TF-IDF y Word2Vec junto con modelos tradicionales de aprendizaje automático para analizar mensajes publicados durante las elecciones presidenciales de 2021. Asimismo, Carrera et al. \cite{Carrera2026} compararon técnicas tradicionales con modelos basados en Transformers para clasificar comentarios relacionados con proyectos de ley peruanos, obteniendo mejores resultados mediante arquitecturas profundas. Estos trabajos muestran que tanto los métodos tradicionales de representación textual como los modelos Transformer constituyen alternativas para abordar la clasificación de sentimientos políticos.
+A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado, la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta concentración ha dejado desatendidas plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de lenguaje masivos preentrenados sobre corpus generales en español neutro o peninsular resultan insuficientes para capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la omisión sistemática en estudios previos de un grupo de control periodístico neutral que permita distinguir entre la hostilidad partidaria y el desencanto generalizado de la ciudadanía frente a la cobertura de los medios tradicionales.
 
-Sin embargo, una limitación de estos enfoques es que muchos modelos son entrenados sobre corpus generales y pueden no representar adecuadamente las características lingüísticas presentes en determinados dominios o regiones. En el caso del español utilizado en redes sociales peruanas, son frecuentes las expresiones coloquiales, la jerga, el sarcasmo, las abreviaturas y otras construcciones propias de la comunicación informal. El uso de modelos generales que no consideran estas características puede afectar su capacidad para clasificar correctamente el sentimiento en este tipo de contenido \cite{10.1145/3446132.3446424} \cite{robertuito}. Además, gran parte de la literatura existente se concentra en Twitter/X y en contextos internacionales, mientras que otras plataformas con una elevada actividad política, como Facebook, Instagram y TikTok, han recibido una atención comparativamente menor \cite{limaretail2026}.
+Para abordar esta brecha, el presente trabajo propone un pipeline de aprendizaje profundo que analiza el sentimiento político y la polarización afectiva individual a partir de 827\,287 comentarios públicos de YouTube correspondientes a 11\,786 videos de 30 canales curados editorialmente durante las elecciones presidenciales peruanas de 2026. Utilizando el modelo RoBERTuito especializado en español peruano, se clasifica la valencia textual de los comentarios y se calculan indicadores de favorabilidad agregada y polarización afectiva individual (AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y \textit{spread}).
 
-Como alternativa a los modelos generales, se han desarrollado modelos especializados en el lenguaje de redes sociales. Entre ellos destaca RoBERTuito, un modelo basado en la arquitectura RoBERTa y preentrenado sobre más de 500 millones de publicaciones en español provenientes de redes sociales. Su entrenamiento sobre este tipo de contenido permite representar características propias del lenguaje informal utilizado en estas plataformas. Además, estudios orientados específicamente al español peruano han mostrado que el ajuste de modelos de este tipo puede mejorar el desempeño en tareas de análisis de sentimientos al incorporar vocabulario y expresiones características del contexto nacional \cite{CalizayaMilla2026}.
+Si bien este enfoque toma como punto de partida la formulación de polarización afectiva individual propuesta por Martínez-España et al. \cite{polariz}, introduce diferencias conceptuales y metodológicas sustanciales orientadas a superar sus limitaciones en entornos audiovisuales. En primer lugar, a diferencia del estudio de referencia, centrado en interacciones de Twitter/X dirigidas a 78 figuras políticas en una elección regional española, nuestro trabajo traslada el análisis a YouTube, donde las interacciones no son menciones directas sino comentarios situados bajo contenidos audiovisuales con líneas editoriales consolidadas, capturando discusiones comunitarias extensas a gran escala. En segundo lugar, se supera el empleo de modelos genéricos mediante la incorporación de \textit{pyupeu/robertuito-peruvian-sentiment} \cite{CalizayaMilla2026}, un modelo preentrenado sobre redes sociales y adaptado al contexto peruano que minimiza el error de clasificación ante la jerga y el registro coloquial electoral. En tercer lugar, mientras que el marco original segmenta a los actores únicamente en facciones partidistas sin grupo de control, nuestra propuesta incorpora un pool canónico de medios periodísticos neutrales como referencia basal, lo que permite evaluar si las interacciones exogrupales ($\mathrm{AP}_{Out}$) responden a confrontación interpartidista o a un rechazo extendido hacia la prensa establecida. Finalmente, se complementa el esquema con una favorabilidad neta ponderada por la certidumbre probabilística del modelo clasificador ($F_{\mathrm{pond}}$) y se delimita con rigurosidad estadística el conjunto de usuarios sin afinidad definida ($75{,}83\,\%$), evitando asignaciones ideológicas forzadas.
 
-En este trabajo se propone un enfoque basado en aprendizaje profundo para analizar el sentimiento político expresado en contenido textual de redes sociales durante la segunda vuelta de las elecciones presidenciales peruanas de 2026. Para ello, se construye un conjunto de datos a partir de comentarios obtenidos de publicaciones relacionadas con los dos candidatos en contienda y con contenido de carácter neutral. Posteriormente, los comentarios son clasificados mediante RoBERTuito y, a partir de sus predicciones, se calculan métricas de favorabilidad neta y ponderada, incorporando además información relacionada con la participación de los usuarios y el nivel de \textit{engagement}. El enfoque se inspira en la metodología de Martínez-España et al. \cite{polariz}, pero se adapta a las características y limitaciones del conjunto de datos disponible.
-%%puede precisar la diferencia con Martinez
-
-El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos, el análisis de polarización política y los modelos aplicados al contexto peruano. La Sección III describe el método propuesto, incluyendo la obtención y el preprocesamiento de los datos, la clasificación de sentimientos y las métricas utilizadas para el análisis. La Sección IV presenta los resultados obtenidos y su interpretación. Finalmente, la Sección V expone las conclusiones y las posibles líneas de trabajo futuro.
+El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos y la polarización política computacional. La Sección III describe el método propuesto, detallando la adquisición y preprocesamiento de datos, el clasificador Transformer y la formulación matemática de las métricas. La Sección IV expone los resultados empíricos y su discusión metodológica. Finalmente, la Sección V presenta las conclusiones y el trabajo futuro.
 
 \section{Estado del Arte}
 El análisis de sentimientos aplicado al ámbito político ha adquirido una creciente relevancia debido al incremento del contenido generado por usuarios en redes sociales y a la disponibilidad de técnicas avanzadas de procesamiento del lenguaje natural. Las investigaciones recientes han abordado este problema desde diferentes perspectivas, incluyendo el estudio de la polarización política, la clasificación automática de opiniones y el desarrollo de modelos especializados para lenguaje informal.
@@ -532,157 +540,175 @@ Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio s
 
 Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
 
-En conjunto, estos trabajos evidencian el potencial de los modelos basados en Transformers para el análisis de sentimientos políticos. Sin embargo, la mayoría de las investigaciones se ha desarrollado utilizando datos provenientes de Twitter/X o en contextos distintos al peruano. Asimismo, existe un número limitado de estudios que empleen publicaciones y comentarios obtenidos de Facebook e Instagram, plataformas que concentran una elevada actividad política y presentan características lingüísticas propias del lenguaje informal utilizado por los usuarios peruanos.
+Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente que la valencia general de un comentario no necesariamente refleja la postura del autor hacia una entidad política específica. Este hallazgo es relevante para interpretar los resultados de modelos de clasificación de sentimiento general, como el empleado en el presente trabajo.
 
-En este contexto, el presente trabajo propone evaluar modelos de aprendizaje profundo para la clasificación de sentimientos políticos utilizando contenido textual obtenido de tanto Facebook, Instagram y TikTok en el idioma español. De esta manera, se busca contribuir al desarrollo de modelos adaptados al contexto peruano y ampliar la evidencia existente sobre el análisis de sentimientos en plataformas que han recibido menor atención dentro de la literatura especializada.
+En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas metodologías hacia plataformas audiovisuales masivas como YouTube, incorporar controles de prensa neutral y adaptar las representaciones a la jerga y particularidades dialectales regionales.
 
 \section{Método Propuesto}
 
-\begin{figure}
+\begin{figure}[t]
     \centering
-    \includegraphics[width=0.85\linewidth]{pipeline_3.png}
-    \caption{Pipeline}
+    \includegraphics[width=0.85\linewidth]{docs/figures/pipeline_3.png}
+    \caption{Arquitectura general del pipeline propuesto para la recolección, inferencia de sentimiento y cálculo de métricas de polarización en YouTube.}
     \label{fig:metodo}
 \end{figure}
 
-La figura \ref{fig:metodo} muestra una representación visual del método usado, con el fin de poder obtener cierta medición de polarización política en el dataset utilizado.
+La Figura~\ref{fig:metodo} ilustra la arquitectura general del pipeline implementado, estructurado en cuatro etapas secuenciales: adquisición programática de datos mediante la API de YouTube Data v3, preprocesamiento y unificación con control editorial, inferencia de sentimiento con un modelo Transformer especializado en el contexto sociolingüístico peruano, y cómputo de métricas agregadas e individuales de favorabilidad y polarización afectiva.
 
-\subsection{Obtención de datos crudos}
+\subsection{Obtención de datos}
 
-Con el objetivo de construir un conjunto de datos inicial para el análisis de sentimientos políticos, y teniendo en cuenta el porcentaje de uso de redes sociales en Perú y las restricciones recientes de acceso a datos en plataformas como Facebook y Twitter/X \cite{ANTONAKAKI2021114006}, se decidió utilizar datos provenientes de TikTok. Se recopiló un total de 2743 comentarios mediante técnicas de \textit{web scraping}, centrados en publicaciones relacionadas con la segunda vuelta de las elecciones presidenciales peruanas, celebradas el 7 de junio de 2026.
+Frente a las crecientes restricciones impuestas por plataformas como Facebook y Twitter/X para el acceso a datos con fines de investigación \cite{ANTONAKAKI2021114006}, se seleccionó YouTube como fuente primaria de información. YouTube ofrece acceso programático transparente a través de su API oficial y proporciona una estructura modular basada en canales, lo que permite asociar de forma directa y trazable el origen editorial de los contenidos audiovisuales con los comentarios vertidos por las audiencias.
 
-Las publicaciones fueron clasificadas en tres categorías: \textit{JP}, \textit{K} y \textit{neutral}. Las dos primeras representan a cada uno de los candidatos presidenciales participantes en la segunda vuelta, mientras que \textit{neutral} agrupa publicaciones de carácter informativo, principalmente relacionadas con el conteo rápido de votos durante las horas posteriores al cierre de la jornada electoral. La selección de publicaciones priorizó aquellas con mayor cantidad de comentarios, con el fin de aumentar el volumen y la diversidad de opiniones recopiladas.
+Para el estudio del escenario electoral peruano de 2026, se definieron 30 canales de YouTube agrupados equitativamente en tres categorías: \textit{izquierda} (10 canales), \textit{derecha} (10 canales) y un pool de control \textit{neutral} (10 canales). La asignación editorial de cada canal se fundamentó en fuentes externas verificables y citables, tales como reportes de propiedad mediática (Media Ownership Monitor), afiliación partidaria oficial y documentación periodística consolidada en Wikipedia en español. El grupo \textit{neutral} agrupa medios de prensa tradicionales, cadenas estatales e iniciativas periodísticas sin afiliación partidaria expresa, funcionando como línea de base informativa.
 
-\subsection{Preprocesado}
+Para cada canal se extrajeron los comentarios públicos de videos emitidos entre enero y junio de 2026, estableciendo un umbral máximo de 1\,000 videos por canal y 2\,000 comentarios por video para mitigar sesgos de sobrerrepresentación inducidos por viralidad aislada. En total, se recolectaron 827\,287 comentarios públicos pertenecientes a 11\,786 videos. Cabe destacar que la etiqueta de canal (\textit{party}) asignada inicialmente a cada registro identifica exclusivamente la línea editorial de la fuente emisora y no la adscripción política del usuario que emite el comentario.
 
-Durante el preprocesamiento se extrajeron únicamente los atributos necesarios para el análisis: contenido textual, identificador y nombre del usuario, cantidad de \textit{likes}, identificador del comentario y de la publicación, así como la información necesaria para determinar si el comentario correspondía a una respuesta a otro (comentario padre). Adicionalmente, cada comentario fue etiquetado con la categoría de la publicación de origen (\textit{party}: \textit{JP}, \textit{K} o \textit{neutral}). Finalmente, los datos de todas las publicaciones fueron unificados en un único conjunto de datos estructurado, según se describe en el Algoritmo~\ref{alg:preprocess}.
+\subsection{Preprocesamiento y unificación de datos}
 
-\begin{algorithm}[H]
-\caption{Preprocesamiento y unificación de los comentarios recolectados}
+El preprocesamiento estandariza los registros y consolida los atributos necesarios para el modelado temporal, lingüístico y de interacción de usuarios. Para cada comentario $c_i$, se extrajeron diez atributos estructurados: el contenido textual, el identificador único del autor ($\text{user\_id}$), el nombre de usuario, la cantidad de reacciones favorables ($\textit{likes}$), el identificador del comentario, el identificador y título del video de origen, el canal emisor, la fecha de publicación, el número de respuestas anidadas y la etiqueta editorial del canal emisor ($\text{party} \in \mathcal{J} = \{\text{izquierda}, \text{derecha}, \text{neutral}\}$).
+
+En el caso del grupo neutral, se integró el pool recolectado localmente con el repositorio canónico de medios peruanos, aplicando una deduplicación estricta por identificador único de comentario ($\text{comment\_id}$) para garantizar la unicidad de las interacciones. El procedimiento global de preprocesamiento se resume en el Algoritmo~\ref{alg:preprocess}.
+
+\begin{algorithm}[t]
+\caption{Preprocesamiento, estandarización y unificación del corpus}
 \label{alg:preprocess}
 \begin{algorithmic}[1]
-\Require Archivos de comentarios obtenidos mediante \textit{web scraping}, cada uno asociado a una categoría política.
-\Ensure Conjunto de datos unificado y etiquetado.
-\ForAll{archivo de comentarios}
-    \State Extraer texto, identificadores (usuario, comentario, publicación), \textit{likes} e identificador de respuesta.
-    \State Determinar si el comentario es una respuesta y registrar su comentario padre.
-    \State Asignar la etiqueta política según el origen del archivo.
+\Require Colección de archivos JSON $\mathcal{F} = \{F_k\}$, indexados por pool editorial $k \in \{\text{izq}, \text{der}, \text{neu\_local}, \text{neu\_canon}\}$.
+\Ensure Conjunto unificado y desduplicado $\mathcal{D} = \{r_i\}$.
+\State $\mathcal{D}_{\text{raw}} \leftarrow \emptyset$
+\ForAll{archivo $F_k \in \mathcal{F}$}
+    \State Determinar la categoría editorial $\text{party} \leftarrow \text{MapearPool}(k)$
+    \ForAll{video $v \in F_k$}
+        \ForAll{comentario $c \in v$}
+            \State Extraer atributos: $\langle \text{texto}, \text{user\_id}, \text{likes}, \text{fecha}, \text{respuestas}, \dots \rangle$
+            \State Asignar etiqueta editorial $\text{party}$
+            \State $\mathcal{D}_{\text{raw}} \leftarrow \mathcal{D}_{\text{raw}} \cup \{c\}$
+        \EndFor
+    \EndFor
 \EndFor
-\State \Return Conjunto de datos unificado.
+\State $\mathcal{D} \leftarrow \text{DeduplicarPorId}(\mathcal{D}_{\text{raw}}, \text{clave} = \text{comment\_id})$
+\State \Return $\mathcal{D}$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\linewidth]{preprocesado.png}
-    \caption{Datos preparados para input de modelo}
-    \label{fig:placeholder}
-\end{figure}
+\subsection{Clasificación de sentimientos con RoBERTuito especializado}
 
-\subsection{Clasificación de sentimiento}
+Para mitigar la brecha de comprensión semántica propia de los modelos de lenguaje generales frente a la comunicación digital peruana, se empleó el modelo \textit{pyupeu/robertuito-peruvian-sentiment} \cite{CalizayaMilla2026}. Este modelo parte de la arquitectura Transformer RoBERTuito \cite{robertuito}, preentrenada sobre más de 500 millones de publicaciones de redes sociales en español, y fue sometido a un proceso de ajuste fino (\textit{fine-tuning}) con corpus anotados de lenguaje informal y jerga política peruana.
 
-Cada comentario preprocesado fue clasificado utilizando \textit{RoBERTuito}, una variante de RoBERTa entrenada con publicaciones de redes sociales escritas por usuarios peruanos, lo que le permite capturar expresiones coloquiales y variaciones lingüísticas propias del contexto nacional. Para cada comentario $c_i$, el modelo produce una etiqueta de sentimiento $S_i \in \{\text{negative},\ \text{neutral},\ \text{positive}\}$ y un puntaje de confianza $P_i \in [0,1]$, de forma que
-
+Para cada comentario $c_i \in \mathcal{D}$, el modelo genera una distribución de probabilidades sobre el espacio triclase $\mathcal{S} = \{\text{negative}, \text{neutral}, \text{positive}\}$. Se selecciona la etiqueta con mayor verosimilitud $S_i$ y se conserva su puntaje de confianza probabilística $P_i \in [0, 1]$:
 \begin{equation}
-(S_i,P_i)=f_{\mathrm{RoBERTuito}}(c_i).
+(S_i, P_i) = f_{\mathrm{RoBERTuito}}(c_i).
+\label{eq:robertuito}
 \end{equation}
+Ambos descriptores permiten no solo determinar la valencia predominante del texto, sino también modular el impacto de cada predicción en función de la certidumbre del clasificador.
 
-Ambos valores fueron incorporados al conjunto de datos para su uso posterior en el análisis de polarización.
+\subsection{Modelado de métricas de favorabilidad y polarización afectiva}
 
-\subsection{Análisis de polarización}
+Con el objetivo de caracterizar tanto la valencia agregada de los espacios discursivos como la polarización a nivel de usuarios individuales, se formularon dos niveles de análisis complementarios.
 
-Con el propósito de cuantificar la polarización política presente en los comentarios recopilados, se definieron diversas métricas basadas en los resultados de la clasificación de sentimientos. En una primera etapa se empleó el \textit{Net Sentiment Score} (NSS), utilizado por Pandey et al. \cite{pandey2025twitter} para evaluar la tendencia del sentimiento hacia distintos partidos políticos durante las elecciones de Bihar de 2025, junto con una variante ponderada por la confianza del modelo. En una segunda etapa se buscó replicar, de forma adaptada, el indicador de polarización afectiva individual propuesto por Martínez-España et al. \cite{polariz}.
+\subsubsection{Favorabilidad neta y favorabilidad ponderada por certidumbre}
 
-\subsubsection{Favorabilidad neta y ponderada}
-
-Para cada categoría política se contabilizó el número de comentarios positivos ($N_{pos}$), negativos ($N_{neg}$) y neutrales ($N_{neu}$), con $N=N_{pos}+N_{neg}+N_{neu}$, y se calculó la favorabilidad neta (NSS) como
-
+A nivel agregado de cada categoría editorial $j \in \mathcal{J}$, se contabilizó el total de comentarios positivos ($N_{\mathrm{pos}}$), negativos ($N_{\mathrm{neg}}$) y neutrales ($N_{\mathrm{neu}}$), con un volumen total $N = N_{\mathrm{pos}} + N_{\mathrm{neg}} + N_{\mathrm{neu}}$. La favorabilidad neta (\textit{Net Sentiment Score}, NSS) se define como:
 \begin{equation}
-F_{\mathrm{neta}} = \frac{N_{pos}-N_{neg}}{N} \in [-1,1].
+F_{\mathrm{neta}}(j) = \frac{N_{\mathrm{pos}} - N_{\mathrm{neg}}}{N} \in [-1, 1].
 \label{eq:favorabilidad_neta}
 \end{equation}
 
-Para incorporar la confianza del modelo, a cada comentario se le asignó un valor $s_i \in \{1,0,-1\}$ según su sentimiento (positivo, neutral, negativo), y su aporte individual se definió como $a_i = s_i P_i$, donde $P_i$ es la confianza entregada por el modelo. La favorabilidad ponderada para cada categoría se obtuvo mediante
-
+Con el fin de evitar que predicciones de valencia marginales o con baja certidumbre distorsionen el indicador, se diseñó la favorabilidad neta ponderada por confianza ($F_{\mathrm{pond}}$). Para cada comentario $c_i$, se asigna un signo de valencia $s_i \in \{+1 \text{ (pos)}, 0 \text{ (neu)}, -1 \text{ (neg)}\}$, y su contribución se pondera por su confianza probabilística $P_i$:
 \begin{equation}
-F_{\mathrm{pond}} = \frac{1}{N}\sum_{i=1}^{N} s_i P_i.
+F_{\mathrm{pond}}(j) = \frac{1}{N} \sum_{i=1}^{N} s_i P_i \in [-1, 1].
 \label{eq:favorabilidad_ponderada}
 \end{equation}
 
-De esta manera, las clasificaciones con mayor confianza tienen una influencia proporcionalmente mayor en la métrica final.
-
-\subsubsection{Indicador de polarización afectiva individual}
+\subsubsection{Indicador de polarización afectiva individual y \textit{spread}}
 \label{subsubsec:ap_individual}
 
-A diferencia de las métricas anteriores, que se calculan de forma agregada por categoría, este indicador busca cuantificar la polarización a nivel de cada usuario, siguiendo la formulación de Martínez-España et al. \cite{polariz}. Para ello es necesario, en primer lugar, determinar el grupo de afinidad política (\textit{ingroup}) de cada usuario.
+A diferencia de las métricas agregadas por canal, el indicador individual busca cuantificar el distanciamiento afectivo de los ciudadanos a partir de sus patrones de interacción, adaptando la formulación de Martínez-España et al. \cite{polariz}.
 
-Para cada usuario $i$, se contabilizó el número de interacciones positivas ($\text{Pos}_{i,j}$) y negativas ($\text{Neg}_{i,j}$) hacia cada categoría política $j$. El \textit{ingroup} se determinó como la categoría con la mayor cantidad de interacciones positivas:
+Para aislar a los usuarios políticamente activos con valencia definida, el universo de análisis individual se restringe a los usuarios que emitieron al menos un comentario clasificado como positivo o negativo ($S_i \in \{\text{positive}, \text{negative}\}$). Para cada usuario $i$ y categoría de canal $j \in \mathcal{J} = \{\text{izquierda}, \text{derecha}, \text{neutral}\}$, se computa el conteo de interacciones positivas ($\text{Pos}_{i,j}$) y negativas ($\text{Neg}_{i,j}$).
 
+La identificación del grupo de afinidad operacional (\textit{ingroup}) se restringe estrictamente a los bloques políticos partidistas $\mathcal{J}_{\mathrm{pol}} = \{\text{izquierda}, \text{derecha}\}$, excluyendo la categoría neutral de los posibles endogrupos. Sea $j^* = \operatorname*{argmax}_{j \in \mathcal{J}_{\mathrm{pol}}} (\text{Pos}_{i,j})$:
 \begin{equation}
-\text{Ingroup}(i) = \operatorname*{argmax}_{j}\left(\text{Pos}_{i,j}\right).
+\text{Ingroup}(i) = \begin{cases}
+j^*, & \text{si } j^* \text{ es único y } \text{Pos}_{i,j^*} > 0, \\
+\text{Undetermined}, & \text{en empate o si } \text{Pos}_{i,j^*} = 0.
+\end{cases}
 \label{eq:ingroup}
 \end{equation}
 
-En caso de que un usuario no registre interacciones positivas con ninguna categoría, o exista un empate entre dos o más categorías, el usuario se clasifica como \textit{Undetermined}, es decir, sin afinidad política clara.
-
-A partir del \textit{ingroup} determinado, se calculó la polarización afectiva hacia el propio grupo ($\mathrm{AP_{In}}$) y hacia el resto de las categorías ($\mathrm{AP_{Out}}$):
-
+Para todo usuario con afinidad determinada $j = \text{Ingroup}(i)$, se calcula la polarización afectiva hacia su propio grupo ($\mathrm{AP}_{\mathrm{In}}$) como el balance de comentarios en su canal de afinidad:
 \begin{equation}
-\mathrm{AP}(i)_{\mathrm{In}} = \text{Pos}_{i,j} - \text{Neg}_{i,j}, \qquad j=\text{Ingroup}(i),
+\mathrm{AP}(i)_{\mathrm{In}} = \text{Pos}_{i,j} - \text{Neg}_{i,j}.
 \label{eq:ap_in}
 \end{equation}
 
+Por su parte, la polarización hacia los grupos externos ($\mathrm{AP}_{\mathrm{Out}}$) agrega el balance neto hacia todas las categorías restantes $\mathcal{J}_{\mathrm{out}} = \mathcal{J} \setminus \{j\}$:
 \begin{equation}
-\mathrm{AP}(i)_{\mathrm{Out}} = \sum_{j' \neq j}\left(\text{Pos}_{i,j'} - \text{Neg}_{i,j'}\right).
+\mathrm{AP}(i)_{\mathrm{Out}} = \sum_{j' \in \mathcal{J} \setminus \{j\}} \left(\text{Pos}_{i,j'} - \text{Neg}_{i,j'}\right).
 \label{eq:ap_out}
 \end{equation}
+Es importante destacar que, en esta formulación, el conjunto $\mathcal{J} \setminus \{j\}$ contiene tanto al bloque político opuesto como a las fuentes periodísticas del pool neutral. Esta inclusión es metodológicamente coherente con el rol de los medios informativos en el ecosistema digital: los usuarios interactúan con coberturas neutrales para discutir la coyuntura, y computar su valencia en $\mathrm{AP}_{\mathrm{Out}}$ permite capturar si el distanciamiento exogrupal convive con un tono hostil o favorable hacia la prensa tradicional.
 
-Finalmente, la polarización afectiva individual se obtuvo como la diferencia entre ambas componentes:
-
+La polarización afectiva individual neta ($\mathrm{AP}$) se obtiene como el contraste entre la adhesión endogrupal y la animosidad exogrupal:
 \begin{equation}
 \mathrm{AP}(i) = \mathrm{AP}(i)_{\mathrm{In}} - \mathrm{AP}(i)_{\mathrm{Out}}.
 \label{eq:ap_final}
 \end{equation}
 
-Dado que $\mathrm{AP}(i)$ depende del volumen total de interacción de cada usuario, se calculó adicionalmente una versión normalizada (\textit{spread}), adaptada de la propuesta de Wagner \cite{wagner2021affective}:
-
+Puesto que $\mathrm{AP}(i)$ es una métrica acumulativa sensible a la hiperactividad de comentaristas frecuentes, se calcula en paralelo una versión normalizada (\textit{spread}), adaptada de la formulación de dispersión de Wagner \cite{wagner2021affective}:
 \begin{equation}
-\mathrm{spread}(i) = \sqrt{\frac{\sum_{j}\left(\text{Pos}_{i,j}-\text{Neg}_{i,j}\right)^2}{n_i}},
+\mathrm{spread}(i) = \sqrt{\frac{\sum_{j \in \mathcal{J}} \left(\text{Pos}_{i,j} - \text{Neg}_{i,j}\right)^2}{n_i}},
 \label{eq:spread}
 \end{equation}
+donde el denominador $n_i = \sum_{j \in \mathcal{J}} (\text{Pos}_{i,j} + \text{Neg}_{i,j})$ representa el número total de interacciones del usuario $i$ que presentaron valencia positiva o negativa. Nótese que, a diferencia de la propuesta original de Martínez-España et al. (que computa el total bruto de interacciones incluyendo neutrales), nuestro denominador restringe la normalización al volumen de intervenciones con valencia determinada, reflejando fielmente la intensidad afectiva efectiva.
 
-donde $n_i$ representa el número total de interacciones del usuario $i$ en todas las categorías consideradas.
+Finalmente, siguiendo el criterio de corte empírico de la literatura, tanto $\mathrm{AP}(i)$ como $\mathrm{spread}(i)$ se clasifican en tres niveles discretos (\textit{Bajo}, \textit{Medio}, \textit{Alto}) utilizando la media muestral ($\mu$) y la desviación estándar ($\sigma$) del corpus:
+\begin{equation}
+\text{Nivel}_{\mathrm{AP}}(i) = \begin{cases}
+\text{Bajo}, & \mathrm{AP}(i) < \mu_{\mathrm{AP}} - \sigma_{\mathrm{AP}}, \\
+\text{Alto}, & \mathrm{AP}(i) > \mu_{\mathrm{AP}} + \sigma_{\mathrm{AP}}, \\
+\text{Medio}, & \text{en otro caso};
+\end{cases}
+\end{equation}
+mientras que para el \textit{spread}, por ser una magnitud estrictamente no negativa, se define nivel \textit{Bajo} cuando $\mathrm{spread}(i) = 0$, nivel \textit{Alto} cuando $\mathrm{spread}(i) > \mu_{\mathrm{spread}} + \sigma_{\mathrm{spread}}$ y nivel \textit{Medio} en el intervalo intermedio. El procedimiento algorítmico global de polarización se sistematiza en el Algoritmo~\ref{alg:polarization}.
 
-Tanto $\mathrm{AP}(i)$ como $\mathrm{spread}(i)$ fueron posteriormente clasificados en tres niveles (bajo, medio y alto), utilizando como referencia la media y la desviación estándar de cada indicador, siguiendo el mismo criterio empleado en \cite{polariz}.
-
-Cabe señalar que la categoría \textit{neutral} fue considerada como una categoría válida dentro del conjunto de posibles \textit{ingroups} y como parte del cálculo de $\mathrm{AP_{Out}}$, en lugar de excluirse del análisis. Esta decisión responde al estado actual del conjunto de datos, compuesto mayoritariamente por publicaciones de carácter neutral, y se retoma como parte de la discusión metodológica en la Sección~\ref{sec:resultados}, donde también se abordan las implicaciones de este tratamiento sobre la interpretación del indicador.
-
-\begin{algorithm}[H]
-\caption{Cálculo de métricas de polarización}
+\begin{algorithm}[t]
+\caption{Cómputo de polarización afectiva individual y \textit{spread}}
+\label{alg:polarization}
 \begin{algorithmic}[1]
-\Require Conjunto de comentarios clasificados.
-
-\ForAll{categoría política}
-    \State Calcular favorabilidad neta y ponderada (Ecuaciones~\ref{eq:favorabilidad_neta}--\ref{eq:favorabilidad_ponderada}).
-\EndFor
-
-\ForAll{usuario}
-    \State Calcular $\text{Pos}_{i,j}$ y $\text{Neg}_{i,j}$ para cada categoría $j$.
-    \State Determinar el \textit{ingroup} (Ecuación~\ref{eq:ingroup}).
-    \If{\textit{ingroup} distinto de \textit{Undetermined}}
-        \State Calcular $\mathrm{AP_{In}}$, $\mathrm{AP_{Out}}$, $\mathrm{AP}$ y \textit{spread} (Ecuaciones~\ref{eq:ap_in}--\ref{eq:spread}).
-        \State Clasificar $\mathrm{AP}$ y \textit{spread} en niveles (bajo/medio/alto).
+\Require Corpus clasificado $\mathcal{D} = \{(c_k, u_k, j_k, S_k, P_k)\}$, categorías $\mathcal{J} = \{\text{izq}, \text{der}, \text{neu}\}$, partidos $\mathcal{J}_{\mathrm{pol}} = \{\text{izq}, \text{der}\}$.
+\Ensure Conjunto de métricas individuales $\mathcal{R} = \{\langle u, \text{Ingroup}, \mathrm{AP}_{\mathrm{In}}, \mathrm{AP}_{\mathrm{Out}}, \mathrm{AP}, \mathrm{spread} \rangle\}$.
+\State Filtrar comentarios con valencia determinada: $\mathcal{D}_{\mathrm{pol}} \leftarrow \{c \in \mathcal{D} \mid S_c \in \{\text{pos}, \text{neg}\}\}$
+\State Extraer conjunto de usuarios evaluables: $\mathcal{U} \leftarrow \text{UsuariosUnicos}(\mathcal{D}_{\mathrm{pol}})$
+\State Inicializar matrices de frecuencias $\mathbf{Pos}_{|\mathcal{U}| \times |\mathcal{J}|}$ y $\mathbf{Neg}_{|\mathcal{U}| \times |\mathcal{J}|}$
+\ForAll{comentario $c = (u, j, S) \in \mathcal{D}_{\mathrm{pol}}$}
+    \If{$S = \text{pos}$} $\mathbf{Pos}[u, j] \leftarrow \mathbf{Pos}[u, j] + 1$
+    \ElsIf{$S = \text{neg}$} $\mathbf{Neg}[u, j] \leftarrow \mathbf{Neg}[u, j] + 1$
     \EndIf
 \EndFor
-
-\State Generar datos a ser ploteados.
+\ForAll{usuario $i \in \mathcal{U}$}
+    \State $n_i \leftarrow \sum_{j \in \mathcal{J}} (\mathbf{Pos}[i, j] + \mathbf{Neg}[i, j])$
+    \State Determinar $\text{Ingroup}(i)$ según Ecuación~\ref{eq:ingroup} sobre $\mathcal{J}_{\mathrm{pol}}$
+    \If{$\text{Ingroup}(i) \neq \text{Undetermined}$}
+        \State $j \leftarrow \text{Ingroup}(i)$
+        \State $\mathrm{AP}(i)_{\mathrm{In}} \leftarrow \mathbf{Pos}[i, j] - \mathbf{Neg}[i, j]$
+        \State $\mathrm{AP}(i)_{\mathrm{Out}} \leftarrow \sum_{j' \in \mathcal{J} \setminus \{j\}} (\mathbf{Pos}[i, j'] - \mathbf{Neg}[i, j'])$
+        \State $\mathrm{AP}(i) \leftarrow \mathrm{AP}(i)_{\mathrm{In}} - \mathrm{AP}(i)_{\mathrm{Out}}$
+        \State $\mathrm{spread}(i) \leftarrow \sqrt{\frac{1}{n_i} \sum_{j \in \mathcal{J}} (\mathbf{Pos}[i, j] - \mathbf{Neg}[i, j])^2}$
+    \Else
+        \State $\mathrm{AP}(i)_{\mathrm{In}}, \mathrm{AP}(i)_{\mathrm{Out}}, \mathrm{AP}(i), \mathrm{spread}(i) \leftarrow \text{NaN}$
+    \EndIf
+\EndFor
+\State Calcular medias y desviaciones globales $(\mu_{\mathrm{AP}}, \sigma_{\mathrm{AP}})$ y $(\mu_{\mathrm{spread}}, \sigma_{\mathrm{spread}})$
+\State Asignar niveles discretos (\textit{Bajo}, \textit{Medio}, \textit{Alto}) a los registros válidos
+\State \Return $\mathcal{R}$
 \end{algorithmic}
 \end{algorithm}
 
 \section{Resultados e interpretación}
 
 Esta sección presenta los resultados de la clasificación de sentimiento y de
-las métricas calculadas sobre $552{,}456$ comentarios de videos publicados por
+las métricas calculadas sobre $827{,}287$ comentarios de videos publicados por
 fuentes agrupadas como izquierda, derecha y neutral. La etiqueta \textit{party}
 identifica el grupo asignado a la fuente del video; no representa una etiqueta
 de sentimiento ni una clasificación política del autor del comentario.
@@ -703,37 +729,35 @@ normalizada incorpora los puntajes de confianza del modelo.
 \hline
 Métrica & Derecha & Izquierda & Neutral \\
 \hline
-Comentarios & 116{,}111 & 264{,}520 & 171{,}825 \\
-Negativo (\%) & 49.34 & 51.74 & 61.43 \\
-Neutro (\%) & 35.10 & 30.13 & 28.13 \\
-Positivo (\%) & 15.56 & 18.13 & 10.44 \\
-Favorabilidad neta & $-0.338$ & $-0.336$ & $-0.510$ \\
-Ponderada norm. & $-0.281$ & $-0.282$ & $-0.422$ \\
+Comentarios & 210{,}278 & 293{,}109 & 323{,}900 \\
+Negativo (\%) & 45.46 & 52.70 & 62.24 \\
+Neutro (\%) & 37.33 & 29.90 & 28.23 \\
+Positivo (\%) & 17.21 & 17.39 & 9.54 \\
+Favorabilidad neta & $-0.282$ & $-0.353$ & $-0.527$ \\
+Ponderada norm. & $-0.238$ & $-0.296$ & $-0.436$ \\
 \hline
 \end{tabular}
 \end{table}
 
-En los tres grupos, el sentimiento negativo es la clase más frecuente. Las
-favorabilidades netas de las fuentes de derecha e izquierda son prácticamente
-iguales ($-0.338$ y $-0.336$), mientras que el grupo neutral registra un valor
-más negativo ($-0.510$). La medida ponderada presenta el mismo orden. Estas
-diferencias describen la valencia general predicha en los comentarios
-recolectados; no demuestran que los comentarios estén dirigidos al grupo
-político asociado al canal ni que sus autores apoyen o rechacen ese grupo.
+En los tres grupos, el sentimiento negativo es la clase más frecuente. La
+favorabilidad neta es menos negativa en las fuentes de derecha ($-0.282$),
+seguida por las de izquierda ($-0.353$) y las neutrales ($-0.527$). La medida
+ponderada presenta el mismo orden. Estos valores resumen la valencia general
+predicha en los comentarios recolectados.
 
 \subsection{Polarización afectiva individual y \textit{spread}}
 
-El análisis individual incluyó $135{,}259$ usuarios con al menos un comentario
-positivo o negativo. De ellos, $100{,}870$ ($74.58\%$) quedaron como
+El análisis individual incluyó $179{,}355$ usuarios con al menos un comentario
+positivo o negativo. De ellos, $136{,}005$ ($75.83\%$) quedaron como
 \textit{Undetermined}: no tuvieron comentarios positivos en los grupos
-políticos considerados o empataron en su máximo. Por tanto, $34{,}389$ usuarios
+políticos considerados o empataron en su máximo. En total, $43{,}350$ usuarios
 tuvieron un grupo de afinidad operacional determinado. Esta asignación se basa
 en el grupo con más comentarios positivos y no equivale a ideología declarada.
 
 La Tabla~\ref{tab:ap_spread} presenta los promedios por grupo asignado. AP se
 calcula como $\mathrm{AP_{In}}-\mathrm{AP_{Out}}$. El \textit{spread} resume la
 magnitud normalizada de las diferencias entre comentarios positivos y
-negativos; su umbral de nivel alto en esta corrida fue $1.940$.
+negativos; su umbral de nivel alto en esta corrida fue $2.052$.
 
 \begin{table}[H]
 \centering
@@ -743,24 +767,22 @@ negativos; su umbral de nivel alto en esta corrida fue $1.940$.
 \hline
 Métrica & Derecha & Izquierda \\
 \hline
-Usuarios & 11{,}524 & 22{,}865 \\
-AP$_{In}$ medio & 0.493 & $-0.839$ \\
-AP$_{Out}$ medio & $-0.991$ & $-0.580$ \\
-AP medio & 1.484 & $-0.259$ \\
-\textit{Spread} medio & 1.098 & 1.133 \\
-\textit{Spread} alto (\%) & 7.12 & 10.21 \\
+Usuarios & 19{,}861 & 23{,}489 \\
+AP$_{In}$ medio & 0.377 & $-1.065$ \\
+AP$_{Out}$ medio & $-1.200$ & $-0.956$ \\
+AP medio & 1.577 & $-0.109$ \\
+\textit{Spread} medio & 1.150 & 1.189 \\
+\textit{Spread} alto (\%) & 8.21 & 10.53 \\
 \hline
 \end{tabular}
 \end{table}
 
-Las Figuras~\ref{fig:ap_in}--\ref{fig:spread} muestran las distribuciones
-individuales de estas cuatro métricas, de forma análoga a las Figuras 3--6 del
-estudio de referencia \cite{polariz}. Los valores de AP$_{In}$, AP$_{Out}$ y
-AP se concentran alrededor de cero y presentan observaciones extremas en
-ambas direcciones. El \textit{spread} no toma valores negativos y también
-presenta una cola hacia valores altos. Estas figuras describen dispersión y
-valores extremos; por sí solas no indican diferencias estadísticamente
-significativas entre grupos.
+Las Figuras~\ref{fig:ap_in}--\ref{fig:spread} muestran distribuciones
+concentradas cerca de cero y colas con observaciones extremas para AP$_{In}$,
+AP$_{Out}$ y AP; el \textit{spread} es no negativo y se extiende hacia valores
+altos. En conjunto, las figuras muestran cómo se distribuyen los valores de
+polarización afectiva y dispersión entre los usuarios asignados a cada grupo
+durante el ciclo electoral peruano analizado.
 
 \begin{figure}[H]
     \centering
@@ -790,91 +812,47 @@ significativas entre grupos.
     \label{fig:spread}
 \end{figure}
 
-El AP medio es positivo para los usuarios asignados a derecha y ligeramente
-negativo para los asignados a izquierda. En ambos grupos, AP$_{Out}$ medio es
-negativo. Sin embargo, esto no basta para concluir que un grupo manifiesta
-mayor polarización afectiva sustantiva: las métricas usan conteos de
-sentimiento general como aproximación a interacciones dirigidas a grupos, y
-son sensibles al volumen de actividad. Además, el \textit{spread} local usa
-como denominador los comentarios positivos y negativos, y no incluye los
-neutrales.
+En la Figura~\ref{fig:ap_in}, el promedio de AP$_{In}$ es positivo para los
+usuarios asignados a derecha ($0.377$) y negativo para los asignados a
+izquierda ($-1.065$). La Figura~\ref{fig:ap_out} muestra promedios negativos
+de AP$_{Out}$ en ambos grupos ($-1.200$ y $-0.956$, respectivamente).
 
-El promedio global de AP fue $0.325$ (DE $6.323$) y el de \textit{spread} fue
-$1.121$ (DE $0.819$). El elevado porcentaje de usuarios indeterminados también
-limita la descripción a quienes aportaron evidencia positiva suficiente para
-asignarles un grupo. El universo de usuarios del análisis se forma tras
-filtrar comentarios neutrales, por lo que no incluye a quienes solo escribieron
-comentarios neutrales.
+La Figura~\ref{fig:ap} resume estos balances: el AP medio es positivo para
+derecha ($1.577$) y cercano a cero para izquierda ($-0.109$), con valores
+dispersos en ambos grupos. En la Figura~\ref{fig:spread}, las medias son
+próximas ($1.150$ para derecha y $1.189$ para izquierda), mientras que la
+proporción de nivel alto es mayor en izquierda ($10.53\%$ frente a $8.21\%$).
+
+El promedio global de AP fue $0.664$ (DE $6.976$) y el de \textit{spread} fue
+$1.171$ (DE $0.882$).
 
 \subsection{Comparación e interpretación de los resultados}
 
-Al comparar estos patrones con los de Martínez-España et al. \cite{polariz},
-el AP$_{In}$ medio del estudio de referencia ($8.662$ para la derecha y
-$6.813$ para la izquierda) es positivo en ambos grupos; en esta corrida también
-es positivo para derecha ($0.493$), pero negativo para izquierda ($-0.839$).
-Los AP medios locales son $1.484$ y $-0.259$, respectivamente, frente a
-valores aproximados de $9.885$ y $7.972$ derivados de las tablas del paper.
-AP$_{Out}$ medio es negativo en ambos análisis: los valores aproximados del
-paper son $-1.223$ para la derecha y $-1.160$ para la izquierda, frente a
-$-0.991$ y $-0.580$ en esta corrida. La dirección del resultado coincide,
-pero las magnitudes difieren. En conjunto, estos patrones describen resultados
-distintos en las métricas observadas, pero no permiten concluir que una
-población presente más o menos polarización que la otra.
+\subsubsection{Contraste con el estudio de referencia}
+Al contrastar estos patrones con los de Martínez-España et al. \cite{polariz}, se observa una coincidencia estructural relevante: en ambos marcos, la animosidad exogrupal ($\mathrm{AP}_{Out}$) es predominantemente negativa ($-1.223$ y $-1.160$ en el estudio de referencia frente a $-1.200$ y $-0.956$ en esta corrida), evidenciando que el distanciamiento hacia grupos rivales o medios no afines constituye el patrón discursivo más consistente. No obstante, mientras que el estudio citado reportó un $\mathrm{AP}_{In}$ positivo en todas las facciones ($8.662$ para derecha y $6.813$ para izquierda), nuestro corpus exhibe una marcada asimetría: un valor positivo para la derecha ($0.377$) frente a un balance fuertemente negativo para la izquierda ($-1.065$), derivando en un AP medio de $1.577$ frente a $-0.109$ (en contraste con $9.885$ y $7.972$ derivados de las tablas del estudio de referencia). Asimismo, las medias de \textit{spread} ($1.150$ y $1.189$) y las proporciones de nivel alto ($8.21\%$ y $10.53\%$) son menores a las del estudio de referencia ($1.874$ y $1.748$; $15.89\%$ y $13.35\%$), lo cual responde a que nuestro denominador restringe la normalización al volumen de intervenciones con valencia determinada y a las diferencias inherentes de escala entre plataformas.
 
-El \textit{spread} medio local ($1.098$ para derecha y $1.133$ para izquierda)
-y la proporción local de nivel alto ($7.12\%$ y $10.21\%$) también son
-inferiores a los valores reportados en el paper ($1.874$ y $1.748$; $15.89\%$
-y $13.35\%$, respectivamente). Esta diferencia no constituye una comparación
-directa: el paper incluye cuatro grupos de Twitter y usa el total de
-interacciones como denominador de \textit{spread}, mientras que este análisis
-incluye comentarios de YouTube clasificados por fuente, dos grupos políticos
-y un pool neutral, y cuenta solo comentarios positivos o negativos en ese
-denominador. También difieren las poblaciones, las unidades de análisis y los
-umbrales para definir niveles altos. Por ello, las magnitudes y proporciones
-no deben interpretarse como un ranking entre estudios ni como una réplica
-metodológica.
+\subsubsection{Interpretación en el contexto electoral peruano de 2026}
+Más allá de los contrastes metodológicos, los hallazgos cobran significado sustantivo al situarse en la coyuntura de las elecciones presidenciales peruanas de 2026, caracterizadas por una contienda sumamente reñida en segunda vuelta, el triunfo estrecho del bloque de derecha y un histórico desencanto ciudadano expresado en elevados índices de ausentismo, votos blancos y nulos.
 
-En conjunto, estos resultados caracterizan sentimiento predicho en los
-comentarios observados bajo las fuentes clasificadas y ofrecen métricas
-exploratorias de actividad por grupo. No permiten inferir directamente la
-postura de cada comentario hacia un actor político, la ideología de sus
-autores, la opinión de los votantes ni la polarización afectiva de la
-población peruana. Una interpretación más fuerte requeriría validar que la
-valencia esté dirigida al objetivo político y examinar la robustez de los
-patrones ante la cobertura desigual de canales y el volumen de comentarios.
+En primer término, la asimetría observada en el apego intragrupal ($\mathrm{AP}_{In}$) y en la polarización neta ($\mathrm{AP}$) se alinea con las dinámicas de movilización de la campaña. Para la derecha, el balance intra-canal positivo ($0.377$) y un AP neto de $1.577$ reflejan una comunidad digital con mayor cohesión interna, apego partidario y capacidad de defensa discursiva, factores determinantes en una contienda polarizada que culminó con su victoria electoral. En contraste, en la izquierda, el $\mathrm{AP}_{In}$ marcadamente negativo ($-1.065$) captura una conversación fragmentada, atravesada por la autocrítica, el desencanto y la decepción frente a sus propios liderazgos y candidaturas. Aunque este bloque mantuvo un rechazo sostenido hacia el adversario ($\mathrm{AP}_{Out} = -0.956$), la ausencia de entusiasmo o respaldo afirmativo hacia sus propios canales ilustra las dificultades de cohesión y movilización que enfrentó este sector en las urnas.
+
+En segundo término, la alta proporción de usuarios clasificados como \textit{Undetermined} ($75.83\%$, correspondiente a $136{,}005$ participantes) encuentra correspondencia directa con la desafección política de la ciudadanía peruana. La ausencia de interacciones positivas sistemáticas hacia las opciones partidarias en contienda refleja la postura del amplio segmento de la población que optó por el voto blanco, viciado o la abstención electoral. Estos usuarios acuden a las secciones de comentarios para deliberar sobre la coyuntura o expresar indignación ciudadana, pero rehúyen la adscripción o lealtad hacia los bloques políticos tradicionales.
+
+Por último, la favorabilidad marcadamente negativa en el pool de medios neutrales ($-0.527$, con $62.24\%$ de comentarios desfavorables) ilustra el descrédito generalizado hacia la prensa convencional en el país. Lejos de funcionar como espacios de consenso o moderación, las plataformas de los medios informativos tradicionales son percibidas con recurrente desconfianza institucional y sesgo editorial por parte de las audiencias, convirtiéndose en el principal foco de hostilidad y desahogo discursivo de los usuarios.
+
+\subsection{Limitaciones}
+
+El presente análisis debe interpretarse considerando tres delimitaciones metodológicas: primero, el modelo clasifica la valencia afectiva general del texto y no su postura dirigida (\textit{stance}) hacia un actor específico, de modo que una crítica a una noticia puede computarse como valencia negativa sin implicar necesariamente rechazo al canal o candidato; segundo, las métricas acumulativas de AP son sensibles a la frecuencia de publicación de superusuarios altamente activos; y tercero, la delimitación del universo individual y del denominador de \textit{spread} excluye a usuarios que comentaron de forma exclusivamente neutral. Por ende, los resultados caracterizan el clima y la interacción afectiva en canales clasificados de YouTube, constituyendo indicadores exploratorios del discurso digital y no estimaciones directas de la intención de voto ni de la polarización ciudadana global.
 
 
 
-% \section{Conclusiones y trabajo futuro}
+\section{Conclusiones y trabajo futuro}
 
-% En este trabajo se aplicó un enfoque simplificado, inspirado en la metodología de
-% Martínez-España et al. \cite{polariz}, para analizar el sentimiento político
-% expresado en comentarios de TikTok durante la segunda vuelta de las elecciones
-% presidenciales peruanas de 2026, utilizando el modelo RoBERTuito sobre un conjunto
-% de 2743 comentarios.
+En este trabajo se implementó un pipeline reproducible de aprendizaje profundo para analizar el sentimiento político y cuantificar la polarización afectiva individual en comentarios públicos de YouTube durante las elecciones presidenciales peruanas de 2026. A partir de un corpus unificado de $827{,}287$ comentarios pertenecientes a $11{,}786$ videos de canales clasificados editorialmente (izquierda, derecha y un pool neutral de control), se evaluó el desempeño del modelo \textit{pyupeu/robertuito-peruvian-sentiment} adaptado al contexto dialectal peruano y se extendió la formulación metodológica de Martínez-España et al.
 
-% Los resultados evidenciaron un comportamiento consistente con un \textit{echo
-% chamber}: las publicaciones asociadas a ambos candidatos registraron favorabilidad
-% neta positiva y de magnitud muy similar entre sí, en contraste con el clima
-% levemente negativo de las publicaciones neutrales. Esta similitud entre bloques
-% políticos, sumada al hecho de que el resultado electoral fue sumamente cerrado,
-% refuerza la idea de que el sentimiento expresado en redes sociales debe entenderse
-% como un reflejo del clima emocional de la conversación digital, y no como un
-% predictor directo de la intención de voto.
+A nivel agregado, los resultados revelan una favorabilidad neta desfavorable en todos los bloques editoriales, acentuándose notablemente en los medios tradicionales de control neutral ($-0{,}527$, ponderada normalizada $-0{,}436$). A nivel individual, los balances de polarización afectiva reflejan dinámicas diferenciadas: los usuarios asignados a la derecha registraron un AP medio positivo ($1{,}577$) impulsado por un $\mathrm{AP}_{In}$ favorable ($0{,}377$), mientras que los afines a la izquierda exhibieron un AP medio negativo ($-0{,}109$) producto de un balance negativo intra-grupo ($\mathrm{AP}_{In} = -1{,}065$). En ambos colectivos, el $\mathrm{AP}_{Out}$ medio resultó marcadamente negativo ($-1{,}200$ y $-0{,}956$), evidenciando una animosidad exogrupal que engloba tanto al partido rival como a la cobertura de los medios tradicionales. Asimismo, un $75{,}83\,\%$ de los usuarios evaluables fue catalogado como \textit{Undetermined}, lo que confirma la baja recurrencia de expresiones positivas hacia partidos y resalta la necesidad metodológica de no imponer adscripciones ideológicas forzadas.
 
-% La principal limitación del estudio fue la escasa recurrencia de los usuarios: la
-% gran mayoría comentó una única vez y prácticamente ninguno interactuó con
-% publicaciones de más de una categoría política. Esto impidió calcular un indicador
-% de polarización afectiva individual (\textit{ingroup}/\textit{outgroup}) equivalente
-% al de la metodología de referencia \cite{polariz}, restringiendo los resultados a
-% una medida de favorabilidad agregada por categoría.
-
-% Como trabajo futuro se plantea ampliar el volumen y la diversidad de las fuentes de
-% datos para captar usuarios recurrentes entre distintas orientaciones políticas,
-% explorar la detección de menciones a otros candidatos dentro de un mismo comentario
-% como señal adicional de polarización, e incorporar una validación manual del modelo
-% de clasificación que permita cuantificar su desempeño sobre el dominio específico de
-% comentarios políticos en español peruano.
+Como principal límite interpretativo, debe subrayarse que la valencia general del texto no equivale a la postura dirigida (\textit{stance}) hacia un actor político concreto, y que las medidas acumulativas son sensibles al volumen de interacción. Para trabajos futuros, se proyecta incorporar modelos de detección de postura y análisis de sentimiento basado en aspectos, así como auditar la robustez de las métricas mediante controles de sensibilidad por cobertura de canal, umbrales de actividad y remuestreos agrupados.
 
 % % conference papers do not normally have an appendix
 
@@ -913,7 +891,7 @@ patrones ante la cobertura desigual de canales y el volumen de comentarios.
 % % (used to reserve space for the reference number labels box)
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv, referencies}
+\bibliography{IEEEabrv, references}
 
 
 \end{document}

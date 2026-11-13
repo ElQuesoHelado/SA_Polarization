@@ -36,6 +36,8 @@ sa-polarization infer-results --message "Nueva inferencia"
 
 `prepare-data` primero sincroniza `neutral.json` desde Kaggle, luego usa canales y periodos de `config/pipeline.toml` y preprocesa izquierda, derecha y neutral. El pool local `neutral_local` (medios neutrales recolectados en YouTube) se une al `neutral.json` canónico y se traduce a `party=neutral` en el preprocesamiento, que además deduplica por `comment_id`. Revisa `AGENTS.md` para el criterio de clasificación de canales: solo entran fuentes con evidencia documentada. Requiere credenciales de YouTube y Kaggle. El grupo de origen `party=neutral` es distinto de la predicción `sentimiento=neutral`. `infer-results` crea una versión del dataset Kaggle con los datos locales, ejecuta el kernel GPU y genera resultados en `outputs/`.
 
+La recolección conserva la caché de comentarios por video y, al reanudar, solo consulta comentarios para videos nuevos o incompletos. `target_total_comments` fija la meta total y `target_group_shares` distribuye esa meta según la composición actual; `max_videos_per_channel` limita cuántos videos recientes de cada canal se revisan dentro del periodo configurado. La meta se evalúa al terminar cada video y puede superarse ligeramente.
+
 Para ejecutar ambas etapas de corrido existe `sa-polarization full-pipeline`. También puedes ejecutar tareas individuales: `collect`, `preprocess`, `data-publish`, `infer` y `analyze`. `data-pull` descarga los JSON/CSV de Kaggle a `data/raw/` y `data/processed/` cuando se quiere trabajar desde una copia local.
 
 ## Prueba de humo

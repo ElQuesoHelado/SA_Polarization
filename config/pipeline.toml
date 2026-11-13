@@ -4,8 +4,11 @@ processed = "data/processed"
 outputs = "outputs"
 
 [youtube]
-max_videos_per_channel = 400
+max_videos_per_channel = 1000
 max_comments_per_video = 2000
+target_total_comments = 1000000
+# Proporciones actuales del corpus por grupo (incluye neutral canónico en neutral_local).
+target_group_shares = { izquierda = 0.4788, derecha = 0.2102, neutral_local = 0.3110 }
 
 [youtube.periods]
 antes = ["2026-01-01T00:00:00Z", "2026-03-31T23:59:59Z"]
