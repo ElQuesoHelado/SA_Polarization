@@ -45,10 +45,16 @@ def build_parser() -> argparse.ArgumentParser:
     smoke.add_argument("--fraction", type=float, help="Fracción de comentarios por archivo (por defecto 0.25)")
     smoke.add_argument("--seed", type=int, help="Semilla de muestreo reproducible")
     smoke.add_argument("--create-dataset", action="store_true", help="Crear el dataset Kaggle privado en la primera ejecución")
+    from .targeted.cli import add_parser
+    add_parser(commands)
     return parser
 
 
 def run_command(args: argparse.Namespace) -> None:
+    if args.command == "targeted":
+        from .targeted.cli import run_command as targeted_command
+        targeted_command(args)
+        return
     config = load_config(args.config)
     if args.command == "collect":
         collect(config)

@@ -1,0 +1,28 @@
+schema_version = 1
+protocol = "targeted-ai-augmentation-v1"
+parent_experiment_id = "development_20261115_v1"
+sampling_seed = 57
+sample_comments = 2000
+ai_weight = 0.25
+maximum_fits = 3
+final_seeds = [42, 43, 44]
+learning_rates = [0.00001]
+objectives = ["ai_augmented"]
+maximum_epochs = 8
+patience = 2
+effective_batch_size = 16
+weight_decay = 0.01
+gradient_clip = 1.0
+
+[quotas]
+left_only = 800
+right_only = 600
+both_blocks = 400
+unknown_only = 200
+
+[[models]]
+id = "beto_ai_augmented"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "d1c9c4565c9d6731e57ed7f027b802697bad861e"
+maximum_tokens = 512
+physical_batch_size = 4

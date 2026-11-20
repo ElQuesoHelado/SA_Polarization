@@ -31,11 +31,15 @@ Estudio de Twitter durante las elecciones regionales de Murcia (2023). Combina u
 - **Figura 6:** `spread` no negativo, rango más compacto, con un valor extremo de izquierda.
 - **Estadística:** ANOVA significativo y post hoc Bonferroni; derecha difiere de los otros grupos, los otros tres no difieren entre sí. **El texto no reporta F ni valores p.**
 
+## Actualización editorial 2026-11-18
+
+El manuscrito vigente usa valoraciones dirigidas anotadas, afinidad en A y evaluación en B; el sentimiento general por fuente ya no es su resultado principal. Spread usa eventos comentario–bloque evaluables de B y gap es el contraste primario. Las observaciones históricas de abajo se conservan como límites del análisis anterior, no como descripción de la nueva ejecución. Las diferencias de denominador y selección impiden equivalencia numérica con esta referencia.
+
 ## Límites para nuestro trabajo
 
 - **Constructo:** mide interacción dirigida a grupos/partidos en Twitter mediante sentimiento; nuestro corpus son comentarios de YouTube asignados al grupo del canal, no postura dirigida a un objetivo.
 - **Grupos:** cuatro familias partidarias españolas; Perú no tiene equivalentes directos de "derecha radical"/"izquierda radical".
-- **Denominador de `spread`:** el paper usa el total de interacciones (incluye neutrales); el pipeline local usa solo comentarios positive/negative.
+- **Denominador de `spread`:** el paper usa el total de interacciones (incluye neutrales); el pipeline histórico actualizado usa todos los comentarios, incluidos neutrales. `targeted-v1` tendrá eventos políticos evaluables comentario–bloque como denominador, por lo que no es numéricamente equivalente.
 - **`neutral`:** en el pipeline se incluye como grupo externo para AP_Out y `spread`; en el paper los grupos externos son los otros tres partidos.
 - **Muestra y plataforma:** Twitter, Murcia 2023, etiquetado manual de 78 entidades; YouTube, Perú 2026, etiquetas automáticas.
 - **Comparaciones:** sus cifras no son un benchmark para Perú; usar solo como referencia conceptual y metodológica.

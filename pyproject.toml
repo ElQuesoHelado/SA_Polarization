@@ -18,6 +18,7 @@ dependencies = [
 [project.optional-dependencies]
 kaggle = ["kaggle>=1.7"]
 inference = ["torch>=2.2", "transformers>=4.40", "huggingface-hub>=0.23"]
+targeted-training = ["torch>=2.2", "transformers>=4.40,<5", "huggingface-hub>=0.23", "sentencepiece>=0.2", "protobuf>=4"]
 
 [project.scripts]
 sa-polarization = "polarization_pipeline.cli:main"

@@ -1,0 +1,2181 @@
+{
+  "schema_version": 1,
+  "version": "2026-11-15-v2",
+  "status": "reviewed",
+  "scope": "Menciones explícitas; alias revisados con desarrollo original exclusivamente. Identidades sin evidencia de bloque permanecen unknown. Véase docs/referencias/registro-actores-v2.md.",
+  "targets": [
+    {
+      "target_id": "fuerza_popular",
+      "name": "Fuerza Popular",
+      "aliases": [
+        "Fuerza Popular",
+        "FP"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext",
+        "https://fuerzapopular.com.pe/conocenos/estructura/",
+        "https://fuerzapopular.com.pe/wp-content/uploads/2026/02/PDG_2026-2031.pdf"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "keiko_fujimori",
+      "name": "Keiko Fujimori",
+      "aliases": [
+        "Keiko Fujimori",
+        "Keiko",
+        "Keyko",
+        "Keico",
+        "Kieko",
+        "Kaiko",
+        "señora K",
+        "sra K",
+        "sra KK",
+        "sraKk",
+        "la K",
+        "Keikorrata",
+        "Keikorrupta",
+        "sra Fujimori"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext",
+        "https://fuerzapopular.com.pe/conocenos/estructura/",
+        "https://fuerzapopular.com.pe/wp-content/uploads/2026/02/PDG_2026-2031.pdf"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "peru_libre",
+      "name": "Perú Libre",
+      "aliases": [
+        "Perú Libre"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://perulibre.pe/wp-content/uploads/2020/09/Libro-Descentralizacion-Revolucion-de-Estos-Tiempos.pdf",
+        "https://perulibre.pe/carta-abierta-para-vladimir-cerron/"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "vladimir_cerron",
+      "name": "Vladimir Cerrón",
+      "aliases": [
+        "Vladimir Cerrón",
+        "Cerrón",
+        "Serron",
+        "Cerrones"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://perulibre.pe/wp-content/uploads/2020/09/Libro-Descentralizacion-Revolucion-de-Estos-Tiempos.pdf",
+        "https://perulibre.pe/carta-abierta-para-vladimir-cerron/"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "juntos_por_el_peru",
+      "name": "Juntos por el Perú",
+      "aliases": [
+        "Juntos por el Perú",
+        "JP",
+        "J P",
+        "Juntosp por el Perú",
+        "Juntos x el el Perú"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.robertosanchezjp.com/",
+        "https://www.eleccionclara.pe/assets/planes/36.pdf",
+        "https://pcp.pe/el-partido-y-el-frente-unico/"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "roberto_sanchez",
+      "name": "Roberto Sánchez",
+      "aliases": [
+        "Roberto Sánchez",
+        "Sánchez",
+        "RobertoSanchez",
+        "Roberto Sánchez Palomino",
+        "Sanches",
+        "Ssnchez",
+        "Sanchaez",
+        "Roberto Sanschez",
+        "Robert Sanchez"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.robertosanchezjp.com/",
+        "https://www.eleccionclara.pe/assets/planes/36.pdf",
+        "https://pcp.pe/el-partido-y-el-frente-unico/"
+      ],
+      "note": "El apellido aislado es candidato, no identificación infalible; evaluar homónimos en la anotación.",
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "partido_comunista_peruano",
+      "name": "Partido Comunista Peruano",
+      "aliases": [
+        "Partido Comunista Peruano"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://pcp.pe/quienes-somos/"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "pedro_castillo",
+      "name": "Pedro Castillo",
+      "aliases": [
+        "Pedro Castillo",
+        "Castillo"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "note": "La candidatura histórica no basta para asignar un bloque vigente sin revisión específica. Auditar el apellido como sustantivo común.",
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "rafael_lopez_aliaga",
+      "name": "Rafael López Aliaga",
+      "aliases": [
+        "Rafael López Aliaga",
+        "López Aliaga",
+        "RLA",
+        "Porky",
+        "Porcky",
+        "Porki",
+        "Porkis",
+        "Porkys",
+        "Porkyyyy",
+        "Porkyria",
+        "L.Aliaga",
+        "Aliaga"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext",
+        "https://renovacionpopular.com.pe/wp-content/uploads/2025/12/downloadfile-1.pdf",
+        "https://plataformahistorico.jne.gob.pe/Tmp/Proyectos/737976.pdf"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "renovacion_popular",
+      "name": "Renovación Popular",
+      "aliases": [
+        "Renovación Popular",
+        "RP",
+        "Renovación Medieval"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext",
+        "https://renovacionpopular.com.pe/wp-content/uploads/2025/12/downloadfile-1.pdf",
+        "https://plataformahistorico.jne.gob.pe/Tmp/Proyectos/737976.pdf"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "avanza_pais",
+      "name": "Avanza País",
+      "aliases": [
+        "Avanza País"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://es.wikipedia.org/wiki/Avanza_Pa%C3%ADs_-_Partido_de_Integraci%C3%B3n_Social"
+      ],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "dina_boluarte",
+      "name": "Dina Boluarte",
+      "aliases": [
+        "Dina Boluarte",
+        "Boluarte",
+        "Dina"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "note": "No trasladar automáticamente afiliaciones anteriores ni etiquetas de los canales.",
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "alfonso_lopez_chau",
+      "name": "Alfonso López Chau",
+      "aliases": [
+        "Alfonso López Chau",
+        "López Chau",
+        "López-Chau",
+        "López Chao",
+        "López Miau",
+        "López Miauuuu",
+        "López Mia"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.atv.pe/noticia/candidato-presidencial-lopez-chau-reafirma-su-postura-de-izquierda-en-el-cade-soy-cristiano-y-soy-socialista/"
+      ],
+      "note": "Clasificación sustentada en autodefinición citada; auditar antes de congelar.",
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "veronika_mendoza",
+      "name": "Verónika Mendoza",
+      "aliases": [
+        "Verónika Mendoza",
+        "Verónika",
+        "Verónica Mendoza"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://revistas.onpe.gob.pe/index.php/elecciones/article/download/167/698?inline=1",
+        "https://es.wikipedia.org/wiki/Ver%C3%B3nika_Mendoza"
+      ],
+      "note": "Verificar vigencia del agrupamiento en 2026, sin transferir automáticamente coaliciones electorales históricas.",
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "jorge_nieto",
+      "name": "Jorge Nieto",
+      "aliases": [
+        "Jorge Nieto",
+        "Nieto",
+        "Nietooo"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "carlos_alvarez",
+      "name": "Carlos Álvarez",
+      "aliases": [
+        "Carlos Álvarez",
+        "Álvarez",
+        "Alvares",
+        "Carlos Alvares"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "ricardo_belmont",
+      "name": "Ricardo Belmont",
+      "aliases": [
+        "Ricardo Belmont",
+        "Belmont",
+        "Ricardo Belmond",
+        "Ricardo Bellmont",
+        "Bermont"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "jose_luna",
+      "name": "José Luna",
+      "aliases": [
+        "José Luna",
+        "Pepe Luna",
+        "Luna"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "antauro_humala",
+      "name": "Antauro Humala",
+      "aliases": [
+        "Antauro Humala",
+        "Antauro"
+      ],
+      "entity_type": "political_actor",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Alias nominales explícitos; no añadir pronombres, insultos genéricos ni transferir la identidad desde el título."
+    },
+    {
+      "target_id": "apra",
+      "name": "APRA",
+      "annotation_ids": [
+        "unregistered:APRA"
+      ],
+      "aliases": [
+        "APRA"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "abimael_guzman",
+      "name": "Abimael Guzmán",
+      "annotation_ids": [
+        "unregistered:Abimael Guzmán"
+      ],
+      "aliases": [
+        "Abimael Guzmán",
+        "Abimael"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "absalon_vasquez",
+      "name": "Absalón Vásquez",
+      "annotation_ids": [
+        "unregistered:Absalón Vásquez"
+      ],
+      "aliases": [
+        "Absalón Vásquez",
+        "Absalón"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "accion_popular",
+      "name": "Acción Popular",
+      "annotation_ids": [
+        "unregistered:Acción Popular"
+      ],
+      "aliases": [
+        "Acción Popular"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ahora_nacion",
+      "name": "Ahora Nación",
+      "annotation_ids": [
+        "unregistered:Ahora Nación"
+      ],
+      "aliases": [
+        "Ahora Nación"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "alan_garcia",
+      "name": "Alan García",
+      "annotation_ids": [
+        "unregistered:Alan García"
+      ],
+      "aliases": [
+        "Alan García",
+        "Alan Damián"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "alberto_fujimori",
+      "name": "Alberto Fujimori",
+      "annotation_ids": [
+        "unregistered:Alberto Fujimori"
+      ],
+      "aliases": [
+        "Alberto Fujimori"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "alejandro_toledo",
+      "name": "Alejandro Toledo",
+      "annotation_ids": [
+        "unregistered:Alejandro Toledo"
+      ],
+      "aliases": [
+        "Alejandro Toledo",
+        "Toledo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "alex_gonzales",
+      "name": "Alex Gonzales",
+      "annotation_ids": [
+        "unregistered:Alex Gonzales"
+      ],
+      "aliases": [
+        "Alex Gonzales"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "alianza_para_el_progreso",
+      "name": "Alianza para el Progreso",
+      "annotation_ids": [
+        "unregistered:Alianza para el Progreso"
+      ],
+      "aliases": [
+        "Alianza para el Progreso",
+        "APP"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "arturo_fernandez",
+      "name": "Arturo Fernández",
+      "annotation_ids": [
+        "unregistered:Arturo Fernández"
+      ],
+      "aliases": [
+        "Arturo Fernández"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "augusto_penaloza",
+      "name": "Augusto Peñaloza",
+      "annotation_ids": [
+        "unregistered:Augusto Peñaloza"
+      ],
+      "aliases": [
+        "Augusto Peñaloza",
+        "Agusto Peñaloza",
+        "Tío Rockefeller"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "augusto_pinochet",
+      "name": "Augusto Pinochet",
+      "annotation_ids": [
+        "unregistered:Augusto Pinochet"
+      ],
+      "aliases": [
+        "Augusto Pinochet"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "avanza_peru",
+      "name": "Avanza Perú",
+      "annotation_ids": [
+        "unregistered:Avanza Perú"
+      ],
+      "aliases": [
+        "Avanza Perú"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "brigida_curo",
+      "name": "Brígida Curó",
+      "annotation_ids": [
+        "unregistered:Brígida Curó"
+      ],
+      "aliases": [
+        "Brígida Curó"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "carla_garcia",
+      "name": "Carla García",
+      "annotation_ids": [
+        "unregistered:Carla García"
+      ],
+      "aliases": [
+        "Carla García"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "carlos_bruce",
+      "name": "Carlos Bruce",
+      "annotation_ids": [
+        "unregistered:Carlos Bruce"
+      ],
+      "aliases": [
+        "Carlos Bruce",
+        "Bruce"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "carlos_espa",
+      "name": "Carlos Espá",
+      "annotation_ids": [
+        "unregistered:Carlos Espá"
+      ],
+      "aliases": [
+        "Carlos Espá",
+        "Espá",
+        "Spá"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "carlos_jaico",
+      "name": "Carlos Jaico",
+      "annotation_ids": [
+        "unregistered:Carlos Jaico"
+      ],
+      "aliases": [
+        "Carlos Jaico",
+        "Jaico"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "charlie_carrasco",
+      "name": "Charlie Carrasco",
+      "annotation_ids": [
+        "unregistered:Charlie Carrasco"
+      ],
+      "aliases": [
+        "Charlie Carrasco"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "cuellos_blancos",
+      "name": "Cuellos Blancos",
+      "annotation_ids": [
+        "unregistered:Cuellos Blancos"
+      ],
+      "aliases": [
+        "Cuellos Blancos"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "cesar_acuna",
+      "name": "César Acuña",
+      "annotation_ids": [
+        "unregistered:César Acuña"
+      ],
+      "aliases": [
+        "César Acuña",
+        "Acuña",
+        "Acuñista"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "dionisio_romero",
+      "name": "Dionisio Romero",
+      "annotation_ids": [
+        "unregistered:Dionisio Romero"
+      ],
+      "aliases": [
+        "Dionisio Romero"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "edward_malaga",
+      "name": "Edward Málaga",
+      "annotation_ids": [
+        "unregistered:Edward Málaga"
+      ],
+      "aliases": [
+        "Edward Málaga",
+        "Málaga"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fernando_belaunde_terry",
+      "name": "Fernando Belaúnde Terry",
+      "annotation_ids": [
+        "unregistered:Fernando Belaúnde Terry"
+      ],
+      "aliases": [
+        "Fernando Belaúnde Terry"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fernando_olivera",
+      "name": "Fernando Olivera",
+      "annotation_ids": [
+        "unregistered:Fernando Olivera"
+      ],
+      "aliases": [
+        "Fernando Olivera",
+        "Olivera",
+        "Popy",
+        "Popy Oliveira"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fernando_rospigliosi",
+      "name": "Fernando Rospigliosi",
+      "annotation_ids": [
+        "unregistered:Fernando Rospigliosi"
+      ],
+      "aliases": [
+        "Fernando Rospigliosi",
+        "Rospulgoso",
+        "Rospiglosi"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "franco_vidal",
+      "name": "Franco Vidal",
+      "annotation_ids": [
+        "unregistered:Franco Vidal"
+      ],
+      "aliases": [
+        "Franco Vidal",
+        "Franquito Vidal"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "guido_bellido",
+      "name": "Guido Bellido",
+      "annotation_ids": [
+        "unregistered:Guido Bellido"
+      ],
+      "aliases": [
+        "Guido Bellido",
+        "Bellido"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "harvey_colchado",
+      "name": "Harvey Colchado",
+      "annotation_ids": [
+        "unregistered:Harvey Colchado"
+      ],
+      "aliases": [
+        "Harvey Colchado",
+        "Colchado"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "hernando_de_soto",
+      "name": "Hernando de Soto",
+      "annotation_ids": [
+        "unregistered:Hernando de Soto"
+      ],
+      "aliases": [
+        "Hernando de Soto",
+        "Desoto"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "iber_maravi",
+      "name": "Iber Maraví",
+      "annotation_ids": [
+        "unregistered:Iber Maraví"
+      ],
+      "aliases": [
+        "Iber Maraví",
+        "Maraví"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ilich_lopez",
+      "name": "Ilich López",
+      "annotation_ids": [
+        "unregistered:Ilich López"
+      ],
+      "aliases": [
+        "Ilich López"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "indira_huilca",
+      "name": "Indira Huilca",
+      "annotation_ids": [
+        "unregistered:Indira Huilca"
+      ],
+      "aliases": [
+        "Indira Huilca",
+        "Indira"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "javier_diez_canseco",
+      "name": "Javier Diez Canseco",
+      "annotation_ids": [
+        "unregistered:Javier Diez Canseco"
+      ],
+      "aliases": [
+        "Javier Diez Canseco"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "jorge_montoya",
+      "name": "Jorge Montoya",
+      "annotation_ids": [
+        "unregistered:Jorge Montoya"
+      ],
+      "aliases": [
+        "Jorge Montoya",
+        "Montoya"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "jorge_del_castillo",
+      "name": "Jorge del Castillo",
+      "annotation_ids": [
+        "unregistered:Jorge del Castillo"
+      ],
+      "aliases": [
+        "Jorge del Castillo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "jose_jeri",
+      "name": "José Jerí",
+      "annotation_ids": [
+        "unregistered:José Jerí"
+      ],
+      "aliases": [
+        "José Jerí",
+        "Jerí",
+        "Pajerín",
+        "Pajeri",
+        "Jerir",
+        "Pa Jerí"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "jose_maria_balcazar",
+      "name": "José María Balcázar",
+      "annotation_ids": [
+        "unregistered:José María Balcázar"
+      ],
+      "aliases": [
+        "José María Balcázar",
+        "Balcázar"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "jose_williams",
+      "name": "José Williams",
+      "annotation_ids": [
+        "unregistered:José Williams"
+      ],
+      "aliases": [
+        "José Williams"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "juan_sotomayor",
+      "name": "Juan Sotomayor",
+      "annotation_ids": [
+        "unregistered:Juan Sotomayor"
+      ],
+      "aliases": [
+        "Juan Sotomayor"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "lilia_paredes",
+      "name": "Lilia Paredes",
+      "annotation_ids": [
+        "unregistered:Lilia Paredes"
+      ],
+      "aliases": [
+        "Lilia Paredes"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "lina_sanchez",
+      "name": "Lina Sánchez",
+      "annotation_ids": [
+        "unregistered:Lina Sánchez"
+      ],
+      "aliases": [
+        "Lina Sánchez"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "los_dinamicos_del_centro",
+      "name": "Los Dinámicos del Centro",
+      "annotation_ids": [
+        "unregistered:Los Dinámicos del Centro"
+      ],
+      "aliases": [
+        "Los Dinámicos del Centro",
+        "Dinámicos del Centro"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "lourdes_alcorta",
+      "name": "Lourdes Alcorta",
+      "annotation_ids": [
+        "unregistered:Lourdes Alcorta"
+      ],
+      "aliases": [
+        "Lourdes Alcorta",
+        "Alcorta"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "lucho_dayer",
+      "name": "Lucho Dayer",
+      "annotation_ids": [
+        "unregistered:Lucho Dayer"
+      ],
+      "aliases": [
+        "Lucho Dayer"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "luis_alberto_sanchez",
+      "name": "Luis Alberto Sánchez",
+      "annotation_ids": [
+        "unregistered:Luis Alberto Sánchez"
+      ],
+      "aliases": [
+        "Luis Alberto Sánchez",
+        "Alberto Sanchez"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "luis_galarreta",
+      "name": "Luis Galarreta",
+      "annotation_ids": [
+        "unregistered:Luis Galarreta"
+      ],
+      "aliases": [
+        "Luis Galarreta",
+        "Galarreta"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "marco_miyashiro",
+      "name": "Marco Miyashiro",
+      "annotation_ids": [
+        "unregistered:Marco Miyashiro"
+      ],
+      "aliases": [
+        "Marco Miyashiro",
+        "Miyashiro"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "marisol_perez_tello",
+      "name": "Marisol Pérez Tello",
+      "annotation_ids": [
+        "unregistered:Marisol Pérez Tello"
+      ],
+      "aliases": [
+        "Marisol Pérez Tello",
+        "Pérez Tello",
+        "Marisol"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "martha_moyano",
+      "name": "Martha Moyano",
+      "annotation_ids": [
+        "unregistered:Martha Moyano"
+      ],
+      "aliases": [
+        "Martha Moyano",
+        "Moyano"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "martin_vizcarra",
+      "name": "Martín Vizcarra",
+      "annotation_ids": [
+        "unregistered:Martín Vizcarra"
+      ],
+      "aliases": [
+        "Martín Vizcarra",
+        "Vizcarra",
+        "Vizcarrata",
+        "Vizcarratas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "maria_teresa_cabrera",
+      "name": "María Teresa Cabrera",
+      "annotation_ids": [
+        "unregistered:María Teresa Cabrera"
+      ],
+      "aliases": [
+        "María Teresa Cabrera"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "mesias_guevara",
+      "name": "Mesías Guevara",
+      "annotation_ids": [
+        "unregistered:Mesías Guevara"
+      ],
+      "aliases": [
+        "Mesías Guevara",
+        "Mesías"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "miguel_torres",
+      "name": "Miguel Torres",
+      "annotation_ids": [
+        "unregistered:Miguel Torres"
+      ],
+      "aliases": [
+        "Miguel Torres",
+        "Miky Torres"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "movadef",
+      "name": "Movadef",
+      "annotation_ids": [
+        "unregistered:Movadef"
+      ],
+      "aliases": [
+        "Movadef"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ollanta_humala",
+      "name": "Ollanta Humala",
+      "annotation_ids": [
+        "unregistered:Ollanta Humala"
+      ],
+      "aliases": [
+        "Ollanta Humala"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "partido_civico_obras",
+      "name": "Partido Cívico Obras",
+      "annotation_ids": [
+        "unregistered:Partido Cívico Obras"
+      ],
+      "aliases": [
+        "Partido Cívico Obras",
+        "Partido Obras"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "partido_democrata_verde",
+      "name": "Partido Demócrata Verde",
+      "annotation_ids": [
+        "unregistered:Partido Demócrata Verde"
+      ],
+      "aliases": [
+        "Partido Demócrata Verde",
+        "Partido Verde"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "partido_morado",
+      "name": "Partido Morado",
+      "annotation_ids": [
+        "unregistered:Partido Morado"
+      ],
+      "aliases": [
+        "Partido Morado"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "partido_del_buen_gobierno",
+      "name": "Partido del Buen Gobierno",
+      "annotation_ids": [
+        "unregistered:Partido del Buen Gobierno"
+      ],
+      "aliases": [
+        "Partido del Buen Gobierno",
+        "Buen Gobierno"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "patricia_chirinos",
+      "name": "Patricia Chirinos",
+      "annotation_ids": [
+        "unregistered:Patricia Chirinos"
+      ],
+      "aliases": [
+        "Patricia Chirinos",
+        "Chirinos"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "pedro_francke",
+      "name": "Pedro Francke",
+      "annotation_ids": [
+        "unregistered:Pedro Francke"
+      ],
+      "aliases": [
+        "Pedro Francke",
+        "Francke"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "pedro_pablo_kuczynski",
+      "name": "Pedro Pablo Kuczynski",
+      "annotation_ids": [
+        "unregistered:Pedro Pablo Kuczynski"
+      ],
+      "aliases": [
+        "Pedro Pablo Kuczynski",
+        "PPK"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "peru_moderno",
+      "name": "Perú Moderno",
+      "annotation_ids": [
+        "unregistered:Perú Moderno"
+      ],
+      "aliases": [
+        "Perú Moderno"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "phillip_butters",
+      "name": "Phillip Butters",
+      "annotation_ids": [
+        "unregistered:Phillip Butters"
+      ],
+      "aliases": [
+        "Phillip Butters",
+        "Butters",
+        "Brutters"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "piero_corvetto",
+      "name": "Piero Corvetto",
+      "annotation_ids": [
+        "unregistered:Piero Corvetto"
+      ],
+      "aliases": [
+        "Piero Corvetto",
+        "Corvetto",
+        "Corveto"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "podemos_peru",
+      "name": "Podemos Perú",
+      "annotation_ids": [
+        "unregistered:Podemos Perú"
+      ],
+      "aliases": [
+        "Podemos Perú"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ramon_ramirez_erazo",
+      "name": "Ramón Ramírez Erazo",
+      "annotation_ids": [
+        "unregistered:Ramón Ramírez Erazo"
+      ],
+      "aliases": [
+        "Ramón Ramírez Erazo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "raul_noblecilla",
+      "name": "Raúl Noblecilla",
+      "annotation_ids": [
+        "unregistered:Raúl Noblecilla"
+      ],
+      "aliases": [
+        "Raúl Noblecilla",
+        "Noblecilla"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "renzo_reggiardo",
+      "name": "Renzo Reggiardo",
+      "annotation_ids": [
+        "unregistered:Renzo Reggiardo"
+      ],
+      "aliases": [
+        "Renzo Reggiardo",
+        "Reggiardo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "roberto_burneo",
+      "name": "Roberto Burneo",
+      "annotation_ids": [
+        "unregistered:Roberto Burneo"
+      ],
+      "aliases": [
+        "Roberto Burneo",
+        "Burneo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ronald_atencio",
+      "name": "Ronald Atencio",
+      "annotation_ids": [
+        "unregistered:Ronald Atencio"
+      ],
+      "aliases": [
+        "Ronald Atencio"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "sendero_luminoso",
+      "name": "Sendero Luminoso",
+      "annotation_ids": [
+        "unregistered:Sendero Luminoso"
+      ],
+      "aliases": [
+        "Sendero Luminoso",
+        "Sendero",
+        "Cenderistas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "sigrid_bazan",
+      "name": "Sigrid Bazán",
+      "annotation_ids": [
+        "unregistered:Sigrid Bazán"
+      ],
+      "aliases": [
+        "Sigrid Bazán",
+        "Sigrid"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "somos_peru",
+      "name": "Somos Perú",
+      "annotation_ids": [
+        "unregistered:Somos Perú"
+      ],
+      "aliases": [
+        "Somos Perú"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "susel_paredes",
+      "name": "Susel Paredes",
+      "annotation_ids": [
+        "unregistered:Susel Paredes"
+      ],
+      "aliases": [
+        "Susel Paredes",
+        "Susel"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "union_por_el_peru",
+      "name": "Unión por el Perú",
+      "annotation_ids": [
+        "unregistered:Unión por el Perú"
+      ],
+      "aliases": [
+        "Unión por el Perú"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "vladimiro_montesinos",
+      "name": "Vladimiro Montesinos",
+      "annotation_ids": [
+        "unregistered:Vladimiro Montesinos"
+      ],
+      "aliases": [
+        "Vladimiro Montesinos",
+        "Montesinos",
+        "Montesanos"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "wolfgang_grozo",
+      "name": "Wolfgang Grozo",
+      "annotation_ids": [
+        "unregistered:Wolfgang Grozo"
+      ],
+      "aliases": [
+        "Wolfgang Grozo",
+        "Grozo",
+        "Wolfgang"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "yonhy_lescano",
+      "name": "Yonhy Lescano",
+      "annotation_ids": [
+        "unregistered:Yonhy Lescano"
+      ],
+      "aliases": [
+        "Yonhy Lescano",
+        "Lescano",
+        "Jhony Lescano",
+        "Jnon Lescano"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "acunismo",
+      "name": "acuñismo",
+      "annotation_ids": [
+        "unregistered:acuñismo"
+      ],
+      "aliases": [
+        "acuñismo",
+        "acuñistas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "capitalismo",
+      "name": "capitalismo",
+      "annotation_ids": [
+        "unregistered:capitalismo"
+      ],
+      "aliases": [
+        "capitalismo"
+      ],
+      "entity_type": "ideology",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "castillismo",
+      "name": "castillismo",
+      "annotation_ids": [
+        "unregistered:castillismo"
+      ],
+      "aliases": [
+        "castillismo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "caviares",
+      "name": "caviares",
+      "annotation_ids": [
+        "unregistered:caviares"
+      ],
+      "aliases": [
+        "caviares",
+        "cabiares",
+        "caviar"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "comunismo",
+      "name": "comunismo",
+      "annotation_ids": [
+        "unregistered:comunismo"
+      ],
+      "aliases": [
+        "comunismo"
+      ],
+      "entity_type": "ideology",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "comunistas",
+      "name": "comunistas",
+      "annotation_ids": [
+        "unregistered:comunistas"
+      ],
+      "aliases": [
+        "comunistas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "derecha",
+      "name": "derecha",
+      "annotation_ids": [
+        "unregistered:derecha"
+      ],
+      "aliases": [
+        "derecha",
+        "DBA"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "derecha_catolica",
+      "name": "derecha católica",
+      "annotation_ids": [
+        "unregistered:derecha católica"
+      ],
+      "aliases": [
+        "derecha católica"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "derecha_evangelica",
+      "name": "derecha evangélica",
+      "annotation_ids": [
+        "unregistered:derecha evangélica"
+      ],
+      "aliases": [
+        "derecha evangélica"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "extrema_derecha",
+      "name": "extrema derecha",
+      "annotation_ids": [
+        "unregistered:extrema derecha"
+      ],
+      "aliases": [
+        "extrema derecha"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "familia_acuna",
+      "name": "familia Acuña",
+      "annotation_ids": [
+        "unregistered:familia Acuña"
+      ],
+      "aliases": [
+        "familia Acuña",
+        "los Acuña",
+        "Acuñas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "familia_fujimori",
+      "name": "familia Fujimori",
+      "annotation_ids": [
+        "unregistered:familia Fujimori"
+      ],
+      "aliases": [
+        "familia Fujimori"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fujiaprismo",
+      "name": "fujiaprismo",
+      "annotation_ids": [
+        "unregistered:fujiaprismo"
+      ],
+      "aliases": [
+        "fujiaprismo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fujicerronismo",
+      "name": "fujicerronismo",
+      "annotation_ids": [
+        "unregistered:fujicerronismo"
+      ],
+      "aliases": [
+        "fujicerronismo"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fujimontesinismo",
+      "name": "fujimontesinismo",
+      "annotation_ids": [
+        "unregistered:fujimontesinismo"
+      ],
+      "aliases": [
+        "fujimontesinismo",
+        "fujimontesinista",
+        "fujimontesinistas"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "fujimorismo",
+      "name": "fujimorismo",
+      "annotation_ids": [
+        "unregistered:fujimorismo"
+      ],
+      "aliases": [
+        "fujimorismo",
+        "fujimoristas",
+        "fujirratas",
+        "fujiratas",
+        "fujis",
+        "fujimorato"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext",
+        "https://fuerzapopular.com.pe/wp-content/uploads/2026/02/PDG_2026-2031.pdf"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "izquierda",
+      "name": "izquierda",
+      "annotation_ids": [
+        "unregistered:izquierda"
+      ],
+      "aliases": [
+        "izquierda",
+        "izquierdas",
+        "izquierdistas",
+        "izquierdismo",
+        "zurdos",
+        "rojetes",
+        "surdos",
+        "isquierda",
+        "izmierda"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "izquierda_caviar",
+      "name": "izquierda caviar",
+      "annotation_ids": [
+        "unregistered:izquierda caviar"
+      ],
+      "aliases": [
+        "izquierda caviar"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "izquierda_extrema",
+      "name": "izquierda extrema",
+      "annotation_ids": [
+        "unregistered:izquierda extrema"
+      ],
+      "aliases": [
+        "izquierda extrema"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "izquierda_radical",
+      "name": "izquierda radical",
+      "annotation_ids": [
+        "unregistered:izquierda radical"
+      ],
+      "aliases": [
+        "izquierda radical"
+      ],
+      "entity_type": "political_group",
+      "target_group": "izquierda",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "libertarios_lorchos",
+      "name": "libertarios lorchos",
+      "annotation_ids": [
+        "unregistered:libertarios lorchos"
+      ],
+      "aliases": [
+        "libertarios lorchos"
+      ],
+      "entity_type": "unresolved_reference",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "nacionalismo",
+      "name": "nacionalismo",
+      "annotation_ids": [
+        "unregistered:nacionalismo"
+      ],
+      "aliases": [
+        "nacionalismo"
+      ],
+      "entity_type": "ideology",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "progresismo",
+      "name": "progresismo",
+      "annotation_ids": [
+        "unregistered:progresismo"
+      ],
+      "aliases": [
+        "progresismo",
+        "progres"
+      ],
+      "entity_type": "ideology",
+      "target_group": "unknown",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    },
+    {
+      "target_id": "ultraderecha",
+      "name": "ultraderecha",
+      "annotation_ids": [
+        "unregistered:ultraderecha"
+      ],
+      "aliases": [
+        "ultraderecha"
+      ],
+      "entity_type": "political_group",
+      "target_group": "derecha",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-06-30",
+      "sources": [
+        "https://www.scielo.org.pe/scielo.php?pid=S2617-22912024000200236&script=sci_arttext"
+      ],
+      "review_note": "Identidad literal de desarrollo; bloque unknown salvo evidencia explícita. No equivale a validar cargo, afiliación ni identidad más específica."
+    }
+  ],
+  "matching": {
+    "version": 2,
+    "flexible_whitespace": true,
+    "longest_mention": true,
+    "ignore_usernames": true
+  },
+  "review": {
+    "date": "2026-11-15",
+    "reviewer": "agent",
+    "source": "original_train_validation_only",
+    "identity_rule": "literal_name_or_documented_identity_only",
+    "unknown_policy": "No inferir bloque por canal, insulto ni afiliación histórica.",
+    "unresolved_not_extracted": [
+      "allison",
+      "bobbio",
+      "caller",
+      "diez_canseco",
+      "fujimori_ambiguo",
+      "grosso",
+      "humala_ambiguo",
+      "perez",
+      "radicales",
+      "rubio",
+      "susana",
+      "tudela"
+    ]
+  }
+}

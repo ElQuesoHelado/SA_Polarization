@@ -1,0 +1,38 @@
+schema_version = 1
+method_version = "targeted-v2"
+sampling_split_seed = 43
+reuse_reviewed_development = true
+seed = 42
+source_config = "config/pipeline.toml"
+input_csv = "outputs/datos_clasificados.csv"
+workspace = "data/targeted"
+outputs = "outputs/targeted"
+registry = "config/political_targets_v2.json"
+base_model = "pysentimiento/robertuito-base-uncased"
+ner_model = "pysentimiento/robertuito-ner"
+model_seeds = [42, 43, 44]
+bootstrap_iterations = 2000
+permutations = 999
+annotation_comments = 2000
+annotation_replies = 400
+daily_api_budget = 2500
+panel_videos_per_channel_month = 2
+minimum_positive_videos = 2
+affinity_positive_share = 0.6666666666666666
+evaluation_min_interactions = 3
+evaluation_min_videos = 2
+
+[quality]
+kappa = 0.70
+target_precision = 0.90
+target_recall = 0.80
+macro_f1 = 0.75
+valence_precision = 0.85
+coverage = 0.60
+
+[kaggle]
+dataset_id = "josealvacornejo/sa-polarization-targeted-dat"
+training_kernel_id = "josealvacornejo/sa-polarization-targeted-training"
+inference_kernel_id = "josealvacornejo/sa-polarization-targeted-inference"
+smoke_dataset_id = "josealvacornejo/sa-polarization-targeted-smoke"
+smoke_kernel_id = "josealvacornejo/sa-polarization-targeted-smoke-inference"

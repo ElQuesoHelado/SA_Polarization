@@ -44,855 +44,270 @@
 %%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
 %%*************************************************************************
 
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices can trigger bugs that do  ***
-% *** not appear when using other class files.                            ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
-
-% Note that the a4paper option is mainly intended so that authors in
-% countries using A4 can easily print to A4 and see how their papers will
-% look in print - the typesetting of the document will not typically be
-% affected with changes in paper size (but the bottom and side margins will).
-% Use the testflow package mentioned above to verify correct handling of
-% both paper sizes by the user's LaTeX system.
-%
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
-%
-\documentclass[conference, letterpaper]{IEEEtran}
-\usepackage{amsmath}
-\usepackage{booktabs}
-% Add the compsoc option for Computer Society conferences.
-%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[conference]{../sty/IEEEtran}
-
-
-
-
-
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
-
-
-% *** MISC UTILITY PACKAGES ***
-%
-%\usepackage{ifpdf}
-% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
-% compilation based on whether the output is pdf or dvi.
-% usage:
-% \ifpdf
-%   % pdf code
-% \else
-%   % dvi code
-% \fi
-% The latest version of ifpdf.sty can be obtained from:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
-% Also, note that IEEEtran.cls V1.7 and later provides a builtin
-% \ifCLASSINFOpdf conditional that works the same way.
-% When switching from latex to pdflatex and vice-versa, the compiler may
-% have to be run twice to clear warning/error messages.
-
-
-
-
-
-
-% *** CITATION PACKAGES ***
-%
-%\usepackage{cite}
-% cite.sty was written by Donald Arseneau
-% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
-% \cite{} output to follow that of IEEE. Loading the cite package will
-% result in citation numbers being automatically sorted and properly
-% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
-% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
-% \cite will automatically add leading space, if needed. Use cite.sty's
-% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
-% cite.sty is already installed on most LaTeX systems. Be sure and use
-% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
-% not currently provide for hyperlinked citations.
-% The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
-% The documentation is contained in the cite.sty file itself.
-
-
-
-
-
-
-% *** GRAPHICS RELATED PACKAGES ***
-%
-\ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-\else
-  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
-  % will default to the driver specified in the system graphics.cfg if no
-  % driver is specified.
-  % \usepackage[dvips]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../eps/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.eps}
-\fi
-% graphicx was written by David Carlisle and Sebastian Rahtz. It is
-% required if you want graphics, photos, etc. graphicx.sty is already
-% installed on most LaTeX systems. The latest version and documentation can
-% be obtained at: 
-% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
-% Another good source of documentation is "Using Imported Graphics in
-% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
-% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
-%
-% latex, and pdflatex in dvi mode, support graphics in encapsulated
-% postscript (.eps) format. pdflatex in pdf mode supports graphics
-% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
-% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
-% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
-% which can result in "jaggedy"/blurry rendering of lines and letters as
-% well as large increases in file sizes.
-%
-% You can find documentation about the pdfTeX application at:
-% http://www.tug.org/applications/pdftex
-
-
-
-
-
-% *** MATH PACKAGES ***
-%
-%\usepackage[cmex10]{amsmath}
-% A popular package from the American Mathematical Society that provides
-% many useful and powerful commands for dealing with mathematics. If using
-% it, be sure to load this package with the cmex10 option to ensure that
-% only type 1 fonts will utilized at all point sizes. Without this option,
-% it is possible that some math symbols, particularly those within
-% footnotes, will be rendered in bitmap form which will result in a
-% document that can not be IEEE Xplore compliant!
-%
-% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does. amsmath.sty is already installed on most LaTeX systems. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
-
-
-
-
-
-% *** SPECIALIZED LIST PACKAGES ***
-%
-%\usepackage{algorithmic}
-% algorithmic.sty was written by Peter Williams and Rogerio Brito.
-% This package provides an algorithmic environment fo describing algorithms.
-% You can use the algorithmic environment in-text or within a figure
-% environment to provide for a floating algorithm. Do NOT use the algorithm
-% floating environment provided by algorithm.sty (by the same authors) or
-% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
-% algorithm float types and packages that provide these will not provide
-% correct IEEE style captions. The latest version and documentation of
-% algorithmic.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
-% There is also a support site at:
-% http://algorithms.berlios.de/index.html
-% Also of interest may be the (relatively newer and more customizable)
-% algorithmicx.sty package by Szasz Janos:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
-
-
-
-
-% *** ALIGNMENT PACKAGES ***
-%
-%\usepackage{array}
-% Frank Mittelbach's and David Carlisle's array.sty patches and improves
-% the standard LaTeX2e array and tabular environments to provide better
-% appearance and additional user controls. As the default LaTeX2e table
-% generation code is lacking to the point of almost being broken with
-% respect to the quality of the end results, all users are strongly
-% advised to use an enhanced (at the very least that provided by array.sty)
-% set of table tools. array.sty is already installed on most systems. The
-% latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/tools/
-
-
-%\usepackage{mdwmath}
-%\usepackage{mdwtab}
-% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
-% especially mdwmath.sty and mdwtab.sty which are used to format equations
-% and tables, respectively. The MDWtools set is already installed on most
-% LaTeX systems. The lastest version and documentation is available at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
-
-
-% IEEEtran contains the IEEEeqnarray family of commands that can be used to
-% generate multiline equations as well as matrices, tables, etc., of high
-% quality.
-
-
-%\usepackage{eqparbox}
-% Also of notable interest is Scott Pakin's eqparbox package for creating
-% (automatically sized) equal width boxes - aka "natural width parboxes".
-% Available at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
-
-
-
-
-
-% *** SUBFIGURE PACKAGES ***
-%\usepackage[tight,footnotesize]{subfigure}
-% subfigure.sty was written by Steven Douglas Cochran. This package makes it
-% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
-% work, it is a good idea to load it with the tight package option to reduce
-% the amount of white space around the subfigures. subfigure.sty is already
-% installed on most LaTeX systems. The latest version and documentation can
-% be obtained at:
-% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
-% subfigure.sty has been superceeded by subfig.sty.
-
-
-
-%\usepackage[caption=false]{caption}
-%\usepackage[font=footnotesize]{subfig}
-% subfig.sty, also written by Steven Douglas Cochran, is the modern
-% replacement for subfigure.sty. However, subfig.sty requires and
-% automatically loads Axel Sommerfeldt's caption.sty which will override
-% IEEEtran.cls handling of captions and this will result in nonIEEE style
-% figure/table captions. To prevent this problem, be sure and preload
-% caption.sty with its "caption=false" package option. This is will preserve
-% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
-% (recommended due to many improvements over 1.2) of subfig.sty supports
-% the caption=false option directly:
-%\usepackage[caption=false,font=footnotesize]{subfig}
-%
-% The latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
-% The latest version and documentation of caption.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
-
-
-
-
-% *** FLOAT PACKAGES ***
-%
-%\usepackage{fixltx2e}
-% fixltx2e, the successor to the earlier fix2col.sty, was written by
-% Frank Mittelbach and David Carlisle. This package corrects a few problems
-% in the LaTeX2e kernel, the most notable of which is that in current
-% LaTeX2e releases, the ordering of single and double column floats is not
-% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
-% single column figure to be placed prior to an earlier double column
-% figure. The latest version and documentation can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/base/
-
-
-
-%\usepackage{stfloats}
-% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
-% the ability to do double column floats at the bottom of the page as well
-% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
-% LaTeX2e). It also provides a command:
-%\fnbelowfloat
-% to enable the placement of footnotes below bottom floats (the standard
-% LaTeX2e kernel puts them above bottom floats). This is an invasive package
-% which rewrites many portions of the LaTeX2e float routines. It may not work
-% with other packages that modify the LaTeX2e float routines. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-% Documentation is contained in the stfloats.sty comments as well as in the
-% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
-% does not allow \baselineskip to stretch. Authors submitting work to the
-% IEEE should note that IEEE rarely uses double column equations and
-% that authors should try to avoid such use. Do not be tempted to use the
-% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
-% not format its papers in such ways.
-
-
-
-
-
-% *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-%\usepackage{url}
-% url.sty was written by Donald Arseneau. It provides better support for
-% handling and breaking URLs. url.sty is already installed on most LaTeX
-% systems. The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
-% Read the url.sty source comments for usage information. Basically,
-% \url{my_url_here}.
-
-
-
-
-
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
-
-
-% correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
-
-% *** GRAPHICS RELATED PACKAGES ***
-%
-\ifCLASSINFOpdf
-   \usepackage[pdftex]{graphicx}
-   \usepackage{subcaption}
-   \usepackage[export]{adjustbox}
-\else
-\fi
-
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-% *** MATH PACKAGES ***
-%
-\usepackage{color}
-%
-\usepackage{fancyhdr}
-\usepackage[caption=false,font=footnotesize]{subfig}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{float}
-
-\renewcommand{\thispagestyle}[2]{} 
-
-
-\fancypagestyle{plain}{
-        \fancyhead{}
-        \fancyhead[C]{first page center header}
-        \fancyfoot{}
-        \fancyfoot[C]{first page center footer}
-}
-\pagestyle{fancy}
-
-
-\headheight 20pt
-\footskip 20pt
-
-\rhead{}
-
-%Enter the first page number of your paper below
-\setcounter{page}{1}
-
-%Header
-\fancyhead[R]{\textit{(IJACSA) International Journal of Advanced Computer Science and Applications, \\ Vol. XXX, No. XXX, 2024}}
-\renewcommand{\headrulewidth}{0pt}
-
-%Footer
-\fancyfoot[C]{www.ijacsa.thesai.org}
-\renewcommand{\footrulewidth}{0.5pt}
-\fancyfoot[R]{\thepage \  $|$ P a g e }
-
-
+% Rewritten for targeted-publication-v1 on 2026-11-18; original template notices retained.
+\documentclass[conference,letterpaper]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,booktabs,array,graphicx}
+\usepackage{algorithm,algpseudocode}
+\floatname{algorithm}{Algoritmo}
+\algrenewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Salida:}}
+\algrenewcommand{\algorithmicforall}{\textbf{para cada}}
+\algrenewcommand{\algorithmicdo}{\textbf{hacer}}
+\algrenewcommand{\algorithmicif}{\textbf{si}}
+\algrenewcommand{\algorithmicthen}{\textbf{entonces}}
+\algrenewcommand{\algorithmicend}{\textbf{fin}}
+\algrenewcommand{\algorithmicfor}{\textbf{para}}
+\algrenewcommand{\algorithmicreturn}{\textbf{devolver}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,babel}
+\usepackage{url}
+\newcommand{\pendiente}[1]{\par\smallskip\noindent\textit{[Pendiente: #1]}\par\smallskip}
+\newcommand{\pos}{\mathrm{Pos}}
+\newcommand{\negc}{\mathrm{Neg}}
+\newcommand{\neu}{\mathrm{Neu}}
+\title{Medición de polarización afectiva expresada en comentarios políticos de YouTube: historiales de usuarios y evaluación de clasificadores en el contexto peruano de 2026}
+\author{\IEEEauthorblockN{Jose Alva Cornejo}\IEEEauthorblockA{Universidad Nacional de San Agustín de Arequipa\\Arequipa, Perú}}
 \begin{document}
-
-%
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-\title{Análisis de sentimientos y favorabilidad política en comentarios de Youtube durante las elecciones 
-presidenciales peruanas de 2026}
-
-
-% author names and affiliations
-% use a multiple column layout for up to three different
-% affiliations
-\makeatletter
-\newcommand{\linebreakand}{
-  \end{@IEEEauthorhalign}
-  \hfill\mbox{}\par
-  \mbox{}\hfill\begin{@IEEEauthorhalign}
-}
-\makeatother
-\author{
-    Jose Alva Cornejo
-    % ,Esdras D. Vasquez, Jose Calizaya Quispe, Roxana Flores-Quispe, Yuber Velazco-Paredes\\
-    Universidad Nacional de San Agustín de Arequipa, Arequipa, Perú\\
-    %Emails: jalvac@unsa.edu.pe, ediazva@unsa.edu.pe, jcalizayaq@unsa.edu.pe, \\rfloresqu@unsa.edu.pe, yvelazco@unsa.edu.pe
-}
-
-
-
-
-% conference papers do not typically use \thanks and this command
-% is locked out in conference mode. If really needed, such as for
-% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
-% after \documentclass
-
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-% 
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
-
-
-
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-
-% make the title area
 \maketitle
-
-
 \begin{abstract}
-Este estudio analiza el sentimiento expresado en comentarios de YouTube durante las elecciones presidenciales
-peruanas de 2026 mediante un pipeline reproducible que combina clasificación de valencia y métricas agregadas e
-individuales. Se procesaron 827\,287 comentarios de 11\,786 videos publicados por 30 canales agrupados en fuentes
-de izquierda, derecha y neutrales, utilizando RoBERTuito especializado en español peruano. La valencia negativa
-predominó en los tres grupos de fuentes, pero fue más marcada en los canales neutrales; estos registraron la menor
-favorabilidad neta ($-0{,}527$), frente a $-0{,}353$ en izquierda y $-0{,}282$ en derecha. En el análisis
-individual, los usuarios asignados operacionalmente a la derecha presentaron un AP promedio positivo ($1{,}577$),
-mientras que el de los asignados a la izquierda se situó cerca de cero ($-0{,}109$). En el contexto del desenlace
-electoral, los comentarios bajo fuentes de derecha presentan un balance individual más favorable, en consonancia
-con la victoria ajustada de Fuerza Popular en la segunda vuelta. En las fuentes de izquierda, el AP medio se
-mantiene cerca de cero, mientras que los comentarios publicados bajo medios neutrales muestran la valencia más
-negativa. Así, la conversación observada combina una expresión más favorable en el espacio asociado al bloque
-ganador con mayor negatividad en las fuentes informativas neutrales.
+La medición de polarización política en comentarios requiere distinguir la valencia general del texto de la valoración dirigida hacia actores concretos. Este trabajo desarrolla un estudio de polarización afectiva expresada en comentarios públicos de YouTube del contexto electoral peruano de enero a junio de 2026. El diseño separa dos componentes: medición por usuario a partir de historiales anotados y evaluación de clasificadores de valoración comentario--objetivo. Se identifica la afinidad operacional con una partición de videos y se evalúan expresiones hacia ambos bloques políticos en otra. Se planifican 800 usuarios realmente comparables y una referencia independiente de 3,000 comentarios; estos tamaños son objetivos del diseño y todavía no constituyen muestras cerradas. La comparación de desarrollo completada comprende cuatro bases Transformer y tres semillas por base, usando 1,148 pares de entrenamiento y 264 de validación con contexto completo común. RoBERTuito obtuvo el mayor macro-F1 de desarrollo (0.644), mientras BETO alcanzó la mayor cobertura condicional de pares candidatos (37.16\%). La validación fue reutilizada; los cuatro modelos deshabilitaron predicciones neutrales tras calibrar y ninguno habilita inferencia automática del corpus. La captura ampliada, las nuevas referencias y la medición final siguen pendientes. Por tanto, esta versión documenta el diseño y los resultados de desarrollo disponibles, sin afirmar todavía presencia, magnitud ni diferencias entre bloques de polarización afectiva.
 \end{abstract}
-
-% IEEEtran.cls defaults to using nonbold math in the Abstract.
-% This preserves the distinction between vectors and scalars. However,
-% if the conference you are submitting to favors bold math in the abstract,
-% then you can use LaTeX's standard command \boldmath at the very start
-% of the abstract to achieve this. Many IEEE journals/conferences frown on
-% math in the abstract anyway.
-
-% no keywords
-
-
 \begin{IEEEkeywords}
-Sentiment Analysis, Natural Language Processing, Deep Learning, Transformer Models, Slang, Social Media, Political Opinion Mining.
+Polarización afectiva, sentimiento dirigido, YouTube, anotación humana, evaluación de clasificadores, Perú.
 \end{IEEEkeywords}
 
-
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
-
-
-
 \section{Introducción}
+El análisis de comentarios políticos permite estudiar expresiones observables de valoración, pero su interpretación depende de identificar quién es valorado. Un texto negativo puede criticar a un adversario para defender a otro actor; su tono general no identifica automáticamente apoyo o rechazo hacia el grupo asociado al canal. Bestvater y Monroe distinguen explícitamente sentimiento y postura en el análisis político \cite{BestvaterMonroe2023}. En YouTube, el análisis basado en aspectos ofrece un antecedente para separar las valoraciones hacia entidades concretas del sentimiento global \cite{Miehling2025}.
 
-Las redes sociales se han consolidado como uno de los principales espacios para la discusión política y la expresión de opiniones ciudadanas. Plataformas como Facebook, Twitter/X y YouTube permiten que millones de usuarios compartan publicaciones, comentarios e interacciones relacionadas con acontecimientos políticos, generando grandes volúmenes de información que reflejan la percepción pública sobre candidatos, partidos y políticas gubernamentales \cite{statista2026}. YouTube, en particular, combina contenido audiovisual de formato largo con secciones de comentarios abiertas y una estructura basada en canales, lo que permite identificar el origen editorial de las publicaciones y analizar las reacciones de las audiencias de forma sistemática. Debido a su alcance e influencia, estas plataformas constituyen una fuente relevante para estudiar el comportamiento político y las tendencias de opinión mediante técnicas de procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con contenido político en redes sociales se ha relacionado con cambios en las actitudes de los usuarios. Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como herramientas de movilización como canales de confrontación discursiva. En este contexto, el análisis automático del contenido generado por los usuarios constituye una alternativa indispensable frente a las limitaciones de costo, cobertura y temporalidad de las encuestas tradicionales.
+El caso peruano cuenta con antecedentes sobre polarización política y discurso electoral \cite{Ponte2022,Mejia2024}. Estos trabajos contextualizan la pregunta, pero no permiten trasladar magnitudes de otros periodos, plataformas o poblaciones a usuarios de YouTube. Tampoco la orientación editorial de un canal identifica la ideología de cada comentarista: las discusiones cruzadas pueden ocurrir bajo fuentes de orientación diferente \cite{Chae2024,Wu2021}.
 
-Una de las principales soluciones computacionales empleadas para este problema es el análisis automático de sentimientos, mediante el cual se identifica la polaridad expresada en un texto y se clasifica generalmente como positiva, negativa o neutra. En años recientes, los avances en aprendizaje profundo y modelos basados en la arquitectura Transformer han permitido mejorar drásticamente el desempeño en clasificación textual al capturar dependencias contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas específicamente al análisis de polarización política: Martínez-España et al. \cite{polariz} propusieron una formulación pionera para cuantificar la polarización afectiva individual a partir de publicaciones en redes sociales; Bor et al. \cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024, Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía Navarrete \cite{Mejia2024} describió la intensificación histórica de la polarización política en el país entre 2000 y 2023.
+El presente estudio se concentra en \emph{polarización afectiva expresada}: balances relativos de valoración explícita hacia actores de izquierda y derecha, entre usuarios con evidencia suficiente en ambos bloques. Adapta las medidas de Martínez-España et al. \cite{polariz}, separando la asignación de afinidad y su evaluación en videos distintos. La afinidad es operacional; no representa identidad partidaria declarada ni una medida psicológica completa del afecto.
 
-A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado, la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta concentración ha dejado desatendidas plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de lenguaje masivos preentrenados sobre corpus generales en español neutro o peninsular resultan insuficientes para capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la omisión sistemática en estudios previos de un grupo de control periodístico neutral que permita distinguir entre la hostilidad partidaria y el desencanto generalizado de la ciudadanía frente a la cobertura de los medios tradicionales.
+Se plantean tres preguntas: (P1) ¿cuál es el balance afectivo relativo hacia el grupo de afinidad y el grupo externo entre usuarios comparables del marco observado?; (P2) ¿qué estabilidad presenta ese balance bajo cambios de partición, contribución por video y composición de actores?; y (P3) ¿qué desempeño ofrecen distintos clasificadores frente a una referencia independiente de valoración dirigida?
 
-Para abordar esta brecha, el presente trabajo propone un pipeline de aprendizaje profundo que analiza el sentimiento político y la polarización afectiva individual a partir de 827\,287 comentarios públicos de YouTube correspondientes a 11\,786 videos de 30 canales curados editorialmente durante las elecciones presidenciales peruanas de 2026. Utilizando el modelo RoBERTuito especializado en español peruano, se clasifica la valencia textual de los comentarios y se calculan indicadores de favorabilidad agregada y polarización afectiva individual (AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y \textit{spread}).
+La contribución metodológica es doble: un procedimiento reproducible de medición por usuario con historiales revisados y una comparación controlada de clasificadores comentario--objetivo. El primer componente puede cerrarse con anotaciones humanas aun cuando el segundo no permita automatizar el corpus. Esta versión presenta el protocolo implementado y el desarrollo completado; las respuestas empíricas finales a P1--P3 permanecen pendientes.
 
-Si bien este enfoque toma como punto de partida la formulación de polarización afectiva individual propuesta por Martínez-España et al. \cite{polariz}, introduce diferencias conceptuales y metodológicas sustanciales orientadas a superar sus limitaciones en entornos audiovisuales. En primer lugar, a diferencia del estudio de referencia, centrado en interacciones de Twitter/X dirigidas a 78 figuras políticas en una elección regional española, nuestro trabajo traslada el análisis a YouTube, donde las interacciones no son menciones directas sino comentarios situados bajo contenidos audiovisuales con líneas editoriales consolidadas, capturando discusiones comunitarias extensas a gran escala. En segundo lugar, se supera el empleo de modelos genéricos mediante la incorporación de \textit{pyupeu/robertuito-peruvian-sentiment} \cite{CalizayaMilla2026}, un modelo preentrenado sobre redes sociales y adaptado al contexto peruano que minimiza el error de clasificación ante la jerga y el registro coloquial electoral. En tercer lugar, mientras que el marco original segmenta a los actores únicamente en facciones partidistas sin grupo de control, nuestra propuesta incorpora un pool canónico de medios periodísticos neutrales como referencia basal, lo que permite evaluar si las interacciones exogrupales ($\mathrm{AP}_{Out}$) responden a confrontación interpartidista o a un rechazo extendido hacia la prensa establecida. Finalmente, se complementa el esquema con una favorabilidad neta ponderada por la certidumbre probabilística del modelo clasificador ($F_{\mathrm{pond}}$) y se delimita con rigurosidad estadística el conjunto de usuarios sin afinidad definida ($75{,}83\,\%$), evitando asignaciones ideológicas forzadas.
+\section{Antecedentes y delimitación del constructo}
+Martínez-España et al. \cite{polariz} proponen medidas individuales de polarización afectiva mediante interacciones dirigidas a entidades políticas en Twitter durante una elección regional española. Su afinidad se asigna por interacciones positivas y sus medidas AP y \emph{spread} resumen balances por grupo. El estudio emplea cuatro grupos políticos; aquí se mantienen dos bloques documentados del contexto peruano. Las diferencias de plataforma, selección, unidades y denominadores impiden una réplica numérica o un ordenamiento de países por sus valores.
 
-El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos y la polarización política computacional. La Sección III describe el método propuesto, detallando la adquisición y preprocesamiento de datos, el clasificador Transformer y la formulación matemática de las métricas. La Sección IV expone los resultados empíricos y su discusión metodológica. Finalmente, la Sección V presenta las conclusiones y el trabajo futuro.
+Wagner \cite{wagner2021affective} aporta un marco conceptual sobre polarización afectiva multipartidista. Las medidas con encuestas, las expresiones textuales y los conteos de interacción no constituyen instrumentos equivalentes. En particular, una brecha positiva entre balances no requiere que el balance externo sea negativo: distinguir favorabilidad relativa y valoración externa negativa es necesario para interpretar los resultados.
 
-\section{Estado del Arte}
-El análisis de sentimientos aplicado al ámbito político ha adquirido una creciente relevancia debido al incremento del contenido generado por usuarios en redes sociales y a la disponibilidad de técnicas avanzadas de procesamiento del lenguaje natural. Las investigaciones recientes han abordado este problema desde diferentes perspectivas, incluyendo el estudio de la polarización política, la clasificación automática de opiniones y el desarrollo de modelos especializados para lenguaje informal.
+Miehling et al. \cite{Miehling2025} estudian sentimiento basado en aspectos en comentarios y respuestas de YouTube. Su trabajo fundamenta examinar entidades dentro del texto, sin transferir resultados de otro conflicto e idioma al caso peruano. Chae y Lee \cite{Chae2024} y Wu y Resnick \cite{Wu2021} distinguen participación cruzada y orientación de la fuente. Estos antecedentes motivan conservar canal, video y comentario como procedencia; participar bajo una fuente no equivale a respaldarla. La interacción entre audiencias, la toxicidad, el sentimiento general y la valoración afectiva dirigida responden a constructos diferentes.
 
-Una de las principales líneas de investigación corresponde al análisis de la polarización política mediante técnicas de análisis de sentimientos. Martínez-España et al. \cite{polariz} propusieron una metodología para medir la polarización afectiva individual utilizando modelos basados en Transformers sobre datos obtenidos de redes sociales. Su trabajo demostró que el análisis automático de sentimientos constituye una alternativa viable a los métodos tradicionales basados en encuestas para estudiar el comportamiento político. De forma similar, Bor et al. \cite{bor2023} emplearon análisis de sentimientos para cuantificar la polarización política en Twitter considerando distintos grupos políticos y diversas políticas públicas en Estados Unidos, evidenciando diferencias significativas en los niveles de polarización según el tema analizado.
+\section{Método propuesto}
+\subsection{Diseño y estado del estudio}
+El estudio mantiene dos ramas (Fig.~\ref{fig:metodo}): medición de historiales y clasificación dirigida. La recolección y el análisis se ejecutan localmente; el entrenamiento se ejecutó en GPU en Kaggle con recursos privados. Configuraciones, particiones, semillas, versiones y hashes permiten verificar procedencia. La comparación de desarrollo está completada; la captura ampliada y las nuevas muestras aún no están cerradas.
 
-Otra línea de investigación se ha enfocado en la clasificación automática de sentimientos políticos utilizando técnicas de aprendizaje automático y aprendizaje profundo. En el contexto peruano, Ayma et al. \cite{Ayma2024} analizaron mensajes publicados en Twitter/X durante las elecciones presidenciales de 2021 empleando representaciones textuales como TF-IDF y Word2Vec en combinación con algoritmos tradicionales de clasificación, obteniendo valores de F1-score superiores a 0.93. Posteriormente, Carrera et al. \cite{Carrera2026} compararon representaciones textuales tradicionales y modelos basados en Transformers para clasificar comentarios relacionados con proyectos de ley peruanos. Sus resultados mostraron que los modelos Transformer superaron consistentemente a los enfoques clásicos, alcanzando precisiones superiores al 88\%.
-
-Pandey et al. \cite{pandey2025twitter} analizaron el sentimiento de los votantes durante las elecciones legislativas de Bihar de 2025 utilizando más de 1\,100 publicaciones obtenidas mediante la API de Twitter. Los autores compararon tres métodos de clasificación de sentimientos: Random Forest, Support Vector Machine (SVM) y el modelo basado en transformadores BERT. Inicialmente, las publicaciones fueron etiquetadas utilizando VADER y posteriormente se evaluaron las tendencias de cada partido político mediante el \textit{Net Sentiment Score} (NSS). Los resultados mostraron que BERT obtuvo una exactitud del 80\%, superando a los modelos tradicionales y evidenciando la capacidad de los modelos basados en transformadores para realizar análisis de sentimientos en escenarios electorales con conjuntos de datos de tamaño reducido.
-
-% Chire Saire y Vilca Zuñiga \cite{chire2021analysis} analizaron la reacción de los usuarios de Twitter ante el proceso de vacancia presidencial ocurrido en Perú durante la pandemia por COVID-19. El estudio tuvo como objetivo identificar los principales temas de discusión y evaluar el impacto que la crisis política generó en la población peruana a partir de las publicaciones realizadas en esta red social. Los autores recopilaron mensajes relacionados con el proceso de destitución presidencial y realizaron un análisis de las opiniones expresadas por los usuarios para identificar tendencias en el debate político. Los resultados evidenciaron que Twitter constituyó una fuente relevante para analizar la percepción ciudadana y la reacción de la población frente a los acontecimientos políticos ocurridos durante dicho periodo.
-
-Rizk et al. \cite{rizk2023predicting} propusieron un modelo para predecir los resultados de las elecciones presidenciales de Estados Unidos de 2020 utilizando publicaciones geolocalizadas de Twitter. La metodología combinó análisis de sentimientos, un clasificador Multinomial Naive Bayes y técnicas de aprendizaje automático para estimar tanto el voto popular como los votos del colegio electoral en los 50 estados. Además, los autores eliminaron publicaciones generadas por bots y valores atípicos, analizaron la evolución temporal y espacial de la opinión pública, y emplearon análisis de redes y detección de comunidades para identificar patrones de interacción entre los usuarios. Los resultados mostraron que el modelo predijo correctamente la victoria de Joe Biden, alcanzando una concordancia del 89.9\% con los resultados oficiales de las elecciones.
-
-Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio sobre el análisis de sentimientos en publicaciones de Twitter relacionadas con las elecciones presidenciales españolas de 2019. Los autores recopilaron miles de publicaciones realizadas antes y después del proceso electoral y propusieron una metodología basada en dos etapas: una caracterización estadística utilizando métricas como entropía, información mutua y el \textit{Compounded Aggregated Positivity Index} (CAPI), seguida de la extracción de características mediante técnicas de aprendizaje no lineal, incluyendo autoencoders y métodos de incrustación estocástica. Los resultados mostraron que tanto las métricas estadísticas como las representaciones obtenidas permitieron caracterizar la evolución temporal del sentimiento y evidenciar diferencias en la polaridad entre los distintos partidos políticos y sus líderes durante el periodo electoral.
-
-Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
-
-Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente que la valencia general de un comentario no necesariamente refleja la postura del autor hacia una entidad política específica. Este hallazgo es relevante para interpretar los resultados de modelos de clasificación de sentimiento general, como el empleado en el presente trabajo.
-
-En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas metodologías hacia plataformas audiovisuales masivas como YouTube, incorporar controles de prensa neutral y adaptar las representaciones a la jerga y particularidades dialectales regionales.
-
-\section{Método Propuesto}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.85\linewidth]{docs/figures/pipeline_3.png}
-    \caption{Arquitectura general del pipeline propuesto para la recolección, inferencia de sentimiento y cálculo de métricas de polarización en YouTube.}
-    \label{fig:metodo}
-\end{figure}
-
-La Figura~\ref{fig:metodo} ilustra la arquitectura general del pipeline implementado, estructurado en cuatro etapas secuenciales: adquisición programática de datos mediante la API de YouTube Data v3, preprocesamiento y unificación con control editorial, inferencia de sentimiento con un modelo Transformer especializado en el contexto sociolingüístico peruano, y cómputo de métricas agregadas e individuales de favorabilidad y polarización afectiva.
-
-\subsection{Obtención de datos}
-
-Frente a las crecientes restricciones impuestas por plataformas como Facebook y Twitter/X para el acceso a datos con fines de investigación \cite{ANTONAKAKI2021114006}, se seleccionó YouTube como fuente primaria de información. YouTube ofrece acceso programático transparente a través de su API oficial y proporciona una estructura modular basada en canales, lo que permite asociar de forma directa y trazable el origen editorial de los contenidos audiovisuales con los comentarios vertidos por las audiencias.
-
-Para el estudio del escenario electoral peruano de 2026, se definieron 30 canales de YouTube agrupados equitativamente en tres categorías: \textit{izquierda} (10 canales), \textit{derecha} (10 canales) y un pool de control \textit{neutral} (10 canales). La asignación editorial de cada canal se fundamentó en fuentes externas verificables y citables, tales como reportes de propiedad mediática (Media Ownership Monitor), afiliación partidaria oficial y documentación periodística consolidada en Wikipedia en español. El grupo \textit{neutral} agrupa medios de prensa tradicionales, cadenas estatales e iniciativas periodísticas sin afiliación partidaria expresa, funcionando como línea de base informativa.
-
-Para cada canal se extrajeron los comentarios públicos de videos emitidos entre enero y junio de 2026, estableciendo un umbral máximo de 1\,000 videos por canal y 2\,000 comentarios por video para mitigar sesgos de sobrerrepresentación inducidos por viralidad aislada. En total, se recolectaron 827\,287 comentarios públicos pertenecientes a 11\,786 videos. Cabe destacar que la etiqueta de canal (\textit{party}) asignada inicialmente a cada registro identifica exclusivamente la línea editorial de la fuente emisora y no la adscripción política del usuario que emite el comentario.
-
-\subsection{Preprocesamiento y unificación de datos}
-
-El preprocesamiento estandariza los registros y consolida los atributos necesarios para el modelado temporal, lingüístico y de interacción de usuarios. Para cada comentario $c_i$, se extrajeron diez atributos estructurados: el contenido textual, el identificador único del autor ($\text{user\_id}$), el nombre de usuario, la cantidad de reacciones favorables ($\textit{likes}$), el identificador del comentario, el identificador y título del video de origen, el canal emisor, la fecha de publicación, el número de respuestas anidadas y la etiqueta editorial del canal emisor ($\text{party} \in \mathcal{J} = \{\text{izquierda}, \text{derecha}, \text{neutral}\}$).
-
-En el caso del grupo neutral, se integró el pool recolectado localmente con el repositorio canónico de medios peruanos, aplicando una deduplicación estricta por identificador único de comentario ($\text{comment\_id}$) para garantizar la unicidad de las interacciones. El procedimiento global de preprocesamiento se resume en el Algoritmo~\ref{alg:preprocess}.
-
-\begin{algorithm}[t]
-\caption{Preprocesamiento, estandarización y unificación del corpus}
-\label{alg:preprocess}
-\begin{algorithmic}[1]
-\Require Colección de archivos JSON $\mathcal{F} = \{F_k\}$, indexados por pool editorial $k \in \{\text{izq}, \text{der}, \text{neu\_local}, \text{neu\_canon}\}$.
-\Ensure Conjunto unificado y desduplicado $\mathcal{D} = \{r_i\}$.
-\State $\mathcal{D}_{\text{raw}} \leftarrow \emptyset$
-\ForAll{archivo $F_k \in \mathcal{F}$}
-    \State Determinar la categoría editorial $\text{party} \leftarrow \text{MapearPool}(k)$
-    \ForAll{video $v \in F_k$}
-        \ForAll{comentario $c \in v$}
-            \State Extraer atributos: $\langle \text{texto}, \text{user\_id}, \text{likes}, \text{fecha}, \text{respuestas}, \dots \rangle$
-            \State Asignar etiqueta editorial $\text{party}$
-            \State $\mathcal{D}_{\text{raw}} \leftarrow \mathcal{D}_{\text{raw}} \cup \{c\}$
-        \EndFor
-    \EndFor
-\EndFor
-\State $\mathcal{D} \leftarrow \text{DeduplicarPorId}(\mathcal{D}_{\text{raw}}, \text{clave} = \text{comment\_id})$
-\State \Return $\mathcal{D}$
-\end{algorithmic}
-\end{algorithm}
-
-\subsection{Clasificación de sentimientos con RoBERTuito especializado}
-
-Para mitigar la brecha de comprensión semántica propia de los modelos de lenguaje generales frente a la comunicación digital peruana, se empleó el modelo \textit{pyupeu/robertuito-peruvian-sentiment} \cite{CalizayaMilla2026}. Este modelo parte de la arquitectura Transformer RoBERTuito \cite{robertuito}, preentrenada sobre más de 500 millones de publicaciones de redes sociales en español, y fue sometido a un proceso de ajuste fino (\textit{fine-tuning}) con corpus anotados de lenguaje informal y jerga política peruana.
-
-Para cada comentario $c_i \in \mathcal{D}$, el modelo genera una distribución de probabilidades sobre el espacio triclase $\mathcal{S} = \{\text{negative}, \text{neutral}, \text{positive}\}$. Se selecciona la etiqueta con mayor verosimilitud $S_i$ y se conserva su puntaje de confianza probabilística $P_i \in [0, 1]$:
-\begin{equation}
-(S_i, P_i) = f_{\mathrm{RoBERTuito}}(c_i).
-\label{eq:robertuito}
-\end{equation}
-Ambos descriptores permiten no solo determinar la valencia predominante del texto, sino también modular el impacto de cada predicción en función de la certidumbre del clasificador.
-
-\subsection{Modelado de métricas de favorabilidad y polarización afectiva}
-
-Con el objetivo de caracterizar tanto la valencia agregada de los espacios discursivos como la polarización a nivel de usuarios individuales, se formularon dos niveles de análisis complementarios.
-
-\subsubsection{Favorabilidad neta y favorabilidad ponderada por certidumbre}
-
-A nivel agregado de cada categoría editorial $j \in \mathcal{J}$, se contabilizó el total de comentarios positivos ($N_{\mathrm{pos}}$), negativos ($N_{\mathrm{neg}}$) y neutrales ($N_{\mathrm{neu}}$), con un volumen total $N = N_{\mathrm{pos}} + N_{\mathrm{neg}} + N_{\mathrm{neu}}$. La favorabilidad neta (\textit{Net Sentiment Score}, NSS) se define como:
-\begin{equation}
-F_{\mathrm{neta}}(j) = \frac{N_{\mathrm{pos}} - N_{\mathrm{neg}}}{N} \in [-1, 1].
-\label{eq:favorabilidad_neta}
-\end{equation}
-
-Con el fin de evitar que predicciones de valencia marginales o con baja certidumbre distorsionen el indicador, se diseñó la favorabilidad neta ponderada por confianza ($F_{\mathrm{pond}}$). Para cada comentario $c_i$, se asigna un signo de valencia $s_i \in \{+1 \text{ (pos)}, 0 \text{ (neu)}, -1 \text{ (neg)}\}$, y su contribución se pondera por su confianza probabilística $P_i$:
-\begin{equation}
-F_{\mathrm{pond}}(j) = \frac{1}{N} \sum_{i=1}^{N} s_i P_i \in [-1, 1].
-\label{eq:favorabilidad_ponderada}
-\end{equation}
-
-\subsubsection{Indicador de polarización afectiva individual y \textit{spread}}
-\label{subsubsec:ap_individual}
-
-A diferencia de las métricas agregadas por canal, el indicador individual busca cuantificar el distanciamiento afectivo de los ciudadanos a partir de sus patrones de interacción, adaptando la formulación de Martínez-España et al. \cite{polariz}.
-
-Para aislar a los usuarios políticamente activos con valencia definida, el universo de análisis individual se restringe a los usuarios que emitieron al menos un comentario clasificado como positivo o negativo ($S_i \in \{\text{positive}, \text{negative}\}$). Para cada usuario $i$ y categoría de canal $j \in \mathcal{J} = \{\text{izquierda}, \text{derecha}, \text{neutral}\}$, se computa el conteo de interacciones positivas ($\text{Pos}_{i,j}$) y negativas ($\text{Neg}_{i,j}$).
-
-La identificación del grupo de afinidad operacional (\textit{ingroup}) se restringe estrictamente a los bloques políticos partidistas $\mathcal{J}_{\mathrm{pol}} = \{\text{izquierda}, \text{derecha}\}$, excluyendo la categoría neutral de los posibles endogrupos. Sea $j^* = \operatorname*{argmax}_{j \in \mathcal{J}_{\mathrm{pol}}} (\text{Pos}_{i,j})$:
-\begin{equation}
-\text{Ingroup}(i) = \begin{cases}
-j^*, & \text{si } j^* \text{ es único y } \text{Pos}_{i,j^*} > 0, \\
-\text{Undetermined}, & \text{en empate o si } \text{Pos}_{i,j^*} = 0.
-\end{cases}
-\label{eq:ingroup}
-\end{equation}
-
-Para todo usuario con afinidad determinada $j = \text{Ingroup}(i)$, se calcula la polarización afectiva hacia su propio grupo ($\mathrm{AP}_{\mathrm{In}}$) como el balance de comentarios en su canal de afinidad:
-\begin{equation}
-\mathrm{AP}(i)_{\mathrm{In}} = \text{Pos}_{i,j} - \text{Neg}_{i,j}.
-\label{eq:ap_in}
-\end{equation}
-
-Por su parte, la polarización hacia los grupos externos ($\mathrm{AP}_{\mathrm{Out}}$) agrega el balance neto hacia todas las categorías restantes $\mathcal{J}_{\mathrm{out}} = \mathcal{J} \setminus \{j\}$:
-\begin{equation}
-\mathrm{AP}(i)_{\mathrm{Out}} = \sum_{j' \in \mathcal{J} \setminus \{j\}} \left(\text{Pos}_{i,j'} - \text{Neg}_{i,j'}\right).
-\label{eq:ap_out}
-\end{equation}
-Es importante destacar que, en esta formulación, el conjunto $\mathcal{J} \setminus \{j\}$ contiene tanto al bloque político opuesto como a las fuentes periodísticas del pool neutral. Esta inclusión es metodológicamente coherente con el rol de los medios informativos en el ecosistema digital: los usuarios interactúan con coberturas neutrales para discutir la coyuntura, y computar su valencia en $\mathrm{AP}_{\mathrm{Out}}$ permite capturar si el distanciamiento exogrupal convive con un tono hostil o favorable hacia la prensa tradicional.
-
-La polarización afectiva individual neta ($\mathrm{AP}$) se obtiene como el contraste entre la adhesión endogrupal y la animosidad exogrupal:
-\begin{equation}
-\mathrm{AP}(i) = \mathrm{AP}(i)_{\mathrm{In}} - \mathrm{AP}(i)_{\mathrm{Out}}.
-\label{eq:ap_final}
-\end{equation}
-
-Puesto que $\mathrm{AP}(i)$ es una métrica acumulativa sensible a la hiperactividad de comentaristas frecuentes, se calcula en paralelo una versión normalizada (\textit{spread}), adaptada de la formulación de dispersión de Wagner \cite{wagner2021affective}:
-\begin{equation}
-\mathrm{spread}(i) = \sqrt{\frac{\sum_{j \in \mathcal{J}} \left(\text{Pos}_{i,j} - \text{Neg}_{i,j}\right)^2}{n_i}},
-\label{eq:spread}
-\end{equation}
-donde el denominador $n_i = \sum_{j \in \mathcal{J}} (\text{Pos}_{i,j} + \text{Neg}_{i,j})$ representa el número total de interacciones del usuario $i$ que presentaron valencia positiva o negativa. Nótese que, a diferencia de la propuesta original de Martínez-España et al. (que computa el total bruto de interacciones incluyendo neutrales), nuestro denominador restringe la normalización al volumen de intervenciones con valencia determinada, reflejando fielmente la intensidad afectiva efectiva.
-
-Finalmente, siguiendo el criterio de corte empírico de la literatura, tanto $\mathrm{AP}(i)$ como $\mathrm{spread}(i)$ se clasifican en tres niveles discretos (\textit{Bajo}, \textit{Medio}, \textit{Alto}) utilizando la media muestral ($\mu$) y la desviación estándar ($\sigma$) del corpus:
-\begin{equation}
-\text{Nivel}_{\mathrm{AP}}(i) = \begin{cases}
-\text{Bajo}, & \mathrm{AP}(i) < \mu_{\mathrm{AP}} - \sigma_{\mathrm{AP}}, \\
-\text{Alto}, & \mathrm{AP}(i) > \mu_{\mathrm{AP}} + \sigma_{\mathrm{AP}}, \\
-\text{Medio}, & \text{en otro caso};
-\end{cases}
-\end{equation}
-mientras que para el \textit{spread}, por ser una magnitud estrictamente no negativa, se define nivel \textit{Bajo} cuando $\mathrm{spread}(i) = 0$, nivel \textit{Alto} cuando $\mathrm{spread}(i) > \mu_{\mathrm{spread}} + \sigma_{\mathrm{spread}}$ y nivel \textit{Medio} en el intervalo intermedio. El procedimiento algorítmico global de polarización se sistematiza en el Algoritmo~\ref{alg:polarization}.
-
-\begin{algorithm}[t]
-\caption{Cómputo de polarización afectiva individual y \textit{spread}}
-\label{alg:polarization}
-\begin{algorithmic}[1]
-\Require Corpus clasificado $\mathcal{D} = \{(c_k, u_k, j_k, S_k, P_k)\}$, categorías $\mathcal{J} = \{\text{izq}, \text{der}, \text{neu}\}$, partidos $\mathcal{J}_{\mathrm{pol}} = \{\text{izq}, \text{der}\}$.
-\Ensure Conjunto de métricas individuales $\mathcal{R} = \{\langle u, \text{Ingroup}, \mathrm{AP}_{\mathrm{In}}, \mathrm{AP}_{\mathrm{Out}}, \mathrm{AP}, \mathrm{spread} \rangle\}$.
-\State Filtrar comentarios con valencia determinada: $\mathcal{D}_{\mathrm{pol}} \leftarrow \{c \in \mathcal{D} \mid S_c \in \{\text{pos}, \text{neg}\}\}$
-\State Extraer conjunto de usuarios evaluables: $\mathcal{U} \leftarrow \text{UsuariosUnicos}(\mathcal{D}_{\mathrm{pol}})$
-\State Inicializar matrices de frecuencias $\mathbf{Pos}_{|\mathcal{U}| \times |\mathcal{J}|}$ y $\mathbf{Neg}_{|\mathcal{U}| \times |\mathcal{J}|}$
-\ForAll{comentario $c = (u, j, S) \in \mathcal{D}_{\mathrm{pol}}$}
-    \If{$S = \text{pos}$} $\mathbf{Pos}[u, j] \leftarrow \mathbf{Pos}[u, j] + 1$
-    \ElsIf{$S = \text{neg}$} $\mathbf{Neg}[u, j] \leftarrow \mathbf{Neg}[u, j] + 1$
-    \EndIf
-\EndFor
-\ForAll{usuario $i \in \mathcal{U}$}
-    \State $n_i \leftarrow \sum_{j \in \mathcal{J}} (\mathbf{Pos}[i, j] + \mathbf{Neg}[i, j])$
-    \State Determinar $\text{Ingroup}(i)$ según Ecuación~\ref{eq:ingroup} sobre $\mathcal{J}_{\mathrm{pol}}$
-    \If{$\text{Ingroup}(i) \neq \text{Undetermined}$}
-        \State $j \leftarrow \text{Ingroup}(i)$
-        \State $\mathrm{AP}(i)_{\mathrm{In}} \leftarrow \mathbf{Pos}[i, j] - \mathbf{Neg}[i, j]$
-        \State $\mathrm{AP}(i)_{\mathrm{Out}} \leftarrow \sum_{j' \in \mathcal{J} \setminus \{j\}} (\mathbf{Pos}[i, j'] - \mathbf{Neg}[i, j'])$
-        \State $\mathrm{AP}(i) \leftarrow \mathrm{AP}(i)_{\mathrm{In}} - \mathrm{AP}(i)_{\mathrm{Out}}$
-        \State $\mathrm{spread}(i) \leftarrow \sqrt{\frac{1}{n_i} \sum_{j \in \mathcal{J}} (\mathbf{Pos}[i, j] - \mathbf{Neg}[i, j])^2}$
-    \Else
-        \State $\mathrm{AP}(i)_{\mathrm{In}}, \mathrm{AP}(i)_{\mathrm{Out}}, \mathrm{AP}(i), \mathrm{spread}(i) \leftarrow \text{NaN}$
-    \EndIf
-\EndFor
-\State Calcular medias y desviaciones globales $(\mu_{\mathrm{AP}}, \sigma_{\mathrm{AP}})$ y $(\mu_{\mathrm{spread}}, \sigma_{\mathrm{spread}})$
-\State Asignar niveles discretos (\textit{Bajo}, \textit{Medio}, \textit{Alto}) a los registros válidos
-\State \Return $\mathcal{R}$
-\end{algorithmic}
-\end{algorithm}
-
-\section{Resultados e interpretación}
-
-Esta sección presenta los resultados de la clasificación de sentimiento y de
-las métricas calculadas sobre $827{,}287$ comentarios de videos publicados por
-fuentes agrupadas como izquierda, derecha y neutral. La etiqueta \textit{party}
-identifica el grupo asignado a la fuente del video; no representa una etiqueta
-de sentimiento ni una clasificación política del autor del comentario.
-
-\subsection{Distribución de sentimiento y favorabilidad}
-
-La Tabla~\ref{tab:sentimiento_favorabilidad} resume el número de comentarios,
-la distribución de sentimiento y las medidas de favorabilidad por grupo de
-fuentes. La favorabilidad neta corresponde a la diferencia entre las
-proporciones de comentarios positivos y negativos. La medida ponderada
-normalizada incorpora los puntajes de confianza del modelo.
-
-\begin{table}[H]
+\begin{figure*}[t]
 \centering
-\caption{Sentimiento predicho y favorabilidad por grupo de fuentes.}
-\label{tab:sentimiento_favorabilidad}
-\begin{tabular}{lrrr}
-\hline
-Métrica & Derecha & Izquierda & Neutral \\
-\hline
-Comentarios & 210{,}278 & 293{,}109 & 323{,}900 \\
-Negativo (\%) & 45.46 & 52.70 & 62.24 \\
-Neutro (\%) & 37.33 & 29.90 & 28.23 \\
-Positivo (\%) & 17.21 & 17.39 & 9.54 \\
-Favorabilidad neta & $-0.282$ & $-0.353$ & $-0.527$ \\
-Ponderada norm. & $-0.238$ & $-0.296$ & $-0.436$ \\
-\hline
+\begin{tikzpicture}[node distance=7mm and 12mm,>=Latex,
+ box/.style={draw,rounded corners,align=center,font=\small,text width=43mm,minimum height=12mm},
+ pending/.style={box,dashed}]
+\node[box] (source) {YouTube Data API\\Marco histórico preparado};
+\node[pending,right=of source] (capture) {Completar captura\\y congelar corpus};
+\node[pending,right=of capture] (sample) {Muestras: historiales\\y referencia independiente};
+\node[pending,below=of sample] (human) {Anotación y revisión\\Medición humana por usuario};
+\node[box,left=of human] (training) {Desarrollo humano anterior\\12 ajustes completados};
+\node[pending,left=of training] (eval) {Evaluación independiente\\de clasificadores};
+\draw[->] (source)--(capture); \draw[->] (capture)--(sample);
+\draw[->] (sample)--(human); \draw[->] (training)--(eval);
+\draw[->] (human.south)--++(0,-7mm)-|(eval.south);
+\end{tikzpicture}
+\caption{Diseño vigente. Los recuadros discontinuos indican etapas pendientes de cierre; no son resultados obtenidos. La medición anotada y la evaluación de modelos son componentes separados.}
+\label{fig:metodo}
+\end{figure*}
+
+\subsection{Marco de datos y captura}
+Se utilizan exclusivamente comentarios públicos obtenidos mediante YouTube Data API. Los canales configurados se agrupan por procedencia editorial de izquierda, derecha o fuentes neutrales, con respaldo documental de afiliación o línea editorial. Esta curación delimita el marco de observación; no es un muestreo representativo de canales ni de votantes.
+
+La elegibilidad temporal exige que tanto el video como el comentario pertenezcan a enero--junio de 2026. La Tabla~\ref{tab:corpus} distingue los conjuntos disponibles y los previstos. La unión preparada combina el corpus dirigido anterior y un panel de auditoría, verifica fechas, excluye videos de la prueba histórica reservada y deduplica por identificador. Sus conteos no representan una simple resta entre corpus.
+
+\begin{table}[t]
+\centering\small
+\caption{Procedencia y estado de los conjuntos del estudio.}
+\label{tab:corpus}
+\begin{tabular}{p{.56\columnwidth}r}
+\toprule
+Conjunto & Tamaño / estado\\\midrule
+Corpus dirigido anterior (comentarios) & 805,039\\
+Unión histórica preparada (filas únicas) & 760,839\\
+Marco de videos para recaptura & 11,280\\
+Corpus ampliado congelado & Pendiente\\
+Cohorte comparable (objetivo de usuarios) & 800\\
+Benchmark independiente (objetivo de comentarios) & 3,000\\\bottomrule
 \end{tabular}
 \end{table}
 
-En los tres grupos, el sentimiento negativo es la clase más frecuente. La
-favorabilidad neta es menos negativa en las fuentes de derecha ($-0.282$),
-seguida por las de izquierda ($-0.353$) y las neutrales ($-0.527$). La medida
-ponderada presenta el mismo orden. Estos valores resumen la valencia general
-predicha en los comentarios recolectados.
+La captura ampliada pagina los comentarios principales en orden temporal y completa las respuestas faltantes por identificador del comentario padre. La API advierte que las respuestas incluidas en un hilo pueden ser incompletas \cite{YoutubeThreads}. Se conservan fecha de captura, identificadores, tipo de comentario y vínculo de hilo. Este vínculo no garantiza identificar al destinatario discursivo de cada respuesta.
 
-\subsection{Polarización afectiva individual y \textit{spread}}
+El histórico tuvo límites de extracción por video; la recaptura busca completar las páginas disponibles de los videos del marco. No recupera comentarios eliminados ni sus versiones originales. Para IDs repetidos se preserva la primera observación local y se registran versiones posteriores; conflictos de autor o video detienen la integración. Los videos pendientes por presupuesto no se confunden con recursos indisponibles. El presupuesto local de 2,500 solicitudes por día UTC es un control de ejecución, no una propiedad del fenómeno.
 
-El análisis individual incluyó $179{,}355$ usuarios con al menos un comentario
-positivo o negativo. De ellos, $136{,}005$ ($75.83\%$) quedaron como
-\textit{Undetermined}: no tuvieron comentarios positivos en los grupos
-políticos considerados o empataron en su máximo. En total, $43{,}350$ usuarios
-tuvieron un grupo de afinidad operacional determinado. Esta asignación se basa
-en el grupo con más comentarios positivos y no equivale a ideología declarada.
+\begin{algorithm}[t]
+\caption{Captura y congelación del corpus dirigido}
+\label{alg:captura}
+\begin{algorithmic}[1]
+\Require Marco de videos, histórico versionado y periodo elegible.
+\Ensure Corpus congelado o avance reanudable.
+\ForAll{video aún pendiente}
+\State Recuperar páginas de comentarios principales.
+\State Completar respuestas faltantes por comentario padre.
+\State Guardar avance, versiones y estado del recurso.
+\If{se agota presupuesto o cuota}
+\State \Return avance guardado, sin congelar.
+\EndIf
+\EndFor
+\If{todos los videos están completos o indisponibles}
+\State Verificar fechas, identidades y deduplicación.
+\State Construir unión, marco de usuarios y benchmark.
+\State Congelar archivos y hashes de procedencia.
+\EndIf
+\end{algorithmic}
+\end{algorithm}
 
-La Tabla~\ref{tab:ap_spread} presenta los promedios por grupo asignado. AP se
-calcula como $\mathrm{AP_{In}}-\mathrm{AP_{Out}}$. El \textit{spread} resume la
-magnitud normalizada de las diferencias entre comentarios positivos y
-negativos; su umbral de nivel alto en esta corrida fue $2.052$.
+\subsection{Objetivos políticos y unidades de anotación}
+Un registro v3 congelado contiene 124 identidades con alias y documentación: 22 clasificadas en izquierda/derecha y 102 con bloque desconocido. Las clasificaciones se vinculan a evidencia documental y vigencia; no se fuerza una asignación binaria para actores ambiguos. La procedencia editorial de la fuente y el bloque del objetivo se almacenan por separado.
 
-\begin{table}[H]
+La unidad anotada es el par comentario--objetivo con una mención explícita y sus offsets. Se emplean cinco etiquetas: favorable (\texttt{positive}), desfavorable (\texttt{negative}), mención sin valoración (\texttt{neutral}), valoración mixta (\texttt{mixed}) y no evaluable (\texttt{not\_evaluable}). Una ausencia de objetivo no es neutralidad. Los pronombres resueltos únicamente por título o padre quedan fuera de la política principal de evidencia explícita.
+
+Los objetivos omitidos pueden registrarse durante la anotación sin ampliar los alias congelados. Si su bloque no está documentado, se conservan como desconocidos y no aportan a los balances de los dos bloques. La evaluación del extractor considera sus omisiones; restringir la evaluación a objetivos detectados produciría otro denominador.
+
+Para medir al usuario se colapsan los objetivos en eventos comentario--bloque. Valoraciones favorables y desfavorables simultáneas dentro del mismo bloque producen un evento mixto. Los eventos mixtos, no evaluables o abstenciones no se transforman en neutros. Un comentario con valoraciones hacia ambos bloques puede aportar un evento a cada bloque. La fuente neutral sigue siendo procedencia; el sentimiento neutral sigue siendo una valencia y el bloque desconocido sigue siendo falta de clasificación documental.
+
+\subsection{Referencias humanas y muestras}
+La referencia v2 anterior contiene 2,000 comentarios cerrados: 1,200 de entrenamiento, 300 de validación y 500 reservados para prueba, separados por video. Las anotaciones fueron confirmadas o corregidas individualmente por un único revisor humano. La revisión está terminada, incluida la anotación de los 500 reservados; sus etiquetas no se han usado para evaluar los modelos y permanecen excluidas de los paquetes de esta comparación. El procedimiento utilizó anotaciones preliminares y no permite estimar acuerdo entre dos humanos independientes.
+
+La nueva cohorte utiliza historiales completos disponibles en el corpus congelado, incluidos comentarios sin candidatos. Los usuarios con oportunidad estructural de comparación se ordenan mediante un hash con semilla fija 57 y se incorporan en lotes de 100. Se revisa el prefijo completo del orden, sin seleccionar usuarios por su polarización prevista. La meta son los primeros 800 que satisfagan los criterios de comparabilidad tras la revisión humana, o el tamaño alcanzado si se agota el marco. Las anotaciones preliminares permiten un análisis provisional; las correcciones humanas pueden exigir continuar el mismo orden.
+
+La planificación por precisión sigue la distinción entre tamaño disponible, precisión deseada y potencia descrita por Lakens \cite{lakens2022sample}. Para un gap acotado en $[-2,2]$, usando varianza máxima 4 y \emph{suponiendo} efecto de diseño 2, el margen aproximado con 800 usuarios sería $1.96\sqrt{4\cdot2/800}\approx0.196$. Estos supuestos son decisiones de planificación del estudio: no garantizan ese margen, un efecto positivo ni suficiencia editorial. El intervalo observado prevalece.
+
+El benchmark independiente planificado contiene 3,000 comentarios: 1,000 con candidatos de izquierda, 1,000 de derecha, 500 solo con objetivos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan a una cuota mediante hash. Dentro de cada cuota se estratifica por procedencia editorial, mes y tipo de comentario, con probabilidades de selección documentadas. Se excluyen videos y textos usados en referencias o desarrollo auxiliar anteriores. El revisor debe identificar todos los objetivos explícitos, incluidos los omitidos por el extractor.
+
+Las anotaciones de la cohorte requerirán confirmación o corrección individual por un revisor humano; la referencia final del benchmark tendrá anotación humana ciega a anotaciones preliminares y predicciones. Las anotaciones preliminares del benchmark solo pueden sustentar comparaciones provisionales, no una estimación independiente de exactitud. Ninguna anotación preliminar se registra como decisión humana.
+
+\subsection{Afinidad operacional y comparación entre bloques}
+Los videos se dividen por hash en A y B, con semilla 42, independientemente de sus resultados. Para el usuario $i$ se asigna afinidad al bloque con mayoría positiva única en A, siempre que reúna al menos dos eventos positivos en al menos dos videos y una proporción dominante de positivos $\geq2/3$. En otro caso la afinidad es indeterminada; ello no permite inferir abstención electoral, desafección o ausencia de identidad política.
+
+La evaluación usa exclusivamente B. Un usuario es comparable si tiene eventos evaluables hacia ambos bloques, al menos tres eventos en total y al menos dos videos. Estos criterios definen una subpoblación observada; no autorizan generalizar a todos los comentaristas. La partición reduce el uso de la misma evidencia para asignar y evaluar afinidad, pero no elimina dependencia entre expresiones de un mismo usuario.
+
+Sea $g_i$ el bloque de afinidad asignado en A, y $\bar g_i$ el bloque opuesto. Para $g\in\{L,R\}$ (izquierda y derecha), los conteos $\pos^B_{ig}$, $\negc^B_{ig}$ y $\neu^B_{ig}$ corresponden a eventos evaluables en B. Se define
+\begin{equation}
+N^B_{ig}=\pos^B_{ig}+\negc^B_{ig}+\neu^B_{ig},\qquad
+b^B_{ig}=\pos^B_{ig}-\negc^B_{ig}.
+\end{equation}
+Las medidas secundarias adaptadas de \cite{polariz} son
+\begin{align}
+\mathrm{AP}_{In,i}&=b^B_{i,g_i}, &
+\mathrm{AP}_{Out,i}&=b^B_{i,\bar g_i},\\
+\mathrm{AP}_i&=\mathrm{AP}_{In,i}-\mathrm{AP}_{Out,i},\label{eq:ap}\\
+\mathrm{spread}_i&=\sqrt{\frac{(b^B_{iL})^2+(b^B_{iR})^2}{N^B_{iL}+N^B_{iR}}}.\label{eq:spread}
+\end{align}
+AP conserva conteos y depende de actividad. El denominador de spread cuenta eventos comentario--bloque evaluables, incluidos los neutrales, no todos los comentarios de YouTube. Por ello la adaptación no es numéricamente equivalente al estudio de referencia ni una escala psicológica validada.
+
+El contraste principal usa balances normalizados:
+\begin{equation}
+\mathrm{gap}_i=
+\frac{\mathrm{AP}_{In,i}}{N^B_{i,g_i}}-
+\frac{\mathrm{AP}_{Out,i}}{N^B_{i,\bar g_i}}\in[-2,2].
+\label{eq:gap}
+\end{equation}
+Solo se define con evidencia en ambos bloques. Su promedio atribuye igual contribución a cada usuario comparable. Un valor positivo expresa favorabilidad relativa hacia el bloque de afinidad: puede coexistir con valoraciones positivas hacia ambos bloques. La valoración externa negativa requiere examinar por separado el segundo balance y su incertidumbre. No se definen niveles universales bajo/medio/alto ni se interpreta confianza del clasificador como intensidad afectiva.
+
+\begin{algorithm}[t]
+\caption{Selección y medición por usuario}
+\label{alg:medicion}
+\begin{algorithmic}[1]
+\Require Corpus congelado, registro y orden de usuarios fijados.
+\Ensure Cohorte auditable y contrastes, o insuficiencia documentada.
+\ForAll{lote de 100 usuarios siguiendo el orden}
+\State Anotar todos sus comentarios y conservar procedencia.
+\State Separar anotaciones preliminares y decisiones humanas.
+\State Colapsar objetivos en eventos comentario--bloque.
+\State Asignar afinidad con A y comprobar cobertura en B.
+\If{hay 800 comparables o se agotó el marco}
+\State Finalizar selección; conservar todos los examinados.
+\State \textbf{Salir del bucle de lotes.}
+\EndIf
+\EndFor
+\State Calcular gap y medidas secundarias sobre B.
+\State Estimar intervalos y ejecutar sensibilidades.
+\State Identificar salida provisional o con revisión humana final.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Incertidumbre y sensibilidad}
+Se prevén 2,000 remuestreos cruzados de usuarios y canales, con canales estratificados por procedencia editorial. En cada réplica se recalculan afinidad y elegibilidad; la selección de videos queda contenida en el remuestreo de sus canales. Se estiman intervalos percentiles del 95\% únicamente con al menos 80\% de réplicas válidas; de lo contrario se informa insuficiencia. Estos intervalos describen incertidumbre dentro del marco observado, sin corregir sesgos de selección de canales.
+
+El gap global es el contraste principal, sin ajuste múltiple. Se aplica Holm a los contrastes secundarios, incluidos balances y diferencias entre afinidades. Las sensibilidades mantienen los usuarios primarios y examinan inversión A/B, contribución equilibrada por video, exclusión individual de los tres actores más frecuentes y uso del componente histórico sin ampliación. Se informa cuántos siguen siendo comparables bajo cada variante, sin sustituir silenciosamente usuarios perdidos.
+
+\subsection{Entrenamiento y evaluación de clasificadores}
+Se comparan cuatro bases: RoBERTuito \cite{robertuito}, BETO \cite{BETOResource}, BERTIN/RoBERTa \cite{BERTINResource} y XLM-RoBERTa \cite{XLMR2020}. Son modelos ajustados para pares nombre del objetivo--comentario con cinco clases. RoBERTuito parte de \texttt{pysentimiento/robertuito-base-uncased}; no es el antiguo modelo peruano de sentimiento general. Las revisiones de las cuatro bases están congeladas y registradas por hash.
+
+El entrenamiento recibe exclusivamente desarrollo humano v2: 1,291 pares de entrenamiento y 278 de validación antes del filtro. La intersección de contexto completo entre los cuatro tokenizadores deja 1,148 y 264 pares, respectivamente. La capacidad efectiva de RoBERTuito es 128 tokens; las otras tres bases admiten 512. Todos se ajustan y comparan sobre los mismos pares completos, sin etiquetas de la nueva cohorte ni del benchmark. La preparación descarta las filas de prueba antes de decodificar sus anotaciones.
+
+Se completaron tres semillas (42, 43, 44) por base, doce ajustes en total. La receta común usa AdamW, tasa $2\times10^{-5}$, decaimiento .01, lote efectivo 16 con microlotes de 4, clip de gradiente 1, máximo ocho épocas y paciencia dos. Los pesos de clase son inversos a la raíz de sus frecuencias. RoBERTuito utiliza el preprocesamiento de redes sociales de \texttt{pysentimiento} 0.7.3; las demás bases reciben texto original. Las revisiones, el entorno y los checkpoints se conservan; no se interpretan las rondas exploratorias anteriores como ajustes de esta comparación cerrada.
+
+Se promedian las probabilidades de las tres semillas. La temperatura y los umbrales por clase se estiman solo con validación, con objetivo de precisión aceptada .85 y al menos diez predicciones para admitir un umbral. Si no se alcanza el criterio, la clase se deshabilita con umbral 1.01. En inferencia, entradas sin contexto completo se abstienen. El criterio es una decisión operacional del estudio y no una norma universal de publicación.
+
+El macro-F1 informado promedia las clases positiva, negativa y neutral; las cinco clases participan en las predicciones y sus errores. La precisión aceptada se calcula después de aplicar umbrales. La cobertura de desarrollo es la fracción ponderada de todos los pares candidatos comunes que reciben una predicción aceptada positiva, negativa o neutral; no incluye objetivos omitidos por el extractor.
+
+La evaluación independiente pendiente separará extracción integral (omisiones incluidas) y clasificación condicional con contexto común. Reportará desempeño por bloque objetivo, fuente y tipo de comentario; intervalos por remuestreo de videos y seis contrastes pareados entre modelos, con Holm. La comparación con sentimiento general solo puede hacerse sobre exactamente el mismo subconjunto con baseline disponible. Los errores de AP/gap en historiales son un diagnóstico de medición, no una evaluación predictiva independiente si comparten desarrollo. Ninguna etapa promueve automáticamente modelos para inferencia del corpus.
+
+\section{Resultados disponibles y resultados pendientes}
+\subsection{Comparación de desarrollo completada}
+La Tabla~\ref{tab:modelos} reproduce la comparación de los cuatro modelos sobre los 264 pares comunes. Son resultados de validación reutilizada, no una prueba independiente. El macro-F1 emplea pesos muestrales y se calcula antes de abstenerse; las precisiones y cobertura corresponden a los umbrales guardados.
+
+\begin{table*}[t]
 \centering
-\caption{Métricas individuales por grupo de afinidad operacional.}
-\label{tab:ap_spread}
-\begin{tabular}{lrr}
-\hline
-Métrica & Derecha & Izquierda \\
-\hline
-Usuarios & 19{,}861 & 23{,}489 \\
-AP$_{In}$ medio & 0.377 & $-1.065$ \\
-AP$_{Out}$ medio & $-1.200$ & $-0.956$ \\
-AP medio & 1.577 & $-0.109$ \\
-\textit{Spread} medio & 1.150 & 1.189 \\
-\textit{Spread} alto (\%) & 8.21 & 10.53 \\
-\hline
+\caption{Desarrollo completado: validación reutilizada. Cobertura condicional a los pares candidatos comunes, no a todos los objetivos reales.}
+\label{tab:modelos}
+\begin{tabular}{lrrrr}
+\toprule
+Modelo & Macro-F1 & Precisión positiva aceptada & Precisión negativa aceptada & Cobertura condicional\\\midrule
+RoBERTuito & 0.6439 & 85.76\% & 95.35\% & 24.46\%\\
+BETO & 0.4768 & 86.22\% & 88.44\% & 37.16\%\\
+BERTIN & 0.4553 & 85.02\% & Sin predicciones & 3.70\%\\
+XLM-RoBERTa & 0.4278 & 85.11\% & Sin predicciones & 14.95\%\\\bottomrule
 \end{tabular}
-\end{table}
+\end{table*}
 
-Las Figuras~\ref{fig:ap_in}--\ref{fig:spread} muestran distribuciones
-concentradas cerca de cero y colas con observaciones extremas para AP$_{In}$,
-AP$_{Out}$ y AP; el \textit{spread} es no negativo y se extiende hacia valores
-altos. En conjunto, las figuras muestran cómo se distribuyen los valores de
-polarización afectiva y dispersión entre los usuarios asignados a cada grupo
-durante el ciclo electoral peruano analizado.
+RoBERTuito obtiene el mayor macro-F1 y BETO la mayor cobertura condicional. Los cuatro deshabilitan predicciones neutrales tras calibrar; BERTIN y XLM-RoBERTa también deshabilitan negativas. La precisión elevada entre las predicciones aceptadas no implica precisión equivalente sobre todos los comentarios. Ninguno alcanza el mínimo operacional de macro-F1 .75; estas cifras no justifican habilitar inferencia automática del corpus.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.98\linewidth]{docs/figures/plot_ap_in.png}
-    \caption{Distribución individual de AP$_{In}$ por grupo de afinidad operacional.}
-    \label{fig:ap_in}
-\end{figure}
+La importación verificó doce ajustes y 99 archivos de resultados, incluidos checkpoints y calibración. Esta integridad respalda la trazabilidad de la ejecución, no la validez sustantiva de una medida de polarización. No se atribuyen diferencias frente a rondas anteriores a una arquitectura cuando cambiaron receta o subconjunto.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.98\linewidth]{docs/figures/plot_ap_out.png}
-    \caption{Distribución individual de AP$_{Out}$ por grupo de afinidad operacional.}
-    \label{fig:ap_out}
-\end{figure}
+\subsection{Composición final del corpus y la cohorte}
+\pendiente{Cerrar la captura, congelar la unión y reportar comentarios únicos, respuestas, videos, canales y exclusiones. Informar usuarios examinados, comparables tras revisión, indeterminados y pérdidas por criterio. Los 800 usuarios son una meta, no un resultado alcanzado.}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.98\linewidth]{docs/figures/plot_ap_final.png}
-    \caption{Distribución individual de AP por grupo de afinidad operacional.}
-    \label{fig:ap}
-\end{figure}
+\subsection{Medición de polarización expresada}
+\pendiente{Incorporar balances internos y externos, AP, spread, gap global y por afinidad, con intervalos y réplicas válidas a partir de la referencia humana final. No hay todavía una estimación cerrada que permita afirmar presencia o magnitud de polarización.}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.98\linewidth]{docs/figures/plot_spread.png}
-    \caption{Distribución individual de \textit{spread} por grupo de afinidad operacional.}
-    \label{fig:spread}
-\end{figure}
+\subsection{Robustez y evaluación independiente}
+\pendiente{Presentar las sensibilidades preespecificadas y la evaluación del benchmark humano ciego: extracción, clasificación, cobertura integral e intervalos. Las anotaciones preliminares y sus análisis deben identificarse como provisionales si se presentan antes del cierre humano.}
 
-En la Figura~\ref{fig:ap_in}, el promedio de AP$_{In}$ es positivo para los
-usuarios asignados a derecha ($0.377$) y negativo para los asignados a
-izquierda ($-1.065$). La Figura~\ref{fig:ap_out} muestra promedios negativos
-de AP$_{Out}$ en ambos grupos ($-1.200$ y $-0.956$, respectivamente).
+\section{Discusión y limitaciones}
+Los resultados de desarrollo muestran una tensión entre admitir predicciones y alcanzar precisión en el subconjunto aceptado. Las clases deshabilitadas y la baja cobertura impiden tratar las etiquetas automáticas como sustituto de una referencia completa. Tampoco aumentar el volumen de comentarios corrige por sí solo una atribución errónea del objetivo. La rama anotada permite investigar P1 y P2 sin condicionar la medición al éxito de un clasificador.
 
-La Figura~\ref{fig:ap} resume estos balances: el AP medio es positivo para
-derecha ($1.577$) y cercano a cero para izquierda ($-0.109$), con valores
-dispersos en ambos grupos. En la Figura~\ref{fig:spread}, las medias son
-próximas ($1.150$ para derecha y $1.189$ para izquierda), mientras que la
-proporción de nivel alto es mayor en izquierda ($10.53\%$ frente a $8.21\%$).
+La medición sigue condicionada al registro explícito y a la documentación de bloques. Puede omitir referencias implícitas, apodos no registrados o actores de bloque desconocido. La cohorte comparable exige actividad y evidencia hacia ambos bloques; no representa a usuarios poco activos o sin afinidad determinada. Se mantiene la auditoría de todos los examinados para hacer visibles estas exclusiones.
 
-El promedio global de AP fue $0.664$ (DE $6.976$) y el de \textit{spread} fue
-$1.171$ (DE $0.882$).
+La revisión de anotaciones preliminares por un único humano puede conservar sesgos del etiquetado inicial y no estima acuerdo entre codificadores. La anotación ciega del nuevo benchmark mejora la independencia respecto de las predicciones, pero no aporta por sí sola una medida de acuerdo humano. La revisión pendiente no debe describirse como validación ya obtenida.
 
-\subsection{Comparación e interpretación de los resultados}
+La independencia del benchmark se refiere a su separación respecto del desarrollo de los modelos. Antes del cierre se auditará si el revisor vio previamente sus comentarios dentro de historiales de la cohorte; ocultar propuestas en la interfaz no elimina esa exposición. Cualquier solapamiento y exposición previa deberán declararse al interpretar la referencia.
 
-\subsubsection{Contraste con el estudio de referencia}
-Al contrastar estos patrones con los de Martínez-España et al. \cite{polariz}, se observa una coincidencia estructural relevante: en ambos marcos, la animosidad exogrupal ($\mathrm{AP}_{Out}$) es predominantemente negativa ($-1.223$ y $-1.160$ en el estudio de referencia frente a $-1.200$ y $-0.956$ en esta corrida), evidenciando que el distanciamiento hacia grupos rivales o medios no afines constituye el patrón discursivo más consistente. No obstante, mientras que el estudio citado reportó un $\mathrm{AP}_{In}$ positivo en todas las facciones ($8.662$ para derecha y $6.813$ para izquierda), nuestro corpus exhibe una marcada asimetría: un valor positivo para la derecha ($0.377$) frente a un balance fuertemente negativo para la izquierda ($-1.065$), derivando en un AP medio de $1.577$ frente a $-0.109$ (en contraste con $9.885$ y $7.972$ derivados de las tablas del estudio de referencia). Asimismo, las medias de \textit{spread} ($1.150$ y $1.189$) y las proporciones de nivel alto ($8.21\%$ y $10.53\%$) son menores a las del estudio de referencia ($1.874$ y $1.748$; $15.89\%$ y $13.35\%$), lo cual responde a que nuestro denominador restringe la normalización al volumen de intervenciones con valencia determinada y a las diferencias inherentes de escala entre plataformas.
+La captura tardía no reconstruye un archivo exhaustivo del discurso de enero--junio. Eliminación, edición, moderación, desigualdad entre canales y límites del histórico afectan la cobertura. Las respuestas identifican pertenencia al hilo, no necesariamente interacción afectiva entre autores concretos. Los intervalos agrupados no corrigen todos estos sesgos.
 
-\subsubsection{Interpretación en el contexto electoral peruano de 2026}
-Más allá de los contrastes metodológicos, los hallazgos cobran significado sustantivo al situarse en la coyuntura de las elecciones presidenciales peruanas de 2026, caracterizadas por una contienda sumamente reñida en segunda vuelta, el triunfo estrecho del bloque de derecha y un histórico desencanto ciudadano expresado en elevados índices de ausentismo, votos blancos y nulos.
+La comparación con Martínez-España et al. es metodológica: se conservan balances y se explicitan cambios de unidad, afinidad y denominador. No se reutilizan cortes numéricos para niveles de polarización ni se concluye superioridad por disponer de más comentarios. Un gap positivo no constituye por sí solo hostilidad externa, segregación, causalidad electoral o una estimación de actitudes de votantes peruanos.
 
-En primer término, la asimetría observada en el apego intragrupal ($\mathrm{AP}_{In}$) y en la polarización neta ($\mathrm{AP}$) se alinea con las dinámicas de movilización de la campaña. Para la derecha, el balance intra-canal positivo ($0.377$) y un AP neto de $1.577$ reflejan una comunidad digital con mayor cohesión interna, apego partidario y capacidad de defensa discursiva, factores determinantes en una contienda polarizada que culminó con su victoria electoral. En contraste, en la izquierda, el $\mathrm{AP}_{In}$ marcadamente negativo ($-1.065$) captura una conversación fragmentada, atravesada por la autocrítica, el desencanto y la decepción frente a sus propios liderazgos y candidaturas. Aunque este bloque mantuvo un rechazo sostenido hacia el adversario ($\mathrm{AP}_{Out} = -0.956$), la ausencia de entusiasmo o respaldo afirmativo hacia sus propios canales ilustra las dificultades de cohesión y movilización que enfrentó este sector en las urnas.
+\subsection{Disponibilidad y tratamiento de materiales}
+Los datos provienen de comentarios públicos, sin contacto con sus autores. Esta versión no reproduce identificadores ni ejemplos rastreables de usuarios. Los datos, propuestas, decisiones y checkpoints permanecen en almacenamiento local y recursos privados; no se afirma una liberación pública. La reproducibilidad se apoya en configuración versionada, procedencia, semillas y hashes. No se declara una aprobación institucional no documentada.
+\pendiente{Completar la declaración de acceso a código y materiales y, si corresponde, la revisión ética institucional documentada antes del envío. No publicar automáticamente textos ni identificadores.}
 
-En segundo término, la alta proporción de usuarios clasificados como \textit{Undetermined} ($75.83\%$, correspondiente a $136{,}005$ participantes) encuentra correspondencia directa con la desafección política de la ciudadanía peruana. La ausencia de interacciones positivas sistemáticas hacia las opciones partidarias en contienda refleja la postura del amplio segmento de la población que optó por el voto blanco, viciado o la abstención electoral. Estos usuarios acuden a las secciones de comentarios para deliberar sobre la coyuntura o expresar indignación ciudadana, pero rehúyen la adscripción o lealtad hacia los bloques políticos tradicionales.
+\section{Conclusiones y trabajo pendiente}
+Se implementó un diseño que separa valoración dirigida, afinidad operacional y procedencia editorial, con medición por historiales y evaluación independiente de clasificadores como ramas distintas. La comparación cerrada de desarrollo completó doce ajustes; RoBERTuito obtuvo el mayor macro-F1 y BETO la mayor cobertura condicional, sin que ningún modelo habilite producción automática.
 
-Por último, la favorabilidad marcadamente negativa en el pool de medios neutrales ($-0.527$, con $62.24\%$ de comentarios desfavorables) ilustra el descrédito generalizado hacia la prensa convencional en el país. Lejos de funcionar como espacios de consenso o moderación, las plataformas de los medios informativos tradicionales son percibidas con recurrente desconfianza institucional y sesgo editorial por parte de las audiencias, convirtiéndose en el principal foco de hostilidad y desahogo discursivo de los usuarios.
-
-\subsection{Limitaciones}
-
-El presente análisis debe interpretarse considerando tres delimitaciones metodológicas: primero, el modelo clasifica la valencia afectiva general del texto y no su postura dirigida (\textit{stance}) hacia un actor específico, de modo que una crítica a una noticia puede computarse como valencia negativa sin implicar necesariamente rechazo al canal o candidato; segundo, las métricas acumulativas de AP son sensibles a la frecuencia de publicación de superusuarios altamente activos; y tercero, la delimitación del universo individual y del denominador de \textit{spread} excluye a usuarios que comentaron de forma exclusivamente neutral. Por ende, los resultados caracterizan el clima y la interacción afectiva en canales clasificados de YouTube, constituyendo indicadores exploratorios del discurso digital y no estimaciones directas de la intención de voto ni de la polarización ciudadana global.
-
-
-
-\section{Conclusiones y trabajo futuro}
-
-En este trabajo se implementó un pipeline reproducible de aprendizaje profundo para analizar el sentimiento político y cuantificar la polarización afectiva individual en comentarios públicos de YouTube durante las elecciones presidenciales peruanas de 2026. A partir de un corpus unificado de $827{,}287$ comentarios pertenecientes a $11{,}786$ videos de canales clasificados editorialmente (izquierda, derecha y un pool neutral de control), se evaluó el desempeño del modelo \textit{pyupeu/robertuito-peruvian-sentiment} adaptado al contexto dialectal peruano y se extendió la formulación metodológica de Martínez-España et al.
-
-A nivel agregado, los resultados revelan una favorabilidad neta desfavorable en todos los bloques editoriales, acentuándose notablemente en los medios tradicionales de control neutral ($-0{,}527$, ponderada normalizada $-0{,}436$). A nivel individual, los balances de polarización afectiva reflejan dinámicas diferenciadas: los usuarios asignados a la derecha registraron un AP medio positivo ($1{,}577$) impulsado por un $\mathrm{AP}_{In}$ favorable ($0{,}377$), mientras que los afines a la izquierda exhibieron un AP medio negativo ($-0{,}109$) producto de un balance negativo intra-grupo ($\mathrm{AP}_{In} = -1{,}065$). En ambos colectivos, el $\mathrm{AP}_{Out}$ medio resultó marcadamente negativo ($-1{,}200$ y $-0{,}956$), evidenciando una animosidad exogrupal que engloba tanto al partido rival como a la cobertura de los medios tradicionales. Asimismo, un $75{,}83\,\%$ de los usuarios evaluables fue catalogado como \textit{Undetermined}, lo que confirma la baja recurrencia de expresiones positivas hacia partidos y resalta la necesidad metodológica de no imponer adscripciones ideológicas forzadas.
-
-Como principal límite interpretativo, debe subrayarse que la valencia general del texto no equivale a la postura dirigida (\textit{stance}) hacia un actor político concreto, y que las medidas acumulativas son sensibles al volumen de interacción. Para trabajos futuros, se proyecta incorporar modelos de detección de postura y análisis de sentimiento basado en aspectos, así como auditar la robustez de las métricas mediante controles de sensibilidad por cobertura de canal, umbrales de actividad y remuestreos agrupados.
-
-% % conference papers do not normally have an appendix
-
-
-% % use section* for acknowledgement
-% % \section*{Acknowledgment}
-
-
-% % The authors would like to thank...
-
-
-
-
-
-% % trigger a \newpage just before the given reference
-% % number - used to balance the columns on the last page
-% % adjust value as needed - may need to be readjusted if
-% % the document is modified later
-% %\IEEEtriggeratref{8}
-% % The "triggered" command can be changed if desired:
-% %\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% % references section
-
-% % can use a bibliography generated by BibTeX as a .bbl file
-% % BibTeX documentation can be easily obtained at:
-% % http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
-% % The IEEEtran BibTeX style support page is at:
-% % http://www.michaelshell.org/tex/ieeetran/bibtex/
-% %\bibliographystyle{IEEEtran}
-% % argument is your BibTeX string definitions and bibliography database(s)
-% %\bibliography{IEEEabrv,../bib/paper}
-% %
-% % <OR> manually copy in the resultant .bbl file
-% % set second argument of \begin to the number of references
-% % (used to reserve space for the reference number labels box)
+El artículo todavía no ofrece conclusiones empíricas finales sobre la polarización expresada. Completar captura, referencias humanas, incertidumbre y sensibilidades es necesario para responder las preguntas sustantivas. Los resultados futuros deberán informarse aun si muestran balances nulos, contrarios a lo esperado o imprecisos, sin cambiar criterios para obtener evidencia afirmativa.
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv, references}
-
-
+\bibliography{IEEEabrv,docs/references}
 \end{document}
-

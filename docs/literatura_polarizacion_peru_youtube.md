@@ -5,6 +5,8 @@
 
 ## Propósito y conclusión
 
+**Actualización 2026-11-14:** el usuario autorizó un rediseño con dos revisores y 2,000 comentarios. La orientación histórica de este documento «sin etiquetado manual» queda sustituida para el nuevo método por [el protocolo dirigido](metodo_polarizacion_dirigida.md). Sus cifras antiguas se conservan como contexto de la corrida previa; no son las del método nuevo.
+
 El objetivo del proyecto es interpretar la polarización política en Perú a partir de comentarios públicos de YouTube. No se plantea aumentar los valores de AP ni hacer etiquetado manual. La revisión sirve para contextualizar qué patrones son frecuentes, cuáles varían entre países y qué afirmaciones permite el corpus actual.
 
 La literatura muestra algunas similitudes generales —favoritismo hacia el grupo propio y rechazo hacia grupos externos—, pero no un patrón universal en la magnitud de la polarización, en el lado político con mayor AP o en su evolución temporal. El contexto, el sistema de partidos, el momento electoral, la plataforma y la definición operacional importan. Por eso el paper español es un antecedente metodológico, no un valor esperado para Perú.

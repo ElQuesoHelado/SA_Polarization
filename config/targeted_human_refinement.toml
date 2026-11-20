@@ -1,0 +1,22 @@
+schema_version = 1
+protocol = "targeted-human-refinement-v1"
+parent_experiment_id = "development_ai_augmentation_v1"
+comparison_experiment_id = "development_blend_20261116_v1"
+maximum_fits = 3
+final_seeds = [42, 43, 44]
+learning_rates = [0.000002]
+objectives = ["class_balanced"]
+maximum_epochs = 2
+fixed_epochs = true
+effective_batch_size = 16
+weight_decay = 0.01
+gradient_clip = 1.0
+calibration_folds = 5
+calibration_seed = 57
+
+[[models]]
+id = "beto_human_refined"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "d1c9c4565c9d6731e57ed7f027b802697bad861e"
+maximum_tokens = 512
+physical_batch_size = 4

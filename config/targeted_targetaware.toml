@@ -1,0 +1,28 @@
+schema_version = 1
+protocol = "targeted-target-aware-v1"
+parent_experiment_id = "development_20261115_v1"
+learning_rates = [0.00001]
+objectives = ["class_balanced"]
+final_seeds = [42, 43, 44]
+maximum_fits = 6
+maximum_epochs = 8
+patience = 2
+effective_batch_size = 16
+weight_decay = 0.01
+gradient_clip = 1.0
+
+[[models]]
+id = "beto_marked_cls"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "d1c9c4565c9d6731e57ed7f027b802697bad861e"
+representation = "marked_cls"
+maximum_tokens = 512
+physical_batch_size = 4
+
+[[models]]
+id = "beto_target_max"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "d1c9c4565c9d6731e57ed7f027b802697bad861e"
+representation = "marked_target_max"
+maximum_tokens = 512
+physical_batch_size = 4

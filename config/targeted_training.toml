@@ -1,0 +1,26 @@
+schema_version = 1
+protocol = "targeted-development-comparison-v1"
+learning_rates = [0.00001, 0.00002]
+objectives = ["class_balanced", "sampling_weighted"]
+screening_seed = 42
+final_seeds = [42, 43, 44]
+maximum_fits = 12
+maximum_epochs = 8
+patience = 2
+effective_batch_size = 16
+weight_decay = 0.01
+gradient_clip = 1.0
+
+[[models]]
+id = "robertuito"
+model = "pysentimiento/robertuito-base-uncased"
+revision = "20cb399e4b93f270c0cd6b6f533bcb0ada3cb658"
+maximum_tokens = 128
+physical_batch_size = 16
+
+[[models]]
+id = "beto"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "resolve_once"
+maximum_tokens = 512
+physical_batch_size = 4

@@ -1,0 +1,66 @@
+{
+  "downloaded": [
+    {
+      "id": "chae-2024",
+      "title": "Where do cross-cutting discussions happen?",
+      "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0302030&type=printable",
+      "local_pdf": "pdfs/contexto/chae-2024.pdf",
+      "sha256": "c6321d9463700ab85216df5ca858c1400352545b7363983e0882c4ecec96e794",
+      "bytes": 465217,
+      "verified_at": "2026-11-14T06:41:59.568694+00:00"
+    },
+    {
+      "id": "bessi-2016",
+      "title": "Users Polarization on Facebook and Youtube",
+      "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0159641&type=printable",
+      "local_pdf": "pdfs/contexto/bessi-2016.pdf",
+      "sha256": "f881b97b576599c2d7a974cbb7aac64ce1dd30f6231b1ea421d900d3982645d6",
+      "bytes": 2433061,
+      "verified_at": "2026-11-14T06:41:59.627597+00:00"
+    },
+    {
+      "id": "lee-kim-2026",
+      "title": "Asymmetric Dynamics of Partisan Warriors in YouTube Comments",
+      "url": "https://arxiv.org/pdf/2603.21776",
+      "local_pdf": "pdfs/contexto/lee-kim-2026.pdf",
+      "sha256": "2695463892b4d0360ce53d4c7ff2645ea1815f67e2bc7cd2a6e55ae53e988f58",
+      "bytes": 1666480,
+      "verified_at": "2026-11-14T06:41:59.690375+00:00"
+    },
+    {
+      "id": "mutlu-ozgur-2022",
+      "title": "A Dataset and BERT-based Models for Targeted Sentiment Analysis on Turkish Texts",
+      "url": "https://aclanthology.org/2022.acl-srw.39.pdf",
+      "local_pdf": "pdfs/contexto/mutlu-ozgur-2022.pdf",
+      "sha256": "b6788b54e92bf90f74450af7c57b1694b2683f582e34c0056caeeee8fb33739e",
+      "bytes": 176340,
+      "verified_at": "2026-11-15T21:53:19.392146+00:00"
+    },
+    {
+      "id": "bansal-sharma-2023",
+      "title": "Large Language Models as Annotators: Enhancing Generalization of NLP Models at Minimal Cost",
+      "url": "https://arxiv.org/pdf/2306.15766",
+      "local_pdf": "pdfs/contexto/bansal-sharma-2023.pdf",
+      "sha256": "7b231890c41f75792657b62d3c27bd876a5ae546854c32c8832ce7e120de89c5",
+      "bytes": 484668,
+      "verified_at": "2026-11-16T04:03:12.084209+00:00"
+    },
+    {
+      "id": "jiang-2021",
+      "title": "Named Entity Recognition with Small Strongly Labeled and Large Weakly Labeled Data",
+      "url": "https://aclanthology.org/2021.acl-long.140.pdf",
+      "local_pdf": "pdfs/contexto/jiang-2021.pdf",
+      "sha256": "e159eeb774556f4a867b9fdf518dfda89621c4769c2d4c03651b1b71f18a23fe",
+      "bytes": 1922035,
+      "verified_at": "2026-11-16T18:54:04.587296+00:00"
+    }
+  ],
+  "unavailable": [
+    {
+      "id": "tran-2022",
+      "url": "https://journals.sagepub.com/doi/pdf/10.1177/21582440221094587",
+      "status": "download_unavailable",
+      "http_status": 403
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+schema_version = 1
+protocol = "targeted-publication-v1"
+parent_config = "config/targeted_v2.toml"
+parent_run = "targeted_20261115_v2"
+registry = "config/political_targets_v3.json"
+study_id = "ap_publication_20261117_v1"
+seed = 42
+selection_seed = 57
+comparable_users = 800
+batch_users = 100
+benchmark_counts = [1000, 1000, 500, 500]
+bootstrap_iterations = 2000
+daily_api_budget = 2500
+planned_design_effect = 2.0
+planned_half_width = 0.20
+maximum_fits = 12
+model_seeds = [42, 43, 44]
+maximum_epochs = 8
+patience = 2
+effective_batch_size = 16
+weight_decay = 0.01
+gradient_clip = 1.0
+learning_rate = 0.00002
+
+[kaggle]
+dataset_id = "josealvacornejo/sa-polarization-publication-data"
+training_kernel_id = "josealvacornejo/sa-polarization-publication-training"
+inference_kernel_id = "josealvacornejo/sa-polarization-publication-predict"
+
+[[models]]
+id = "robertuito"
+model = "pysentimiento/robertuito-base-uncased"
+revision = "20cb399e4b93f270c0cd6b6f533bcb0ada3cb658"
+maximum_tokens = 512
+physical_batch_size = 4
+
+[[models]]
+id = "beto"
+model = "dccuchile/bert-base-spanish-wwm-uncased"
+revision = "d1c9c4565c9d6731e57ed7f027b802697bad861e"
+maximum_tokens = 512
+physical_batch_size = 4
+
+[[models]]
+id = "bertin"
+model = "bertin-project/bertin-roberta-base-spanish"
+revision = "72b7e584ff8552880b39045a8bb80d86dcc27672"
+maximum_tokens = 512
+physical_batch_size = 4
+
+[[models]]
+id = "xlm_roberta"
+model = "FacebookAI/xlm-roberta-base"
+revision = "e73636d4f797dec63c3081bb6ed5c7b0bb3f2089"
+maximum_tokens = 512
+physical_batch_size = 4

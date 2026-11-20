@@ -1,0 +1,10 @@
+schema_version = 1
+protocol = "targeted-probability-blend-development-v1"
+parent_experiment_id = "development_ai_augmentation_v1"
+augmented_weights = [0.25, 0.50, 0.75]
+maximum_new_candidates = 3
+calibration_folds = 5
+seed = 57
+bootstrap_iterations = 2000
+# Same mixture for every target, block and user. No learned routing or new fits.
+# Threshold/temperature grids and minimum calibration support remain unchanged.

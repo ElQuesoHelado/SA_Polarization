@@ -116,7 +116,7 @@ def _sentiment_summary(frame: pd.DataFrame, output: Path) -> None:
 
 
 def _empty_polarization(output: Path) -> None:
-    columns = ["user_id", "ingroup", "AP_In", "AP_Out", "AP", "spread", "n_interacciones", "nivel_AP", "nivel_spread"]
+    columns = ["user_id", "ingroup", "AP_In", "AP_Out", "AP_Out_politico", "balance_neutral", "AP_sin_neutral", "AP", "spread", "n_interacciones", "n_interacciones_valencia", "nivel_AP", "nivel_spread"]
     pd.DataFrame(columns=columns).to_csv(output / "ap_individual.csv", index=False)
     pd.DataFrame(columns=["mean", "std", "count"]).to_csv(output / "polarizacion_por_grupo.csv")
     for xlabel, filename in (("Affective polarization in-group (AP_In)", "plot_ap_in.png"), ("Affective polarization out-group (AP_Out)", "plot_ap_out.png"), ("Affective polarization (AP)", "plot_ap_final.png"), ("Spread", "plot_spread.png")):
@@ -126,11 +126,12 @@ def _empty_polarization(output: Path) -> None:
 
 
 def _polarization(frame: pd.DataFrame, output: Path) -> None:
-    work = frame.loc[frame["sentimiento"].isin(["positive", "negative"])].copy()
-    if work.empty or work["user_id"].dropna().empty:
+    frame = frame.loc[frame["user_id"].notna()].copy()
+    if frame.empty:
         _empty_polarization(output)
         return
-    users = work["user_id"].dropna().unique()
+    work = frame.loc[frame["sentimiento"].isin(["positive", "negative"])].copy()
+    users = frame["user_id"].unique()
     tags = frame["party"].dropna().unique().tolist()
     parties = [tag for tag in tags if tag != "neutral"]
     matrix = work.groupby(["user_id", "party", "sentimiento"]).size().unstack(fill_value=0)
@@ -139,6 +140,8 @@ def _polarization(frame: pd.DataFrame, output: Path) -> None:
             matrix[sentiment] = 0
     positive = matrix["positive"].unstack(fill_value=0).reindex(index=users, columns=tags, fill_value=0)
     negative = matrix["negative"].unstack(fill_value=0).reindex(index=users, columns=tags, fill_value=0)
+    total_comments = frame.groupby("user_id").size().reindex(users, fill_value=0)
+    valenced_comments = positive.sum(axis=1) + negative.sum(axis=1)
     ingroups = []
     for _, row in positive.reindex(columns=parties, fill_value=0).iterrows():
         maximum = row.max() if len(row) else 0
@@ -148,19 +151,25 @@ def _polarization(frame: pd.DataFrame, output: Path) -> None:
     records = []
     for user in positive.index:
         selected = ingroup.loc[user]
-        total = positive.loc[user].sum() + negative.loc[user].sum()
+        total = int(total_comments.loc[user])
+        total_valenced = int(valenced_comments.loc[user])
+        balances = positive.loc[user] - negative.loc[user]
+        spread = np.sqrt(float((balances ** 2).sum()) / total) if total else np.nan
         if selected == "Undetermined":
-            ap_in = ap_out = ap = spread = np.nan
+            ap_in = ap_out = ap_out_political = neutral_balance = ap_without_neutral = ap = np.nan
         else:
             ap_in = positive.loc[user, selected] - negative.loc[user, selected]
-            outgroups = [tag for tag in tags if tag != selected]
-            ap_out = sum(positive.loc[user, tag] - negative.loc[user, tag] for tag in outgroups)
+            opposite = "izquierda" if selected == "derecha" else "derecha"
+            ap_out_political = balances.get(opposite, 0)
+            neutral_balance = balances.get("neutral", 0)
+            ap_out = ap_out_political + neutral_balance
+            ap_without_neutral = ap_in - ap_out_political
             ap = ap_in - ap_out
-            spread = np.sqrt(sum((positive.loc[user, tag] - negative.loc[user, tag]) ** 2 for tag in tags) / total) if total else np.nan
-        records.append({"user_id": user, "ingroup": selected, "AP_In": ap_in, "AP_Out": ap_out, "AP": ap, "spread": spread, "n_interacciones": total})
+        records.append({"user_id": user, "ingroup": selected, "AP_In": ap_in, "AP_Out": ap_out, "AP_Out_politico": ap_out_political, "balance_neutral": neutral_balance, "AP_sin_neutral": ap_without_neutral, "AP": ap, "spread": spread, "n_interacciones": total, "n_interacciones_valencia": total_valenced})
     result = pd.DataFrame(records)
-    ap_mean, ap_std = result["AP"].mean(), result["AP"].std()
-    spread_mean, spread_std = result["spread"].mean(), result["spread"].std()
+    classified = result.loc[result["ingroup"] != "Undetermined"]
+    ap_mean, ap_std = classified["AP"].mean(), classified["AP"].std()
+    spread_mean, spread_std = classified["spread"].mean(), classified["spread"].std()
     result["nivel_AP"] = np.select(
         [result["AP"].isna(), result["AP"] < ap_mean - ap_std, result["AP"] > ap_mean + ap_std],
         ["Undetermined", "Bajo", "Alto"], default="Medio",

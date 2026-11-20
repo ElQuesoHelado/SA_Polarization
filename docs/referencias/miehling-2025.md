@@ -1,6 +1,6 @@
 # miehling-2025 — Aspect-Based Sentiment Analysis en YouTube
 
-**Cita completa:** Miehling, E.; Dakota, D.; Kübler, S. (2025). *Investigating Polarization in YouTube Comments via Aspect-Based Sentiment Analysis*. In *Proceedings of the 15th International Conference on Recent Advances in Natural Language Processing (RANLP 2025)*, pp. 784–794. [ACL Anthology](https://aclanthology.org/2025.ranlp-1.83/).
+**Cita completa:** Miehling, D.; Dakota, D.; Kübler, S. (2025). *Investigating Polarization in YouTube Comments via Aspect-Based Sentiment Analysis*. In *Proceedings of the 15th International Conference on Recent Advances in Natural Language Processing (RANLP 2025)*, pp. 718–728. [ACL Anthology](https://aclanthology.org/2025.ranlp-1.83/).
 
 **PDF:** `pdfs/09.miehling-2025.pdf`  
 **Rol:** `youtube-sa-polarizacion` — antecedente metodológico directo de análisis de sentimiento y polarización en comentarios de YouTube.  

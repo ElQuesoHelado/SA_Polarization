@@ -1,66 +1,46 @@
-# nuestro-paper — `docs/doc.tex` (documento en preparación)
+# Manuscrito propio — estudio dirigido en preparación
 
-**Documento:** `docs/doc.tex`
-**Título:** *Análisis de sentimientos y favorabilidad política en comentarios de Youtube durante las elecciones presidenciales peruanas de 2026*.
-**Autor:** Jose Alva Cornejo (Universidad Nacional de San Agustín de Arequipa). Plantilla IJACSA/IEEEtran.
-**Rol:** `paper-propio` — contexto del trabajo que consume el pipeline.
-**Verificado:** 2026-11-10 contra `docs/doc.tex`.
+**Documento:** `docs/doc.tex`. **Actualizado:** 2026-11-18 tras autorización explícita de reescritura. **Título:** *Medición de polarización afectiva expresada en comentarios políticos de YouTube: historiales de usuarios y evaluación de clasificadores en el contexto peruano de 2026*. **Autor:** Jose Alva Cornejo, UNSA. Español; clase IEEEtran conservada, cabecera ficticia IJACSA/2024 retirada.
 
-## Estado y fuente de datos canónica
+## Enfoque y estado
 
-- **Vigente:** Documento completamente unificado sobre el corpus de **YouTube: 827,287 comentarios** de 11,786 videos de 40 canales consolidados (30 monitoreados agrupados en izquierda, derecha y neutral local, más el pool neutral canónico), elecciones peruanas de 2026. Todas las secciones (§Resumen, §Introducción, §Método, §Resultados y §Conclusiones) están alineadas con esta corrida.
-- **TikTok descartado:** Ya no forma parte del trabajo ni de ninguna sección del documento; la única fuente es YouTube.
+El manuscrito separa medición por historiales anotados y evaluación de clasificadores. La comparación de desarrollo terminó; captura ampliada, cohorte y benchmark nuevo siguen pendientes. Los resultados históricos de sentimiento general y AP exploratorio fueron retirados del artículo por decisión del usuario, sin borrar sus datos, figuras ni registros. Ya no aparecen como resultados ni en apéndice.
 
-## Corpus y método
+La fuente metodológica vigente es [estudio publicable](../estudio_publicable.md), estudio `ap_publication_20261117_v1`, configurado en `config/targeted_publication.toml`. La reescritura no modifica la ejecución ni consume la prueba de 500 comentarios.
 
-- **Datos:** `data/processed/comentarios_consolidado.csv` → inferencia Kaggle → `outputs/datos_clasificados.csv` (827,287 filas).
-- **Modelo:** `pyupeu/robertuito-peruvian-sentiment`; salida `(S_i, P_i)` con `S_i ∈ {negative, neutral, positive}` y confianza `P_i ∈ [0,1]`.
-- **Favorabilidad neta (NSS):** `F_neta = (N_pos − N_neg) / N ∈ [−1, 1]`.
-- **Favorabilidad ponderada:** `F_pond = (1/N) Σ s_i P_i`, con `s_i ∈ {1, 0, −1}`.
-- **Ingroup:** `argmax_j Pos_i,j` sobre grupos partidarios (izquierda/derecha); sin positivos o empate → `Undetermined`.
-- **AP_In:** `Pos_i,j − Neg_i,j` con `j = ingroup`.
-- **AP_Out:** `Σ_{j'≠j} (Pos_i,j' − Neg_i,j')` (incluye tanto al partido opuesto como al pool neutral).
-- **AP:** `AP_In − AP_Out`.
-- **spread:** `sqrt( Σ_j (Pos_i,j − Neg_i,j)² / n_i )`, **adaptado de Wagner (2021)**. En el código local `n_i` cuenta comentarios con valencia determinada (positive/negative); el paper de referencia usa el total de interacciones.
-- **Niveles:** bajo/medio/alto por media ± DE de cada indicador, con el criterio de Martínez-España. Umbral de spread alto en la corrida actual: **2.052**.
+## Datos y referencias
 
-## Resultados exactos (corrida documentada en `AGENTS.md`)
+- Corpus dirigido anterior: 805,039 comentarios. Unión histórica preparada: 760,839 filas, tras combinación del histórico y panel, verificación temporal, exclusión de videos reservados y deduplicación. No es una simple resta entre corpus.
+- Marco de recaptura: 11,280 videos; tamaño ampliado final pendiente. Las capturas/versiones no se suman como nuevos comentarios únicos.
+- Registro v3: 124 identidades, 22 con bloque documentado y 102 desconocidas. Fuente editorial, bloque objetivo y valencia son variables distintas.
+- Referencia v2: 2,000 comentarios revisados por un humano con propuestas IA; 1,200/300/500 por entrenamiento/validación/prueba. Los 500 están anotados, pero sin evaluación de modelos y fuera del nuevo entrenamiento.
+- Nuevas metas: 800 usuarios realmente comparables y benchmark de 3,000 comentarios. Son tamaños previstos, no alcanzados. La cohorte usa revisión asistida y el benchmark final anotación humana ciega. No se estima acuerdo entre humanos.
 
-**Tabla 1 — sentimiento y favorabilidad por grupo:**
+## Medición
 
-| party | comentarios | % neg | % neu | % pos | favorabilidad neta | ponderada norm. |
-|---|---:|---:|---:|---:|---:|---:|
-| derecha | 210,278 | 45.46 | 37.33 | 17.21 | −0.282 | −0.238 |
-| izquierda | 293,109 | 52.70 | 29.90 | 17.39 | −0.353 | −0.296 |
-| neutral | 323,900 | 62.24 | 28.23 | 9.54 | −0.527 | −0.436 |
+Afinidad en A, evaluación en B, partición por video con semilla 42. Mayoría positiva única, >=2 positivos en >=2 videos y cuota >=2/3. Comparabilidad en B: ambos bloques, >=3 eventos y >=2 videos. Orden fijo hash de usuarios, semilla 57 y lotes de 100; no seleccionar por AP o significación.
 
-**Tabla 2 — métricas individuales:**
+AP_In/AP_Out y AP usan balances dirigidos en B. Spread divide por eventos comentario–bloque evaluables de B, incluidos neutrales. Gap normaliza cada balance por sus eventos y es el contraste principal; gap positivo no implica por sí solo negatividad externa. Dos mil remuestreos cruzados de usuarios/canales, mínimo 80% de réplicas válidas, Holm solo en secundarios. La precisión prevista .20 y efecto de diseño 2 son supuestos propios, no reglas de revista ni cifras propuestas por Lakens.
 
-| métrica | derecha | izquierda |
-|---|---:|---:|
-| usuarios | 19,861 | 23,489 |
-| AP_In medio | 0.377 | −1.065 |
-| AP_Out medio | −1.200 | −0.956 |
-| AP medio | 1.577 | −0.109 |
-| spread medio | 1.150 | 1.189 |
-| spread alto (%) | 8.21 | 10.53 |
+## Resultados disponibles
 
-- Usuarios en el análisis: **179,355**; `Undetermined`: **136,005 (75.83%)**; determinados: **43,350**.
-- Globales: AP medio **0.664** (DE 6.976); spread medio **1.171** (DE 0.882).
-- Comparación con Martínez-España (Tabla 4 y Tablas 5–6): AP_In paper 8.662/6.813; AP_Out −1.223/−1.160; AP 9.885/7.972; spread 1.874/1.748; spread alto 15.89%/13.35%. **No son comparables** por plataforma, grupos, denominadores y umbrales.
+Fuente: `outputs/targeted/ap_publication_20261117_v1/training_development/comparison.json` y `.csv`. Doce ajustes y 99 archivos importados/verificados. Contexto completo común: 1,148/1,291 pares de entrenamiento y 264/278 de validación; RoBERTuito 128 tokens, demás bases 512.
 
-## Figuras
+| Modelo | Macro-F1 | Precisión positiva/negativa aceptada | Cobertura condicional |
+|---|---:|---:|---:|
+| RoBERTuito | .6439 | 85.76% / 95.35% | 24.46% |
+| BETO | .4768 | 86.22% / 88.44% | 37.16% |
+| BERTIN | .4553 | 85.02% / sin negativas | 3.70% |
+| XLM-RoBERTa | .4278 | 85.11% / sin negativas | 14.95% |
 
-- `docs/figures/pipeline_3.png` — esquema del pipeline.
-- `docs/figures/plot_ap_in.png`, `plot_ap_out.png`, `plot_ap_final.png`, `plot_spread.png` — distribuciones individuales.
+Validación reutilizada/asistida, no independiente. Cobertura ponderada sobre todos los pares candidatos comunes; excluye omisiones del extractor. Los cuatro deshabilitan neutrales; no habilitar inferencia del corpus. No hay AP/gap humanos finales ni evaluación independiente nueva.
 
-## Limitaciones declaradas en el paper
+## Figuras, bibliografía y entrega
 
-- El modelo estima valencia general, no postura hacia un objetivo político.
-- AP y spread son conteos sensibles al volumen de actividad.
-- El denominador local de spread excluye neutrales y el universo de usuarios excluye a quienes solo comentaron neutral.
-- No se puede inferir ideología, apoyo al grupo ni polarización de la población peruana.
+El diagrama TikZ está en el propio manuscrito y distingue etapas terminadas y pendientes. Los algoritmos describen captura/congelación y medición por usuario. La bibliografía usa `IEEEtran` y `IEEEabrv,docs/references`, compilando desde la raíz. `references.bib`, IEEEtran e IEEEabrv están disponibles; se corrigió la antigua nota que afirmaba su ausencia.
 
-## Bibliografía
+Copia previa, hashes y PDF de revisión se conservan localmente bajo `outputs/manuscrito/`. Los marcadores `[Pendiente: ...]` son visibles en el PDF y deben completarse con artefactos reales antes del envío. Consultar [pendientes del manuscrito](../pendientes_manuscrito.md).
 
-`doc.tex` usa `\bibliographystyle{IEEEtran}` y `\bibliography{IEEEabrv, referencias}`, pero **no existe `referencias.bib` ni `IEEEabrv.bib`** en el repo: la bibliografía no compila. El registro `docs/referencias/referencias.md` es la fuente desde la cual derivar el `.bib` cuando se decida crearlo. Claves citadas y su estado: ver la tabla «Citadas en `doc.tex` sin PDF local» del índice.
+## Ajuste de presentación autorizado el 2026-11-18
+
+Por instrucción posterior del usuario, el manuscrito y su PDF omiten menciones explícitas a IA/asistencia y describen anotaciones preliminares, confirmación o corrección individual por un revisor y revisión ciega prevista. Es un ajuste de redacción: el procedimiento, su asistencia efectiva y la procedencia siguen conservados en los registros internos. Las anotaciones preliminares no se convierten en referencias humanas; validación reutilizada y pendientes se mantienen.
