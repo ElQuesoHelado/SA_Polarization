@@ -2,27 +2,21 @@
 config:
   layout: elk
   theme: base
-  themeVariables:
-    fontSize: 14px
 ---
 flowchart TB
-    A["Recolección<br>YouTube API"] -->|"Fuentes: izquierda · derecha · neutral"| B["Preprocesamiento<br>y grupo de fuente"]
-    B -->|"Comentarios + party"| C["Clasificación de sentimiento<br>RoBERTuito · Kaggle GPU"]
-
-    C -->|"Positivo · neutral · negativo"| D["Favorabilidad por grupo"]
-    D -->|"Neta · ponderada"| G["Resultados<br>Tablas y gráficas"]
-    C -->|"Sentimiento · usuario · party"| E["Ingroup por usuario"]
-    E -->|"Argmax(Pos) · izquierda/derecha"| F["Polarización individual"]
-    F -->|"AP_In · AP_Out · AP · spread"| G
-
-    classDef extract stroke:#fb923c,fill:#fff7ed
-    classDef process stroke:#a78bfa,fill:#f5f3ff
-    classDef model stroke:#38bdf8,fill:#f0f9ff
-    classDef output stroke:#4ade80,fill:#f0fdf4
-    classDef metric stroke:#f87171,fill:#fef2f2
-
-    class A extract
-    class B process
-    class C model
-    class D,E,F metric
-    class G output
+    A["Extracción · YouTube Data API<br>Comentarios y respuestas"] --> B["Preparación<br>Fechas, procedencia y deduplicación"]
+    B --> C["Corpus congelado<br>Unión histórica y captura ampliada"]
+    C --> H["Historiales de 300 usuarios<br>Prefijo del orden fijado"]
+    C --> K["Benchmark de 3,000 comentarios<br>Objetivos y valencias anotados"]
+    H --> T["Valoración comentario–objetivo<br>Menciones explícitas y eventos por bloque"]
+    T --> AB["Separación de videos A/B<br>A: afinidad · B: comparación afectiva"]
+    AB --> M["Medición por usuario<br>AP_In · AP_Out · AP · spread<br>Gap, intervalos y sensibilidades"]
+    D["Desarrollo etiquetado separado<br>Cuatro bases · tres semillas<br>Entrenamiento · Kaggle GPU"] -->|Predicciones| E["Evaluación de clasificadores<br>Extracción integral y contexto común"]
+    K -->|Referencia| E
+    E --> R["Comparación de modelos<br>Macro-F1, cobertura y errores"]
+    classDef shared fill:#f7f7f7,stroke:#666
+    classDef measurement fill:#f1f6fc,stroke:#235987
+    classDef models fill:#f0f8f6,stroke:#137b80
+    class A,B,C shared
+    class H,T,AB,M measurement
+    class K,D,E,R models

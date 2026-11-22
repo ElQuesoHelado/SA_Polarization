@@ -9,7 +9,7 @@ from ..common import LABELS, atomic_json, read_csv
 from ..learning import classification_metrics
 from ..metrics import holm
 from .analysis import number
-from .annotations import close_reference, decisions
+from .annotations import close_reference, decisions, checked
 from .state import output, seal, verify, verify_seal
 
 MODEL_IDS = ("robertuito", "beto", "bertin", "xlm_roberta")
@@ -159,10 +159,17 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
             matched = joined_reference(baseline_comments, pred)
             result.append({"model_id": model, "comments": len(baseline_comments), "pairs": len(matched), **measure(matched)})
         pd.DataFrame(result).to_csv(destination / "historical_baseline_matched.csv", index=False)
+    _, _, annotation_policy, _ = checked(study, "benchmark")
+    review_mode = annotation_policy["human_mode"]
     summary = dict(stage=stage, comments=len(sample), evaluated_models=list(MODEL_IDS),
-        reference="ai_proposals_agreement_only" if stage == "provisional" else "single_human_blind",
+        reference="ai_proposals_agreement_only" if stage == "provisional" else "single_human_" + review_mode,
+        human_review_mode=review_mode,
         model_selected_for_production=None, reserved_test_opened=False,
-        limitation="Provisional compara acuerdo con IA, no exactitud humana" if stage == "provisional" else "Referencia de un humano; incertidumbre condicional al marco de videos")
+        limitation=("Provisional compara acuerdo con IA, no exactitud humana" if stage == "provisional" else
+                    "Referencia asistida de un humano; independencia limitada e incertidumbre condicional al marco de videos" if review_mode == "assisted" else
+                    "Referencia de un humano; incertidumbre condicional al marco de videos"))
+    if stage == "provisional" or review_mode == "assisted":
+        summary["independently_validated"] = False
     extraction = frames["beto"]
     tp = extraction.loc[extraction.gold_target_present & extraction.candidate_present, "weight"].sum()
     predicted = extraction.loc[extraction.candidate_present, "weight"].sum()

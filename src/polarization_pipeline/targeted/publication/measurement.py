@@ -38,6 +38,8 @@ def screened_users(sample, events, scored, ranked, settings, target):
     def reasons(row):
         if row.paired:
             return []
+        if 'affinity_excluded' in sample and sample.loc[sample.user_id.eq(row.user_id),'affinity_excluded'].all():
+            return ["affinity_exclusion_certified"]
         if not row.known_evaluable_events:
             return ["no_known_evaluable_events"]
         if row.ingroup == "Undetermined":
@@ -89,7 +91,11 @@ def coverage_tables(corpus, sample, events, included, registry):
                 users=part.user_id.nunique(), comments=part.comment_id.nunique(), videos=part.post_id.nunique(), channels=part.channel_id.nunique()))
         units = []
         empty = 0
+        skipped = 0
         for row in comments.itertuples():
+            if pd.isna(row.annotation_json):
+                skipped += 1
+                continue
             items = json.loads(row.annotation_json)
             empty += not items
             for item in items:
@@ -97,6 +103,8 @@ def coverage_tables(corpus, sample, events, included, registry):
         if units:
             for (group, valence), part in pd.DataFrame(units).groupby(["target_group", "valence"], sort=True):
                 annotations.append(dict(scope=scope, target_group=group, valence=valence, targets=len(part), comments=part.comment_id.nunique(), users=part.user_id.nunique()))
+        if skipped:
+            annotations.append(dict(scope=scope, target_group="unread", valence="skipped_affinity", targets=0, comments=skipped, users=None))
         annotations.append(dict(scope=scope, target_group="none", valence="no_explicit_targets", targets=0, comments=empty, users=None))
     return (pd.DataFrame(coverage), pd.DataFrame(composition, columns=["scope", "target_group", "valence", "events", "users", "comments", "videos", "channels"]),
         pd.DataFrame(annotations))
@@ -135,17 +143,27 @@ def preflight(settings, plan, study, registry):
         return result
     samples, finals = [], []
     for folder in folders:
-        sample, form, info = sample_readiness(study, folder.name)
+        sample, form, info = sample_readiness(study, folder.name, registry)
         samples.append(sample)
         complete = form.review_complete.str.lower().eq("true")
         result["reviewed_comments"] += int(complete.sum())
-        result["pending_comments"] += int((~complete).sum())
+        if info['human_review_complete']:
+            result['pending_comments'] += 0
+        else:
+            result['pending_comments'] += int((~complete).sum())
+        result['skipped_comments'] = result.get('skipped_comments',0) + info.get('skipped_comments',0)
         # Validate every completed batch, even if a different batch is pending.
         if info["human_review_complete"]:
             finals.append(decisions(study, folder.name, registry, "final"))
     sample = pd.concat(samples, ignore_index=True)
     validate_histories(sample, ranked, corpus)
     result["screened_users"] = sample.user_id.nunique()
+    from .fixed_scope import policy
+    fixed=policy(study)
+    result.update(stopping_rule="fixed_screened_users" if fixed else "comparable_users_or_exhaustion",
+        screened_users_ceiling=fixed["screened_users"] if fixed else None)
+    if fixed and result["screened_users"]>fixed["screened_users"]:
+        raise ValueError("Usuarios fuera del alcance fijo")
     result["requirements"]["histories_complete"] = True
     if result["pending_comments"]:
         result.update(status="waiting_human_review", next_command="targeted publication review --sample <lote pendiente>")
@@ -156,8 +174,15 @@ def preflight(settings, plan, study, registry):
     screened = screened_users(frame, events, scores(events, settings), ranked, settings, plan["comparable_users"])
     comparable = int(screened.paired.sum())
     exhausted = result["screened_users"] == len(ranked)
-    result.update(comparable_users=min(comparable, plan["comparable_users"]), comparable_screened_total=comparable,
-        frame_exhausted=exhausted, target_reached=comparable >= plan["comparable_users"])
+    from .fixed_scope import policy
+    fixed=policy(study)
+    reached=(result['screened_users']==fixed['screened_users']) if fixed else comparable>=plan['comparable_users']
+    if fixed and result['screened_users']>fixed['screened_users']:
+        raise ValueError('Usuarios fuera del alcance fijo')
+    result.update(comparable_users=comparable if fixed else min(comparable, plan['comparable_users']),
+        comparable_screened_total=comparable,stopping_rule='fixed_screened_users' if fixed else 'comparable_users_or_exhaustion',
+        screened_users_ceiling=fixed['screened_users'] if fixed else None,
+        frame_exhausted=exhausted, target_reached=reached)
     result["ready_for_analysis"] = result["target_reached"] or exhausted
     result.update(status="ready_for_analysis" if result["ready_for_analysis"] else "waiting_comparable_users",
         next_command="targeted publication analyze --stage final" if result["ready_for_analysis"] else "targeted publication next --stage final",

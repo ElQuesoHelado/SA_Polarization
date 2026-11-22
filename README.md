@@ -8,7 +8,7 @@ La [medición anotada puede cerrarse aunque fallen los clasificadores](docs/cont
 
 Disponible el [diagnóstico local de desarrollo y preparación de evaluación](docs/diagnostico_desarrollo_publicacion.md): `targeted publication diagnose-development` genera un informe sellado sin reentrenar; `targeted publication evaluation-preflight` comprueba requisitos en modo de solo lectura. El diagnóstico ya está guardado y la evaluación espera el snapshot de captura.
 
-La ruta nueva es [`targeted publication`](docs/estudio_publicable.md), con configuración independiente `config/targeted_publication.toml`. Busca 800 usuarios realmente comparables mediante historiales completos anotados, una referencia independiente de 3,000 comentarios y una comparación cerrada de cuatro modelos/tres semillas. Conserva la prueba final anterior, los modelos y los resultados históricos. Las propuestas IA permiten resultados provisionales; no sustituyen el cierre humano.
+La ruta nueva es [`targeted publication`](docs/estudio_publicable.md), con configuración independiente `config/targeted_publication.toml`. El alcance vigente cierra un prefijo fijo de 300 usuarios examinados e incluye a todos sus comparables, con corte inicial en 200; sustituye por recursos la planificación original de 800 comparables. Conserva una referencia de 3,000 comentarios separada del desarrollo y una comparación cerrada de cuatro modelos/tres semillas. Conserva la prueba final anterior, los modelos y los resultados históricos. Las propuestas IA permiten resultados provisionales; no sustituyen el cierre humano.
 
 El estudio `ap_publication_20261117_v1` ya está preparado con 11,280 videos elegibles para captura. Para consultar o reanudar:
 
@@ -21,7 +21,9 @@ La captura contabiliza el presupuesto compartido por día del Pacífico (`Americ
 
 El entrenamiento ampliado terminó y sus 12 ajustes están importados y verificados. `targeted publication training-report` reproduce la comparación local desde logits y calibración guardados: mayor macro-F1 de desarrollo, RoBERTuito 0.6439; mayor cobertura condicional de candidatos, BETO 37.16%. No habilita producción ni sustituye la evaluación independiente pendiente. No reenviar ese entrenamiento; el informe existente está sellado y no se sobrescribe.
 
-Para mantener el trabajo independiente de la conversación, usar `targeted publication start-services --daily-api-budget 9000` y consultar `targeted publication runtime-status`. Los servicios de usuario conservan registros y se detienen ante errores; no arrancan tras reiniciar el equipo. `targeted publication audit-capture` genera el informe local del aporte de las capturas y la carga provisional de anotación. La [guía de anotación](docs/guia_anotacion_publicacion.md) explica las tandas de 50 comentarios y el benchmark ciego.
+Para mantener el trabajo independiente de la conversación, usar `targeted publication start-services --daily-api-budget 9000` y consultar `targeted publication runtime-status`. Los servicios de usuario conservan registros y se detienen ante errores; no arrancan tras reiniciar el equipo. `targeted publication audit-capture` genera el informe local del aporte de las capturas y la carga provisional de anotación. La [guía de anotación](docs/guia_anotacion_publicacion.md) explica las tandas de 50 comentarios y los modos de revisión del benchmark.
+
+La [lectura por afinidad](docs/estudio_publicable.md#lectura-por-afinidad-y-benchmark-paralelo-enmienda-del-21-de-noviembre) permite omitir comentarios de usuarios cuya exclusión ya está demostrada mediante una cota conservadora. `screening-batch` organiza primero A; quienes califican mantienen A y B completos, y las correcciones humanas pueden reabrir lecturas. `predict`, `remote` y `benchmark` admiten `--scope benchmark` para comparar los 3,000 comentarios sin esperar el cierre de cohortes. No cambia los criterios ni habilita producción.
 
 ## Requisitos
 

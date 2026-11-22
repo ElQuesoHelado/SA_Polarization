@@ -5,18 +5,18 @@ import json
 import numpy as np
 import pandas as pd
 
-from ..common import atomic_json, read_csv, stamp
+from ..common import atomic_json, read_csv, sha256, stamp
 from ..metrics import collapse_events, clustered_inference, holm, user_scores
 from ..registry import load_registry
 from .state import output, seal, verify
-from .measurement import validate_histories, screened_users, coverage_tables, precision_assessment
+from .measurement import validate_histories, screened_users as build_screened_users, coverage_tables, precision_assessment
 
 
 def events_from_annotations(frame, registry):
     targets = {t["target_id"]: t for t in load_registry(registry, frozen=True)["targets"]}
     rows = []
     for row in frame.to_dict("records"):
-        for item in json.loads(row["annotation_json"]):
+        for item in json.loads(row["annotation_json"]) if pd.notna(row["annotation_json"]) else []:
             target = targets.get(item["target_id"], {})
             rows.append({**row, **item, "target_group": target.get("target_group", "unknown"),
                          "corpus": "publication_union", "accepted": True})
@@ -35,13 +35,19 @@ def scores(events, settings, **kwargs):
     return user_scores(scoring_input(events), settings, seed=settings["seed"], **kwargs)
 
 
-def analyze(settings, plan, study, registry, *, stage="provisional"):
+def analyze(settings, plan, study, registry, *, stage="provisional", screened_users=None):
     from .annotations import cohort_samples, close_reference
     from ...reporting import validate_results_section, update_study_section
     verify(study, frozen=True)
+    from .fixed_scope import policy
+    fixed=policy(study)
+    if screened_users is not None and (not fixed or screened_users not in {fixed['initial_report_users'],fixed['screened_users']}):
+        raise ValueError('Corte no autorizado en la política fija')
+    if stage=='final' and fixed and screened_users not in (None,fixed['screened_users']):
+        raise ValueError('El corte inicial solo permite resultados provisionales')
     if stage == "final":
         validate_results_section(settings["_root"] / "AGENTS.md")
-    sample = cohort_samples(study, registry, stage)
+    sample = cohort_samples(study, registry, stage, screened_users=screened_users)
     ranked = read_csv(study / "eligible_users.csv")
     ranked["rank"] = ranked["rank"].astype(int)
     corpus = read_csv(study / "corpus.csv")
@@ -49,15 +55,18 @@ def analyze(settings, plan, study, registry, *, stage="provisional"):
     used = set(sample.user_id)
     events = events_from_annotations(sample, registry)
     all_scores = scores(events, settings)
-    screened = screened_users(sample, events, all_scores, ranked, settings, plan["comparable_users"])
+    screened = build_screened_users(sample, events, all_scores, ranked, settings, len(used) if fixed else plan["comparable_users"])
     paired = screened.loc[screened.paired].sort_values("rank")
-    selected = paired.iloc[:plan["comparable_users"]]
+    selected = paired if fixed else paired.iloc[:plan["comparable_users"]]
     # Keep every screened user in audit; the primary sample is the first K qualifiers.
     included = set(selected.user_id)
     primary = events.loc[events.user_id.isin(included)].copy()
-    if stage == "final" and len(included) < plan["comparable_users"] and len(used) < len(ranked):
+    if fixed and (len(used)>fixed['screened_users'] or (stage=='final' and len(used)!=fixed['screened_users'])):
+        raise ValueError('El análisis excede el techo o no completa el alcance humano final')
+    if not fixed and stage == "final" and len(included) < plan["comparable_users"] and len(used) < len(ranked):
         raise ValueError("Faltan comparables: continuar revisión/next antes del cierre")
-    destination = output(settings, study) / f"analysis_{stage}"
+    suffix=f"_users_{len(used):04d}" if fixed else ""
+    destination = output(settings, study) / f"analysis_{stage}{suffix}"
     destination.mkdir(exist_ok=False)
     screened.to_csv(destination / "screened_user_scores.csv", index=False)
     selected.to_csv(destination / "primary_user_scores.csv", index=False)
@@ -80,14 +89,14 @@ def analyze(settings, plan, study, registry, *, stage="provisional"):
     targets = {t["target_id"]: t for t in load_registry(registry)["targets"]}
     target_counts = {}
     for value in sample.annotation_json:
-        for item in json.loads(value):
+        for item in json.loads(value) if pd.notna(value) else []:
             if targets.get(item["target_id"], {}).get("target_group") in ("izquierda", "derecha"):
                 target_counts[item["target_id"]] = target_counts.get(item["target_id"], 0)+1
     variants = [("reverse_A_B", scores(events, settings, reverse=True)),
                 ("balanced_video", scores(events, settings, balance_unit="post_id"))]
     for target in sorted(target_counts, key=lambda t: (-target_counts[t], t))[:3]:
         altered = sample.copy()
-        altered["annotation_json"] = altered.annotation_json.map(lambda v: json.dumps([i for i in json.loads(v) if i["target_id"] != target]))
+        altered["annotation_json"] = altered.annotation_json.map(lambda v: json.dumps([i for i in json.loads(v) if i["target_id"] != target]) if pd.notna(v) else None)
         variants.append(("exclude_"+target, scores(events_from_annotations(altered, registry), settings)))
     original = sample.loc[sample.component.eq("historical_main")]
     variants.append(("historical_main_only", scores(events_from_annotations(original, registry), settings)))
@@ -96,11 +105,23 @@ def analyze(settings, plan, study, registry, *, stage="provisional"):
         sensitivity.append(dict(variant=name, comparable=int(frame.paired.sum()), gap=number(frame.loc[frame.paired, "gap"].mean())))
     pd.DataFrame(sensitivity).to_csv(destination / "sensitivities.csv", index=False)
     gap = selected.gap.mean() if len(selected) else np.nan
-    report = dict(stage=stage, study=study.name, screened_users=len(used), comparable_users=len(included),
+    report = dict(stopping_rule='fixed_screened_users' if fixed else 'comparable_users_or_exhaustion',
+        screened_users_ceiling=fixed['screened_users'] if fixed else None,
+        is_initial_report=bool(fixed and len(used)<fixed['screened_users']),
+        source_samples={p.name: sha256(p/'sample.csv')
+            for p in (study/'annotations').glob('cohort_*') if set(read_csv(p/'sample.csv').user_id) <= used},
+        source_annotation_hashes={p.name: {name: sha256(p/name) for name in
+            ("ai_proposals.json", "proposal_state.json", "human_review.csv") if (p/name).exists()}
+            for p in (study/"annotations").glob("cohort_*") if set(read_csv(p/"sample.csv").user_id) <= used},
+        fixed_scope_policy_sha256=sha256(study/"fixed_user_scope/policy.json") if fixed else None,
+        original_comparable_target_superseded=bool(fixed),
+        stage=stage, study=study.name, screened_users=len(used), comparable_users=len(included),
         comparable_screened_total=int(all_scores.paired.sum()),
         target_comparable_users=plan["comparable_users"], frame_exhausted=len(used) == len(ranked),
         eligible_frame_users=len(ranked), snapshot_comments=len(corpus), screened_comments=len(sample),
         primary_comments=int(sample.user_id.isin(included).sum()), screened_events=len(events), primary_events=len(primary),
+        annotated_comments=int(sample.annotation_json.notna().sum()), skipped_affinity_comments=int(sample.annotation_json.isna().sum()),
+        screened_event_counts_complete=bool(sample.annotation_json.notna().all()),
         screened_frame_user_fraction=len(used)/len(ranked) if len(ranked) else None,
         primary_screened_user_fraction=len(included)/len(used) if used else None,
         measurement_basis="human_annotations" if stage == "final" else "ai_proposals",
@@ -110,7 +131,8 @@ def analyze(settings, plan, study, registry, *, stage="provisional"):
         independently_validated=False, test_opened=False, inference_scope="Usuarios comparables en el marco explícito observado; no votantes",
         planned_design_effect=plan["planned_design_effect"], planned_half_width=plan["planned_half_width"])
     atomic_json(destination / "summary.json", report)
-    text = [f"# Polarización dirigida — {stage}", "", f"Usuarios examinados: {len(used)}; comparables incluidos: {len(included)}.",
+    text = [f"# Polarización dirigida — {stage}",
+            f"Regla de cierre: {report['stopping_rule']}; corte inicial: {report['is_initial_report']}. No se amplía según el resultado.", "", f"Usuarios examinados: {len(used)}; comparables incluidos: {len(included)}.",
             f"Gap medio: {number(gap)}. Consulte contrasts.csv para incertidumbre y cobertura.", "",
             f"Precisión estadística: {precision['precision_status']}; semiancho IC95% observado: {precision['observed_half_width']}; meta prevista: {plan['planned_half_width']}.",
             f"Interpretación del intervalo del gap: {precision['gap_evidence']}. No determina por sí sola la interpretación de las sensibilidades.",

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from collections import defaultdict
 
 import numpy as np
 import pandas as pd
@@ -23,9 +24,14 @@ def exposure_audit(benchmark, cohorts):
             rows.append(dict(comment_id=row["comment_id"], text_key=text_key(row["text"]), batch=batch,
                 completed=str(decision["review_complete"]).lower() == "true",
                 reviewer_id=decision["reviewer_id"], reviewed_at=decision["reviewed_at"]))
+    by_id, by_text = defaultdict(list), defaultdict(list)
+    for index, row in enumerate(rows):
+        by_id[row["comment_id"]].append(index)
+        by_text[row["text_key"]].append(index)
     overlap = []
     for item in benchmark.to_dict("records"):
-        matches = [r for r in rows if r["comment_id"] == item["comment_id"] or r["text_key"] == text_key(item["text"])]
+        indices = set(by_id.get(item["comment_id"], ())) | set(by_text.get(text_key(item["text"]), ()))
+        matches = [rows[index] for index in sorted(indices)]
         if not matches:
             continue
         proven = False
@@ -47,7 +53,7 @@ def exposure_audit(benchmark, cohorts):
         rows=overlap, limitation="Only recorded human review dates; unrecorded reading cannot be ruled out")
 
 
-def sample_readiness(study, name):
+def sample_readiness(study, name, registry=None):
     from .annotations import checked
     folder, sample, manifest, _ = checked(study, name)
     if sample.sample_id.duplicated().any() or sample.comment_id.duplicated().any():
@@ -67,7 +73,15 @@ def sample_readiness(study, name):
             raise ValueError("Procedencia de revisión ciega incompatible")
     reviewed = form.review_complete.str.lower().eq("true")
     ready = bool(reviewed.all() and len(form))
-    return sample, form, dict(comments=len(sample), proposals_complete=set(proposals)==set(sample.sample_id),
+    screening_info = {}
+    from . import screening
+    if registry is not None and name.startswith('cohort_') and screening.enabled(study):
+        info, _, _ = screening.inspect(screening.policy_settings(study),study,registry,name,'final')
+        ready = info['complete']
+        proposed, _, _ = screening.inspect(screening.policy_settings(study),study,registry,name,'provisional')
+        screening_info = dict(screening_complete=ready, skipped_comments=info['skipped_comments'],
+            provisional_screening_complete=proposed['complete'])
+    return sample, form, dict(**screening_info, comments=len(sample), proposals_complete=set(proposals)==set(sample.sample_id),
         human_review_complete=ready, reference_closed=(folder / "reference.json").exists(), mode=manifest["human_mode"])
 
 
@@ -120,12 +134,12 @@ def preflight(settings, plan, study, registry):
     req["cohort_initialized"] = bool(folders)
     samples, cohorts, readiness = [benchmark], [], {}
     for folder in folders:
-        sample, form, info = sample_readiness(study, folder.name)
+        sample, form, info = sample_readiness(study, folder.name, registry)
         samples.append(sample); cohorts.append((folder.name,sample,form)); readiness[folder.name]=info
         if info["human_review_complete"]:
             from .annotations import decisions
             decisions(study,folder.name,registry,"final")
-    req["cohort_proposals_complete"] = bool(folders) and all(v["proposals_complete"] for v in readiness.values())
+    req["cohort_proposals_complete"] = bool(folders) and all(v.get("provisional_screening_complete",v["proposals_complete"]) for v in readiness.values())
     req["cohort_human_review_complete"] = bool(folders) and all(v["human_review_complete"] for v in readiness.values())
     if cohorts and pd.concat([c[1] for c in cohorts]).comment_id.duplicated().any():
         raise ValueError("Comentarios repetidos entre lotes de cohorte")

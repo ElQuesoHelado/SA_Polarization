@@ -1,0 +1,858 @@
+
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 2.7 or later) with an IEEE conference paper.
+
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
+\documentclass[conference, letterpaper]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{booktabs}
+% Add the compsoc option for Computer Society conferences.
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[conference]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
+% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+%\usepackage{mdwmath}
+%\usepackage{mdwtab}
+% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
+% especially mdwmath.sty and mdwtab.sty which are used to format equations
+% and tables, respectively. The MDWtools set is already installed on most
+% LaTeX systems. The lastest version and documentation is available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+%\usepackage{eqparbox}
+% Also of notable interest is Scott Pakin's eqparbox package for creating
+% (automatically sized) equal width boxes - aka "natural width parboxes".
+% Available at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
+
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\usepackage[tight,footnotesize]{subfigure}
+% subfigure.sty was written by Steven Douglas Cochran. This package makes it
+% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
+% work, it is a good idea to load it with the tight package option to reduce
+% the amount of white space around the subfigures. subfigure.sty is already
+% installed on most LaTeX systems. The latest version and documentation can
+% be obtained at:
+% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
+% subfigure.sty has been superceeded by subfig.sty.
+
+
+
+%\usepackage[caption=false]{caption}
+%\usepackage[font=footnotesize]{subfig}
+% subfig.sty, also written by Steven Douglas Cochran, is the modern
+% replacement for subfigure.sty. However, subfig.sty requires and
+% automatically loads Axel Sommerfeldt's caption.sty which will override
+% IEEEtran.cls handling of captions and this will result in nonIEEE style
+% figure/table captions. To prevent this problem, be sure and preload
+% caption.sty with its "caption=false" package option. This is will preserve
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% (recommended due to many improvements over 1.2) of subfig.sty supports
+% the caption=false option directly:
+%\usepackage[caption=false,font=footnotesize]{subfig}
+%
+% The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+% The latest version and documentation of caption.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Documentation is contained in the stfloats.sty comments as well as in the
+% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
+% does not allow \baselineskip to stretch. Authors submitting work to the
+% IEEE should note that IEEE rarely uses double column equations and
+% that authors should try to avoid such use. Do not be tempted to use the
+% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
+% not format its papers in such ways.
+
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
+% Read the url.sty source comments for usage information. Basically,
+% \url{my_url_here}.
+
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+   \usepackage[pdftex]{graphicx}
+   \usepackage[export]{adjustbox}
+\else
+\fi
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% *** MATH PACKAGES ***
+%
+\usepackage{color}
+%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla,es-noshorthands]{babel}
+\usepackage{array,amssymb,amsfonts,float,url}
+\usepackage{tikz,pgfplots,fontawesome5}
+\usetikzlibrary{arrows.meta,positioning,babel}
+\pgfplotsset{compat=1.18}
+\floatname{algorithm}{Algoritmo}
+\algrenewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Salida:}}
+\algrenewcommand{\algorithmicforall}{\textbf{para cada}}
+\algrenewcommand{\algorithmicdo}{\textbf{hacer}}
+\algrenewcommand{\algorithmicif}{\textbf{si}}
+\algrenewcommand{\algorithmicthen}{\textbf{entonces}}
+\algrenewcommand{\algorithmicelse}{\textbf{en otro caso}}
+\algrenewcommand{\algorithmicend}{\textbf{fin}}
+\algrenewcommand{\algorithmicfor}{\textbf{para}}
+\newcommand{\Pos}{\mathrm{Pos}}
+\newcommand{\Neg}{\mathrm{Neg}}
+\newcommand{\Neu}{\mathrm{Neu}}
+
+\begin{document}
+
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Análisis de sentimiento dirigido y polarización afectiva en comentarios de YouTube durante las elecciones 
+presidenciales peruanas de 2026}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\makeatletter
+\newcommand{\linebreakand}{
+  \end{@IEEEauthorhalign}
+  \hfill\mbox{}\par
+  \mbox{}\hfill\begin{@IEEEauthorhalign}
+}
+\makeatother
+\author{
+    Jose Alva Cornejo\\
+    % ,Esdras D. Vasquez, Jose Calizaya Quispe, Roxana Flores-Quispe, Yuber Velazco-Paredes\\
+    Universidad Nacional de San Agustín de Arequipa, Arequipa, Perú\\
+    %Emails: jalvac@unsa.edu.pe, ediazva@unsa.edu.pe, jcalizayaq@unsa.edu.pe, \\rfloresqu@unsa.edu.pe, yvelazco@unsa.edu.pe
+}
+
+
+
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3}, 
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+Hoy en día las plataformas digitales ofrecen una gran cantidad de información sobre las opiniones políticas de los ciudadanos; sin embargo, esa información no necesariamente representa las preferencias de la población. Por ello, este estudio analiza el sentimiento dirigido y la polarización afectiva expresada en comentarios de YouTube durante las elecciones presidenciales del Perú en 2026 mediante un procedimiento reproducible que combina valoración hacia actores políticos y métricas individuales. El corpus ampliado contiene 1\,012\,515 comentarios; se examinaron los historiales de 300 usuarios, de los cuales 122 cumplieron los criterios de comparación entre bloques. La afinidad operacional se identifica en una partición de videos y se evalúa en otra, distinguiendo el bloque del objetivo de la procedencia editorial del canal. El gap medio entre balances normalizados interno y externo fue 1.4424, con IC95\% [1.2733, 1.6827]; el balance interno fue positivo (0.5829) y el externo negativo ($-0.8594$). Las seis sensibilidades conservaron una brecha positiva, mientras que la diferencia entre afinidades de izquierda y derecha fue inconclusa. En paralelo, se compararon cuatro clasificadores sobre un benchmark de 3\,000 comentarios. La contribución consiste en separar la medición de expresiones afectivas por usuario del desempeño de su clasificación automática, permitiendo caracterizar favoritismo relativo y valoración externa negativa dentro del marco observado.
+\end{abstract}
+
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the conference you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals/conferences frown on
+% math in the abstract anyway.
+
+% no keywords
+
+
+\begin{IEEEkeywords}
+Polarización afectiva, sentimiento dirigido, YouTube, Transformer, afinidad operacional, Perú.
+\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introducción}
+
+Las redes sociales se han consolidado como uno de los principales espacios 
+para la discusión política y la expresión de opiniones ciudadanas. Plataformas 
+como Facebook, Twitter/X y Youtube permiten que millones de usuarios compartan 
+publicaciones, comentarios e interacciones relacionadas con acontecimientos 
+políticos, generando grandes volúmenes de información que reflejan la 
+percepción pública sobre candidatos, partidos y 
+políticas gubernamentales \cite{statista2026}. Debido a su alcance e 
+influencia, estas plataformas constituyen 
+una fuente relevante para estudiar el comportamiento político y las tendencias 
+de opinión mediante técnicas de 
+procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con 
+contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios. 
+Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se 
+correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como 
+herramientas de movilización como canales de confrontacion discursiva. En este contexto, el análisis automático 
+del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión 
+pública durante procesos electorales.
+
+Una de las principales soluciones computacionales empleadas para este 
+problema es el análisis automático de sentimientos, mediante el cual se 
+identifica la polaridad expresada en un texto y se clasifica generalmente 
+como positiva, negativa o neutra. En años recientes, los avances en aprendizaje 
+profundo y modelos basados en la arquitectura Transformer han permitido mejorar 
+drásticamente el desempeño en clasificación textual al capturar dependencias 
+contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas 
+específicamente al análisis de polarización política: Martínez-España et al. 
+\cite{polariz} propusieron una formulación pionera para cuantificar la polarización 
+afectiva individual a partir de publicaciones en redes sociales; Bor et al. 
+\cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de 
+política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones 
+previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024, 
+Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos 
+polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía 
+Navarrete \cite{Mejia2024} describió la intensificación histórica de la 
+polarización política en el país entre 2000 y 2023.
+
+A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado, 
+la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado 
+exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes 
+barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta 
+concentración motiva ampliar el estudio de plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate 
+comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de 
+lenguaje masivos preentrenados sobre corpus generales en español neutro o peninsular resultan insuficientes para 
+capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos 
+de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la necesidad de distinguir la procedencia editorial del contenido de la identidad política del objetivo valorado: un comentario bajo una fuente neutral puede expresar apoyo o rechazo hacia actores de cualquier bloque.
+
+Para abordar esta brecha, el presente trabajo propone un procedimiento reproducible que analiza el sentimiento político dirigido y la polarización afectiva individual a partir de un corpus ampliado de 1\,012\,515 comentarios públicos de YouTube del periodo enero--junio de 2026. Se examinan 300 historiales de usuarios siguiendo un orden fijado; 122 reúnen evidencia evaluable hacia ambos bloques políticos. Se calculan AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y \textit{spread}, complementados por un gap normalizado y sus intervalos de incertidumbre.
+
+Si bien este enfoque toma como punto de partida la formulación de polarización afectiva individual propuesta por Martínez-España et al. \cite{polariz}, introduce diferencias conceptuales y metodológicas para su aplicación a YouTube. En primer lugar, se valoran menciones explícitas a actores políticos dentro de comentarios y respuestas; la orientación editorial del canal se conserva como procedencia, sin transferirla al autor ni al objetivo. En segundo lugar, se separan los videos utilizados para asignar afinidad y para evaluar la valoración interna y externa. En tercer lugar, se mantienen fuentes neutrales como parte del marco de observación, sin convertirlas en un tercer bloque objetivo ni en un control experimental. Finalmente, la medición por historiales se distingue de una comparación de cuatro clasificadores Transformer: la disponibilidad de un corpus amplio no equivale a contar con predicciones suficientemente fiables sobre todos sus comentarios.
+
+El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos y la polarización política computacional. La Sección III describe el método propuesto, detallando la adquisición y preprocesamiento de datos, el clasificador Transformer y la formulación matemática de las métricas. La Sección IV expone los resultados empíricos y su discusión metodológica. Finalmente, la Sección V presenta las limitaciones y la Sección VI las conclusiones y el trabajo futuro.
+
+\section{Estado del Arte}
+El análisis de sentimientos aplicado al ámbito político ha adquirido una creciente relevancia debido al incremento del contenido generado por usuarios en redes sociales y a la disponibilidad de técnicas avanzadas de procesamiento del lenguaje natural. Las investigaciones recientes han abordado este problema desde diferentes perspectivas, incluyendo el estudio de la polarización política, la clasificación automática de opiniones y el desarrollo de modelos especializados para lenguaje informal.
+
+Una de las principales líneas de investigación corresponde al análisis de la polarización política mediante técnicas de análisis de sentimientos. Martínez-España et al. \cite{polariz} propusieron una metodología para medir la polarización afectiva individual utilizando modelos basados en Transformers sobre datos obtenidos de redes sociales. Su trabajo proporciona un antecedente computacional para estudiar expresiones afectivas; estas mediciones textuales y las encuestas no constituyen instrumentos equivalentes. De forma similar, Bor et al. \cite{bor2023} emplearon análisis de sentimientos para cuantificar la polarización política en Twitter considerando distintos grupos políticos y diversas políticas públicas en Estados Unidos, evidenciando diferencias significativas en los niveles de polarización según el tema analizado.
+
+Otra línea de investigación se ha enfocado en la clasificación automática de sentimientos políticos utilizando técnicas de aprendizaje automático y aprendizaje profundo. En el contexto peruano, Ayma et al. \cite{Ayma2024} analizaron mensajes publicados en Twitter/X durante las elecciones presidenciales de 2021 empleando representaciones textuales como TF-IDF y Word2Vec en combinación con algoritmos tradicionales de clasificación, obteniendo valores de F1-score superiores a 0.93. Posteriormente, Carrera et al. \cite{Carrera2026} compararon representaciones textuales tradicionales y modelos basados en Transformers para clasificar comentarios relacionados con proyectos de ley peruanos. Sus resultados mostraron que los modelos Transformer superaron consistentemente a los enfoques clásicos, alcanzando precisiones superiores al 88\%.
+
+Pandey et al. \cite{pandey2025twitter} analizaron el sentimiento de los votantes durante las elecciones legislativas de Bihar de 2025 utilizando más de 1\,100 publicaciones obtenidas mediante la API de Twitter. Los autores compararon tres métodos de clasificación de sentimientos: Random Forest, Support Vector Machine (SVM) y el modelo basado en transformadores BERT. Inicialmente, las publicaciones fueron etiquetadas utilizando VADER y posteriormente se evaluaron las tendencias de cada partido político mediante el \textit{Net Sentiment Score} (NSS). Los resultados mostraron que BERT obtuvo una exactitud del 80\%, superando a los modelos tradicionales y evidenciando la capacidad de los modelos basados en transformadores para realizar análisis de sentimientos en escenarios electorales con conjuntos de datos de tamaño reducido.
+
+% Chire Saire y Vilca Zuñiga \cite{chire2021analysis} analizaron la reacción de los usuarios de Twitter ante el proceso de vacancia presidencial ocurrido en Perú durante la pandemia por COVID-19. El estudio tuvo como objetivo identificar los principales temas de discusión y evaluar el impacto que la crisis política generó en la población peruana a partir de las publicaciones realizadas en esta red social. Los autores recopilaron mensajes relacionados con el proceso de destitución presidencial y realizaron un análisis de las opiniones expresadas por los usuarios para identificar tendencias en el debate político. Los resultados evidenciaron que Twitter constituyó una fuente relevante para analizar la percepción ciudadana y la reacción de la población frente a los acontecimientos políticos ocurridos durante dicho periodo.
+
+Rizk et al. \cite{rizk2023predicting} propusieron un modelo para predecir los resultados de las elecciones presidenciales de Estados Unidos de 2020 utilizando publicaciones geolocalizadas de Twitter. La metodología combinó análisis de sentimientos, un clasificador Multinomial Naive Bayes y técnicas de aprendizaje automático para estimar tanto el voto popular como los votos del colegio electoral en los 50 estados. Además, los autores eliminaron publicaciones generadas por bots y valores atípicos, analizaron la evolución temporal y espacial de la opinión pública, y emplearon análisis de redes y detección de comunidades para identificar patrones de interacción entre los usuarios. Los resultados mostraron que el modelo predijo correctamente la victoria de Joe Biden, alcanzando una concordancia del 89.9\% con los resultados oficiales de las elecciones.
+
+Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio sobre el análisis de sentimientos en publicaciones de Twitter relacionadas con las elecciones presidenciales españolas de 2019. Los autores recopilaron miles de publicaciones realizadas antes y después del proceso electoral y propusieron una metodología basada en dos etapas: una caracterización estadística utilizando métricas como entropía, información mutua y el \textit{Compounded Aggregated Positivity Index} (CAPI), seguida de la extracción de características mediante técnicas de aprendizaje no lineal, incluyendo autoencoders y métodos de incrustación estocástica. Los resultados mostraron que tanto las métricas estadísticas como las representaciones obtenidas permitieron caracterizar la evolución temporal del sentimiento y evidenciar diferencias en la polaridad entre los distintos partidos políticos y sus líderes durante el periodo electoral.
+
+Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
+
+Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en 
+YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias 
+durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente 
+que la valencia general de un comentario no necesariamente refleja la postura del autor hacia una entidad política 
+específica. Este hallazgo motiva la separación entre sentimiento general y valoración comentario--objetivo adoptada en el presente trabajo.
+
+En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del 
+discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas 
+metodologías hacia plataformas audiovisuales masivas como YouTube, distinguir la procedencia editorial de los objetivos políticos y adaptar 
+las representaciones a la jerga y particularidades dialectales regionales.
+
+\section{Método Propuesto}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.98\textwidth}{!}{\input{docs/figures/pipeline_actual.tikz}}
+\caption{Pipeline del estudio. La extracción y preparación construyen el corpus; la rama izquierda mide expresiones afectivas en historiales y la derecha evalúa clasificadores con desarrollo separado. El entrenamiento no constituye un requisito de la medición anotada.}
+\label{fig:metodo}
+\end{figure*}
+
+La Figura~\ref{fig:metodo} ilustra la arquitectura general del pipeline implementado: adquisición programática mediante YouTube Data API v3, preprocesamiento y unificación con procedencia editorial, construcción de muestras de historiales y evaluación, y cómputo de métricas. La medición por usuario y la comparación de clasificadores son ramas complementarias, con entradas y denominadores distintos.
+
+\subsection{Obtención de datos}
+Frente a las restricciones de acceso a datos de otras plataformas \cite{ANTONAKAKI2021114006}, se seleccionó YouTube como fuente primaria de información. Su API oficial proporciona una estructura modular basada en canales y videos, lo que permite asociar de forma trazable el origen editorial del contenido con los comentarios publicados por las audiencias.
+
+La asignación editorial se fundamentó en fuentes externas documentadas, como reportes de propiedad mediática, afiliación partidaria y documentación sobre línea editorial. La unión observada contiene 40 canales: diez de derecha, ocho de izquierda y 22 fuentes neutrales. Esta composición incluye el histórico y la captura ampliada; no implica una distribución equilibrada de las fuentes. La etiqueta \textit{party} identifica exclusivamente la procedencia editorial y no la adscripción del autor ni el bloque del objetivo mencionado. Las fuentes neutrales no constituyen un control experimental.
+
+Se exigió que las fechas del video y del comentario pertenecieran a enero--junio de 2026. La captura ampliada completó 11\,280 videos, paginando comentarios y recuperando respuestas faltantes mediante el identificador del padre \cite{YoutubeThreads}. Tras integrar las observaciones históricas elegibles y deduplicar por identificador, el corpus congelado reúne 1\,012\,515 comentarios de 11\,361 videos. Los videos recapturados y los presentes en la unión son conjuntos con funciones distintas. El vínculo de respuesta identifica el hilo de la API y no necesariamente el destinatario discursivo.
+
+\subsection{Preprocesado}
+El preprocesamiento estandariza los registros y consolida los atributos temporales, lingüísticos y de participación: texto original, identificadores de autor, comentario, video y canal, fecha de comentario y video, título, reacciones, respuestas y procedencia editorial. Se conservan emojis, mayúsculas y formas coloquiales relevantes para interpretar la valoración. Las transformaciones específicas de tokenización se aplican en la rama de clasificación.
+
+Se integra el histórico elegible con las capturas completas, conservando la primera observación de cada comentario y registrando versiones posteriores y conflictos. Las filas de videos incompletos no entran al cierre del corpus. El Algoritmo~\ref{alg:preprocess} resume la integración; el registro de objetivos y los archivos se congelan con hashes para conservar trazabilidad.
+
+\begin{algorithm}[t]
+\caption{Preprocesamiento, estandarización y unificación del corpus}
+\label{alg:preprocess}
+\begin{algorithmic}[1]
+\Require Histórico y capturas completas, periodo y grupos de fuente.
+\Ensure Corpus único, procedencia y orden de usuarios verificables.
+\ForAll{observación de comentario}
+\State Verificar identidades y fechas de video y comentario.
+\State Conservar texto, autor, hilo y procedencia editorial.
+\State Excluir fechas fuera del periodo; registrar la exclusión.
+\State Deduplicar por comentario; conservar versiones y conflictos.
+\EndFor
+\State Construir unión y comprobar integridad de historiales.
+\State Congelar corpus, registro de objetivos y hashes.
+\State Construir marco elegible y muestras separadas.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Objetivos políticos y construcción de muestras}
+La unidad de valoración es el par comentario--objetivo con mención explícita. El registro congelado contiene 124 identidades: 22 con bloque documentado de izquierda o derecha y 102 con bloque desconocido. Se distinguen cinco etiquetas: favorable, desfavorable, neutral, mixta y no evaluable. Una mención neutral no es ausencia de objetivo; una mezcla o una referencia desconocida no se convierte en neutral. Las referencias resueltas únicamente por título o comentario padre no entran al principal de evidencia explícita. Los objetivos omitidos durante la extracción pueden incorporarse a la anotación conservando su bloque desconocido cuando no hay clasificación documental.
+
+Los objetivos de un mismo comentario se colapsan por bloque. Si hay valoraciones favorables y desfavorables simultáneas hacia ese bloque, el evento es mixto. Solo eventos favorables, desfavorables y neutrales con bloque conocido aportan a los balances; un comentario puede aportar un evento a cada bloque.
+
+El marco estructural contiene 4\,443 usuarios potencialmente comparables, ordenados por SHA-256 de una clave fija con semilla 57. Se examina el prefijo de 300 usuarios, en lotes de 100, conservando todos sus comentarios del corpus. El cierre usa el número examinado, no el signo del gap ni la significación. Las condiciones afectivas se comprueban después; elegibilidad estructural no equivale a comparabilidad confirmada.
+
+El benchmark separado del desarrollo contiene 3\,000 comentarios: 1\,000 con candidatos de izquierda, 1\,000 de derecha, 500 solo con candidatos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan por hash a una cuota; dentro de cada cuota se estratifica por fuente, mes y tipo de comentario. Se conservan probabilidades de inclusión y se excluyen videos y textos utilizados en desarrollo anterior. Esta muestra evalúa clasificadores; no reemplaza los historiales utilizados para medir polarización.
+
+\subsection{Clasificación de sentimiento dirigido con Transformers}
+Se comparan RoBERTuito \cite{robertuito}, BETO \cite{BETOResource}, BERTIN/RoBERTa \cite{BERTINResource} y XLM-RoBERTa \cite{XLMR2020}. Cada modelo recibe el nombre del objetivo y el comentario, y estima probabilidades de las cinco clases. RoBERTuito parte de su base de lenguaje social; no se reutiliza como medición dirigida la predicción triclase del antiguo modelo de sentimiento general.
+\begin{equation}
+\boldsymbol{p}_{c,t}=f_{\theta}(\text{objetivo }t,\text{comentario }c).
+\label{eq:robertuito}
+\end{equation}
+El desarrollo etiquetado contiene 1\,291/278 pares de entrenamiento/validación antes del filtro de contexto. La intersección entre los cuatro tokenizadores deja 1\,148/264 pares completos. RoBERTuito admite efectivamente 128 tokens y las otras bases 512. Las etiquetas de la nueva cohorte y del benchmark no entran al entrenamiento; las 500 observaciones de prueba histórica se mantienen apartadas.
+
+Se completaron tres semillas (42, 43, 44) por base, doce ajustes en GPU en Kaggle. La receta común usa AdamW, tasa $2\times10^{-5}$, decaimiento .01, lote efectivo 16, máximo ocho épocas y paciencia dos. Se promedian probabilidades por semilla; temperatura y umbrales por clase se ajustan solo en validación. Se exige precisión aceptada .85 y al menos diez predicciones para habilitar un umbral; en otro caso se deshabilita la clase. Las entradas sin contexto completo se abstienen. La confianza se emplea para aceptar predicciones y no como intensidad afectiva del usuario.
+
+La evaluación distingue extracción integral, con omisiones, y clasificación condicional a candidatos de contexto completo común. El macro-F1 promedia las clases favorable, desfavorable y neutral antes de abstención. La cobertura integral es la proporción ponderada de objetivos evaluables anotados que reciben una predicción aceptada evaluable. La cobertura condicional restringe el denominador al panel común. Se usan los pesos inversos de inclusión de comentarios; el benchmark no se interpreta como una muestra simple de todo el corpus.
+
+\subsection{Modelado de métricas de favorabilidad y polarización afectiva}
+Con el objetivo de caracterizar la valoración hacia actores y la polarización individual, se distingue el balance dirigido de las diferencias entre bloques. La fuente editorial no determina el destino de la valoración.
+
+\subsubsection{Afinidad y balances dirigidos}
+Los videos se separan por hash en A y B con semilla 42. En A, el bloque de afinidad $g_i$ es el de mayoría positiva única, con al menos dos positivos en al menos dos videos y cuota dominante $\geq2/3$ de los positivos a ambos bloques. Empates o evidencia insuficiente producen afinidad indeterminada; no implican una preferencia electoral específica.
+\begin{equation}
+g_i=\operatorname*{argmax}_{g\in\{L,R\}}\Pos^A_{ig}
+\quad\text{si satisface los mínimos de afinidad.}
+\label{eq:ingroup}
+\end{equation}
+La lectura comienza por A, por videos de menor tamaño y desempate por identificador. Solo se omite el resto de un historial cuando una cota demuestra que ningún bloque alcanzaría los mínimos, aun suponiendo cada comentario pendiente como posible apoyo. Las omisiones se conservan como tales, sin anotarlas como ausencia de objetivos. Para quienes califican, A y B requieren lectura completa.
+
+La evaluación utiliza B. Se exige evidencia evaluable hacia ambos bloques, al menos tres eventos en total y dos videos. Para cada usuario comparable y bloque $g$, se define
+\begin{equation}
+N^B_{ig}=\Pos^B_{ig}+\Neg^B_{ig}+\Neu^B_{ig},\qquad b^B_{ig}=\Pos^B_{ig}-\Neg^B_{ig}.
+\label{eq:favorabilidad_neta}
+\end{equation}
+El balance normalizado $b^B_{ig}/N^B_{ig}$ está en $[-1,1]$ e incluye los neutrales evaluables en su denominador.
+
+\subsubsection{Indicador de polarización afectiva individual y \textit{spread}}
+\label{subsubsec:ap_individual}
+El indicador individual adapta la formulación de Martínez-España et al. \cite{polariz}, distinguiendo afinidad operacional y valoración en videos separados. Si $\bar g_i$ es el bloque opuesto,
+\begin{align}
+\mathrm{AP}_{In,i}&=b^B_{i,g_i},\label{eq:ap_in}\\
+\mathrm{AP}_{Out,i}&=b^B_{i,\bar g_i},\label{eq:ap_out}\\
+\mathrm{AP}_i&=\mathrm{AP}_{In,i}-\mathrm{AP}_{Out,i}.\label{eq:ap_final}
+\end{align}
+El grupo externo es el bloque político opuesto; no incluye las fuentes neutrales como destino adicional. AP conserva balances de conteos y depende de actividad.
+\begin{equation}
+\mathrm{spread}_i=\sqrt{\frac{(b^B_{iL})^2+(b^B_{iR})^2}{N^B_{iL}+N^B_{iR}}}.
+\label{eq:spread}
+\end{equation}
+El denominador cuenta eventos comentario--bloque evaluables, incluidos neutrales. Esta adaptación de dispersión \cite{wagner2021affective,polariz} no elimina toda dependencia del volumen ni constituye una escala psicológica equivalente a una encuesta. No se asignan niveles universales bajo, medio o alto.
+
+El contraste principal normaliza cada balance:
+\begin{equation}
+\mathrm{gap}_i=\frac{\mathrm{AP}_{In,i}}{N^B_{i,g_i}}-\frac{\mathrm{AP}_{Out,i}}{N^B_{i,\bar g_i}}\in[-2,2].
+\label{eq:gap}
+\end{equation}
+Su promedio atribuye igual contribución a cada usuario comparable. Un gap positivo indica favoritismo relativo, pero no exige un balance externo negativo; este se examina por separado.
+
+\begin{algorithm}[t]
+\caption{Cómputo de polarización afectiva individual y \textit{spread}}
+\label{alg:polarization}
+\begin{algorithmic}[1]
+\Require Corpus congelado, objetivos anotados y orden fijado.
+\Ensure Usuarios comparables, métricas y motivos de exclusión.
+\ForAll{usuario del prefijo de 300}
+\State Conservar su historial y colapsar eventos por bloque.
+\State Asignar videos a A/B y comprobar afinidad en A.
+\State Certificar exclusiones según la cota de pendientes.
+\State Para afinidad válida, completar A/B y comprobar cobertura B.
+\If{afinidad válida, ambos bloques, tres eventos y dos videos en B}
+\State Calcular AP\textsubscript{In}, AP\textsubscript{Out}, AP, spread y gap.
+\Else
+\State Registrar motivo de exclusión, sin reemplazar al usuario.
+\EndIf
+\EndFor
+\State Promediar por usuario y calcular intervalos y sensibilidades.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Incertidumbre y sensibilidad}
+Se ejecutan 2\,000 remuestreos cruzados de usuarios y canales, con canales estratificados por fuente, recalculando afinidad y elegibilidad en cada réplica. Los intervalos percentiles del 95\% requieren al menos 80\% de réplicas válidas. El gap global es el contraste principal; Holm se aplica a los contrastes secundarios. Estos intervalos describen variación dentro del marco observado.
+
+Las sensibilidades mantienen los usuarios primarios y recalculan comparabilidad con A/B invertido, contribución equilibrada por video, exclusión individual de los tres actores más frecuentes y uso del componente histórico sin ampliación. Cada variante informa cuántos usuarios conservan comparabilidad. Son comprobaciones de estabilidad, no seis estudios independientes.
+
+\section{Resultados e interpretación}
+Esta sección presenta la composición del corpus, las métricas calculadas sobre los usuarios comparables y la evaluación separada de clasificadores. El tamaño del corpus no es el denominador del contraste individual.
+
+\subsection{Composición y cobertura de la medición}
+La Tabla~\ref{tab:sentimiento_favorabilidad} distingue el corpus disponible de las unidades efectivamente examinadas. El prefijo de 300 reúne 13\,888 comentarios; 13\,179 tienen anotaciones y 709 quedaron omitidos mediante certificado de exclusión por afinidad. Estos últimos no se contabilizan como comentarios sin objetivos.
+
+\begin{table}[t]
+\centering\small
+\caption{Corpus, historiales y muestra de evaluación.}
+\label{tab:sentimiento_favorabilidad}
+\begin{tabular}{lr}\toprule
+Conjunto & Tamaño\\\midrule
+Corpus congelado (comentarios) & 1\,012\,515\\
+Marco estructural (usuarios) & 4\,443\\
+Prefijo examinado (usuarios) & 300\\
+Historiales del prefijo (comentarios) & 13\,888\\
+Usuarios comparables & 122\\
+Historiales comparables (comentarios) & 6\,696\\
+Benchmark (comentarios) & 3\,000\\\bottomrule
+\end{tabular}
+\end{table}
+
+Los 122 comparables constituyen el 40.67\% del prefijo examinado; los otros 178 no cumplen todos los criterios. Sus historiales completos contienen 6\,696 comentarios, incluidos los de A y B y aquellos sin objetivos evaluables. Las fuentes neutrales aportan 2\,601 de estos comentarios: su presencia es procedencia del contenido, no un tercer bloque objetivo. El análisis de polarización no asigna el resultado de los 122 a todos los autores del corpus.
+
+\subsection{Polarización afectiva individual y \textit{spread}}
+La Tabla~\ref{tab:ap_spread} presenta los promedios por afinidad operacional. Los balances de conteos y el gap normalizado describen escalas distintas; no se interpretan sus magnitudes como intercambiables.
+
+\begin{table}[t]
+\centering\small
+\caption{Métricas sobre los usuarios comparables en B.}
+\label{tab:ap_spread}
+\begin{tabular}{lrr}\toprule
+Métrica & Derecha & Izquierda\\\midrule
+Usuarios & 54 & 68\\
+AP$_{In}$ medio & 3.6481 & 3.0735\\
+AP$_{Out}$ medio & -4.2778 & -7.5294\\
+AP medio & 7.9259 & 10.6029\\
+\textit{Spread} medio & 1.8067 & 2.1710\\
+Gap medio & 1.4131 & 1.4656\\
+\bottomrule\end{tabular}
+\end{table}
+
+El gap global es 1.4424, IC95\% [1.2733, 1.6827]. El balance interno normalizado es 0.5829 [0.4430, 0.7700] y el externo $-0.8594$ [$-0.9480$, $-0.7919$]. La brecha positiva se acompaña, por tanto, de valoración interna favorable y externa desfavorable dentro del marco observado. Los tres intervalos utilizan 2\,000 réplicas válidas.
+
+Los gaps por afinidad son 1.4656 [1.1977, 1.7420] en izquierda y 1.4131 [1.1506, 1.7643] en derecha. La diferencia derecha menos izquierda es $-0.0526$, IC95\% [$-0.4624$, 0.3868], con $p$ ajustado por Holm de .7845 y 1\,999 réplicas válidas. No se obtiene evidencia concluyente de una diferencia entre afinidades. Las diferencias de AP bruto no sustituyen este contraste normalizado.
+
+Las Figuras~\ref{fig:ap_in}--\ref{fig:spread} muestran las distribuciones individuales actuales, con frecuencias relativas para comparar los tamaños distintos de los grupos. Los intervalos de cada histograma se comparten entre afinidades; las colas representan variación de actividad y balances, no niveles clínicos o psicológicos de polarización.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
+xlabel={$\mathrm{AP}_{In}$},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-29,0.014705882) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0) (-1.75,0.64705882) (3.7,0.27941176) (9.15,0.044117647) (14.6,0) (20.05,0) (25.5,0) (30.95,0.014705882) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0) (80,0)};
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-29,0) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0.055555556) (-1.75,0.66666667) (3.7,0.24074074) (9.15,0.018518519) (14.6,0) (20.05,0) (25.5,0) (30.95,0) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0.018518519) (80,0)};
+\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\end{axis}\end{tikzpicture}
+\caption{Distribución de AP$_{In}$ por afinidad operacional. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\label{fig:ap_in}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
+xlabel={$\mathrm{AP}_{Out}$},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-62,0.029411765) (-58.9,0) (-55.8,0) (-52.7,0.014705882) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0) (-27.9,0.014705882) (-24.8,0) (-21.7,0.014705882) (-18.6,0.014705882) (-15.5,0.058823529) (-12.4,0.058823529) (-9.3,0.058823529) (-6.2,0.26470588) (-3.1,0.47058824) (0,0)};
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-62,0) (-58.9,0) (-55.8,0) (-52.7,0) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0.018518519) (-27.9,0) (-24.8,0) (-21.7,0.018518519) (-18.6,0) (-15.5,0) (-12.4,0.018518519) (-9.3,0.074074074) (-6.2,0.27777778) (-3.1,0.59259259) (0,0)};
+\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\end{axis}\end{tikzpicture}
+\caption{Distribución de AP$_{Out}$ por afinidad operacional. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\label{fig:ap_out}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
+xlabel={AP},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-1,0.30882353) (4.55,0.35294118) (10.1,0.19117647) (15.65,0.058823529) (21.2,0.044117647) (26.75,0.014705882) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0.014705882) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0.014705882) (98.9,0) (104.45,0) (110,0)};
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-1,0.38888889) (4.55,0.5) (10.1,0.074074074) (15.65,0.018518519) (21.2,0) (26.75,0) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0) (98.9,0) (104.45,0.018518519) (110,0)};
+\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\end{axis}\end{tikzpicture}
+\caption{Distribución de AP por afinidad operacional. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\label{fig:ap}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
+xlabel={Spread},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(0.40824829,0.044117647) (0.75436047,0.058823529) (1.1004726,0.11764706) (1.4465848,0.20588235) (1.792697,0.23529412) (2.1388092,0.058823529) (2.4849214,0.073529412) (2.8310335,0.11764706) (3.1771457,0) (3.5232579,0.014705882) (3.8693701,0.014705882) (4.2154823,0) (4.5615944,0.014705882) (4.9077066,0) (5.2538188,0) (5.599931,0.014705882) (5.9460432,0) (6.2921553,0) (6.6382675,0.014705882) (6.9843797,0.014705882) (7.3304919,0)};
+\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(0.40824829,0) (0.75436047,0.18518519) (1.1004726,0.16666667) (1.4465848,0.24074074) (1.792697,0.2037037) (2.1388092,0.11111111) (2.4849214,0.037037037) (2.8310335,0) (3.1771457,0.018518519) (3.5232579,0) (3.8693701,0) (4.2154823,0.018518519) (4.5615944,0) (4.9077066,0) (5.2538188,0) (5.599931,0) (5.9460432,0) (6.2921553,0) (6.6382675,0) (6.9843797,0.018518519) (7.3304919,0)};
+\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\end{axis}\end{tikzpicture}
+\caption{Distribución de \textit{spread} por afinidad operacional. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\label{fig:spread}
+\end{figure}
+
+\subsection{Sensibilidades}
+La Tabla~\ref{tab:sensibilidades} muestra que las seis estimaciones conservan un gap positivo. El equilibrio por video mantiene los 122 comparables; las demás variantes reducen el tamaño efectivo. No se atribuyen a estas estimaciones puntuales intervalos que no fueron calculados.
+\begin{table}[t]
+\centering\small
+\caption{Sensibilidades sobre los usuarios primarios.}
+\label{tab:sensibilidades}
+\begin{tabular}{lrr}\toprule
+Variante & Usuarios & Gap\\\midrule
+A/B invertido & 76 & 1.5203\\
+Equilibrio por video & 122 & 1.4727\\
+Sin Keiko Fujimori & 80 & 1.5054\\
+Sin Roberto Sánchez & 90 & 1.4470\\
+Sin Rafael López Aliaga & 98 & 1.5059\\
+Histórico sin ampliación & 100 & 1.4928\\
+\bottomrule\end{tabular}
+\end{table}
+
+\subsection{Comparación de clasificadores}
+La Tabla~\ref{tab:clasificadores} distingue dos paneles del benchmark de 3\,000 comentarios: la evaluación integral incorpora objetivos omitidos y candidatos adicionales, mientras que el panel común contiene candidatos con contexto completo para las cuatro bases. El primero reúne 5\,165 pares de la unión anotación--predicción y el segundo 3\,222; los pesos provienen del diseño de muestreo, no del número bruto de pares.
+
+\begin{table*}[t]
+\centering\small
+\caption{Comparación de clasificadores. Macro-F1 y cobertura tienen denominadores distintos; la cobertura se calcula tras abstención.}
+\label{tab:clasificadores}
+\begin{tabular}{lrrrr}\toprule
+& \multicolumn{2}{c}{Evaluación integral} & \multicolumn{2}{c}{Candidatos con contexto común}\\
+Modelo & Macro-F1 & Cobertura (\%) & Macro-F1 & Cobertura (\%)\\\midrule
+RoBERTuito & 0.3836 & 10.33 & 0.5979 & 26.17\\
+BETO & 0.3237 & 21.21 & 0.4993 & 47.26\\
+BERTIN & 0.2911 & 0.72 & 0.4519 & 1.81\\
+XLM-RoBERTa & 0.2832 & 3.32 & 0.4309 & 8.27\\
+\bottomrule\end{tabular}
+\end{table*}
+
+RoBERTuito obtiene el mayor macro-F1 integral (0.3836) y BETO la mayor cobertura integral (21.21\%). El desempeño sobre candidatos de contexto completo es superior al integral; restringir el denominador omite una parte relevante del problema de extracción. La precisión y recuperación ponderadas de extracción son 96.85\% y 44.53\%, respectivamente, sobre todos los objetivos de la referencia, incluidos desconocidos. No son medidas de recuperación exclusiva de actores con bloque conocido.
+
+En desarrollo, RoBERTuito alcanzó macro-F1 0.6439 y BETO cobertura condicional 37.16\% sobre los 264 pares comunes. Esas cifras corresponden a otro panel y no equivalen al desempeño integral del benchmark. Ningún modelo habilita inferencia automática del corpus completo. Los resultados de polarización anteriores proceden de historiales anotados, no de aplicar estos clasificadores al millón de comentarios.
+
+\subsection{Comparación e interpretación de los resultados}
+Al contrastar estos patrones con los de Martínez-España et al. \cite{polariz}, se conserva una relación conceptual: los balances internos y externos permiten distinguir favoritismo relativo y valoración hacia el bloque opuesto. En los usuarios comparables aquí observados, el balance interno normalizado es positivo y el externo negativo. Esta configuración es compatible con polarización afectiva expresada, sin convertir la afinidad operacional en identidad partidaria declarada.
+
+Las diferencias de plataforma, actores, selección de usuarios y denominadores impiden interpretar AP o spread como escalas directamente equivalentes entre estudios. Tampoco el signo del sentimiento de un comentario bajo una fuente informa por sí solo de su postura hacia esa fuente \cite{BestvaterMonroe2023,Miehling2025}. La evidencia dirigida permite evitar esa transferencia y conservar comentarios bajo fuentes neutrales sin tratarlas como un grupo rival.
+
+La ausencia de una diferencia concluyente entre afinidades no significa igualdad demostrada. Del mismo modo, una afinidad indeterminada o una exclusión por cobertura insuficiente no permite identificar abstencionistas, votos nulos o desafección. Los hallazgos describen expresiones de usuarios con evidencia suficiente en ambos bloques, no el desenlace electoral ni sus causas.
+
+\section{Limitaciones}
+Esta versión se presenta como preprint y sus resultados son provisionales. Las anotaciones de los historiales y del benchmark requieren todavía confirmación o corrección individual mediante revisión humana. La comparación de clasificadores expresa concordancia con esas anotaciones iniciales, no exactitud frente a una referencia humana independiente. Las correcciones pueden reabrir lecturas antes omitidas, cambiar la comparabilidad de usuarios y modificar estimaciones. La incertidumbre del bootstrap no incluye este error de anotación; el desarrollo reutilizado tampoco constituye una prueba independiente. No se estima acuerdo entre dos revisores.
+
+La selección editorial de canales, la captura posterior de contenidos públicos y los actores de bloque desconocido limitan la transferencia. No se reconstruyen comentarios eliminados ni el estado textual exacto de todas las publicaciones al momento de su emisión. Los usuarios comparables son una subpoblación activa del marco y no representan a los votantes peruanos; la partición A/B reduce la reutilización directa de evidencia, pero no elimina dependencia entre expresiones de un mismo autor.
+
+El prefijo de 300 se fijó por recursos tras conocer el avance de anotación, incluidos 79 comparables entre los primeros 200. Esta enmienda sustituyó la planificación original de 800 comparables y no debe presentarse como una decisión previa al inicio del estudio. La justificación de precisión distingue planificación y tamaño disponible \cite{lakens2022sample}: la referencia de semiancho .20 no es un umbral universal de publicación. El semiancho observado del IC95\% del gap es .2047, ligeramente mayor, y se conserva sin ampliar el muestreo por el resultado.
+
+AP y spread dependen del volumen y de los eventos evaluables disponibles. El gap reduce esa dependencia mediante normalización, pero no mide toda la experiencia psicológica del afecto. La cobertura y el desempeño de los clasificadores impiden extender automáticamente esta medición al corpus completo. La lectura dirigida, las decisiones de clasificación de actores y las limitaciones de evidencia explícita deberán considerarse al interpretar las magnitudes.
+
+\section{Conclusiones y trabajo futuro}
+Este trabajo adapta la medición de polarización afectiva expresada a comentarios y respuestas de YouTube, separando el origen editorial del contenido, el objetivo valorado y la afinidad operacional del autor. El corpus ampliado permite construir historiales y una muestra diferenciada para evaluar clasificadores; sus funciones no se confunden con el denominador de la medición individual.
+
+Entre los 122 usuarios comparables, el gap medio de 1.4424 se acompaña de un balance interno favorable y externo desfavorable. Las sensibilidades mantienen una brecha positiva; no se obtiene una diferencia concluyente entre afinidades de izquierda y derecha. La comparación de cuatro bases muestra que el desempeño de clasificación y la cobertura de objetivos requieren consideración conjunta. El aporte es un procedimiento trazable para estudiar valoraciones dirigidas y distinguir sus resultados de las posibilidades de automatización. El trabajo futuro comprende ampliar la evidencia de medición y examinar errores de extracción, ambigüedad y contexto sin equiparar actividad discursiva con intención de voto.
+
+% %
+% % <OR> manually copy in the resultant .bbl file
+% % set second argument of \begin to the number of references
+% % (used to reserve space for the reference number labels box)
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,docs/references}
+
+
+\end{document}
+

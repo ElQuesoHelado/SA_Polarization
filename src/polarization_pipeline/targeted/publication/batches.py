@@ -21,11 +21,12 @@ def indices(length, number):
 def export(study, name, number=1):
     folder, sample, manifest, _ = checked(study, name)
     selected = sample.iloc[list(indices(len(sample), number))]
-    destination = folder / 'work_batches' / f'{number:04d}'
+    batch_root = 'work_batches_assisted' if manifest.get('original_human_mode') == 'blind' else 'work_batches'
+    destination = folder / batch_root / f'{number:04d}'
     with lock(folder / 'batch_export.lock'):
         if destination.exists():
             saved = verify_seal(destination)
-            if saved['sample_sha256'] != sha256(folder / 'sample.csv'):
+            if saved['sample_sha256'] != sha256(folder / 'sample.csv') or saved['human_mode'] != manifest['human_mode']:
                 raise ValueError('La tanda corresponde a otra muestra')
         else:
             destination.parent.mkdir(exist_ok=True)

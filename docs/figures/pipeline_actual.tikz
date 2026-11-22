@@ -1,0 +1,40 @@
+% Fuente compartida por el artículo y la exportación independiente.
+\begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
+ box/.style={draw=black!25,rounded corners=2mm,fill=black!2,
+   text width=4.6cm,minimum height=1.55cm,align=center,
+   execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000},font=\sffamily\small,inner sep=3mm},
+ leftbox/.style={box,text width=6cm,draw=blue!50!black,fill=blue!3},
+ rightbox/.style={box,text width=6cm,draw=teal!65!black,fill=teal!3},
+ flow/.style={->,line width=.8pt,draw=black!65},
+ lab/.style={font=\sffamily\scriptsize,fill=white,inner sep=2pt}]
+\node[box] (api) at (2.5,0) {\includegraphics[height=6mm]{docs/figures/youtube_icon.pdf}\\
+  \textbf{Extracción de datos}\\YouTube Data API · comentarios y respuestas};
+\node[box] (prep) at (8.5,0) {{\Large\faFilter}\\
+  \textbf{Preparación}\\Fechas, procedencia y deduplicación};
+\node[box] (corpus) at (14.5,0) {{\Large\faDatabase}\\
+  \textbf{Corpus congelado}\\Unión histórica y captura ampliada};
+\draw[flow] (api)--(prep); \draw[flow] (prep)--(corpus);
+\node[leftbox] (users) at (4.2,-2.6) {{\Large\faUsers}\\
+  \textbf{Historiales de 300 usuarios}\\Prefijo del orden fijado; todos sus comentarios};
+\node[rightbox] (benchmark) at (12.8,-2.6) {{\Large\faClipboardList}\\
+  \textbf{Benchmark de 3,000 comentarios}\\Objetivos y valencias anotados};
+\draw[flow] (corpus.south)--++(0,-.3)-|(users.north);
+\draw[flow] (corpus.south)--++(0,-.3)-|(benchmark.north);
+\node[leftbox] (targets) at (4.2,-4.9) {{\Large\faTags}\\
+  \textbf{Valoración comentario--objetivo}\\Menciones explícitas y eventos por bloque};
+\node[rightbox] (train) at (12.8,-4.9) {{\Large\faMicrochip}\\
+  \textbf{Entrenamiento · Kaggle GPU}\\Desarrollo separado: cuatro bases, tres semillas};
+\draw[flow] (users)--(targets);
+\node[leftbox] (ab) at (4.2,-7.2) {{\Large\faProjectDiagram}\\
+  \textbf{Separación de videos A/B}\\A: afinidad operacional · B: comparación afectiva};
+\node[rightbox] (eval) at (12.8,-7.2) {{\Large\faBalanceScale}\\
+  \textbf{Evaluación de clasificadores}\\Extracción integral y contexto común};
+\draw[flow] (targets)--(ab);
+\draw[flow] (train)--node[lab,right]{Predicciones}(eval);
+\draw[flow] (benchmark.east)--++(.65,0)|-node[lab,pos=.65,right]{Referencia}(eval.east);
+\node[leftbox] (measure) at (4.2,-9.5) {{\Large\faChartBar}\\
+  \textbf{Medición por usuario}\\AP\textsubscript{In}, AP\textsubscript{Out}, AP, spread\\Gap, intervalos y sensibilidades};
+\node[rightbox] (models) at (12.8,-9.5) {{\Large\faChartLine}\\
+  \textbf{Comparación de modelos}\\Macro-F1, cobertura y errores};
+\draw[flow] (ab)--(measure); \draw[flow] (eval)--(models);
+\end{tikzpicture}

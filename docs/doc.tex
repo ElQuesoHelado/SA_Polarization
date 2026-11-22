@@ -73,7 +73,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-La medición de polarización política en comentarios requiere distinguir la valencia general del texto de la valoración dirigida hacia actores concretos. Este trabajo desarrolla un estudio de polarización afectiva expresada en comentarios públicos de YouTube del contexto electoral peruano de enero a junio de 2026. El diseño separa dos componentes: medición por usuario a partir de historiales anotados y evaluación de clasificadores de valoración comentario--objetivo. Se identifica la afinidad operacional con una partición de videos y se evalúan expresiones hacia ambos bloques políticos en otra. Se planifican 800 usuarios realmente comparables y una referencia independiente de 3,000 comentarios; estos tamaños son objetivos del diseño y todavía no constituyen muestras cerradas. La comparación de desarrollo completada comprende cuatro bases Transformer y tres semillas por base, usando 1,148 pares de entrenamiento y 264 de validación con contexto completo común. RoBERTuito obtuvo el mayor macro-F1 de desarrollo (0.644), mientras BETO alcanzó la mayor cobertura condicional de pares candidatos (37.16\%). La validación fue reutilizada; los cuatro modelos deshabilitaron predicciones neutrales tras calibrar y ninguno habilita inferencia automática del corpus. La captura ampliada, las nuevas referencias y la medición final siguen pendientes. Por tanto, esta versión documenta el diseño y los resultados de desarrollo disponibles, sin afirmar todavía presencia, magnitud ni diferencias entre bloques de polarización afectiva.
+La medición de polarización política en comentarios requiere distinguir la valencia general del texto de la valoración dirigida hacia actores concretos. Este trabajo desarrolla un estudio de polarización afectiva expresada en comentarios públicos de YouTube del contexto electoral peruano de enero a junio de 2026. El diseño separa dos componentes: medición por usuario a partir de historiales anotados y evaluación de clasificadores de valoración comentario--objetivo. Se identifica la afinidad operacional con una partición de videos y se evalúan expresiones hacia ambos bloques políticos en otra. El alcance vigente comprende un prefijo fijo de 300 usuarios examinados, incorporando a todos los que satisfagan comparabilidad, y una referencia de 3,000 comentarios separada del desarrollo. Un corte inicial de 200 se conserva por separado. La comparación de desarrollo completada comprende cuatro bases Transformer y tres semillas por base, usando 1,148 pares de entrenamiento y 264 de validación con contexto completo común. RoBERTuito obtuvo el mayor macro-F1 de desarrollo (0.644), mientras BETO alcanzó la mayor cobertura condicional de pares candidatos (37.16\%). La validación fue reutilizada; los cuatro modelos deshabilitaron predicciones neutrales tras calibrar y ninguno habilita inferencia automática del corpus. La captura ampliada concluyó; la revisión de las referencias y la medición final siguen pendientes. Por tanto, esta versión documenta el diseño y los resultados de desarrollo disponibles, sin afirmar todavía presencia, magnitud ni diferencias entre bloques de polarización afectiva.
 \end{abstract}
 \begin{IEEEkeywords}
 Polarización afectiva, sentimiento dirigido, YouTube, anotación humana, evaluación de clasificadores, Perú.
@@ -86,7 +86,7 @@ El caso peruano cuenta con antecedentes sobre polarización política y discurso
 
 El presente estudio se concentra en \emph{polarización afectiva expresada}: balances relativos de valoración explícita hacia actores de izquierda y derecha, entre usuarios con evidencia suficiente en ambos bloques. Adapta las medidas de Martínez-España et al. \cite{polariz}, separando la asignación de afinidad y su evaluación en videos distintos. La afinidad es operacional; no representa identidad partidaria declarada ni una medida psicológica completa del afecto.
 
-Se plantean tres preguntas: (P1) ¿cuál es el balance afectivo relativo hacia el grupo de afinidad y el grupo externo entre usuarios comparables del marco observado?; (P2) ¿qué estabilidad presenta ese balance bajo cambios de partición, contribución por video y composición de actores?; y (P3) ¿qué desempeño ofrecen distintos clasificadores frente a una referencia independiente de valoración dirigida?
+Se plantean tres preguntas: (P1) ¿cuál es el balance afectivo relativo hacia el grupo de afinidad y el grupo externo entre usuarios comparables del marco observado?; (P2) ¿qué estabilidad presenta ese balance bajo cambios de partición, contribución por video y composición de actores?; y (P3) ¿qué desempeño ofrecen distintos clasificadores frente a una referencia revisada de valoración dirigida?
 
 La contribución metodológica es doble: un procedimiento reproducible de medición por usuario con historiales revisados y una comparación controlada de clasificadores comentario--objetivo. El primer componente puede cerrarse con anotaciones humanas aun cuando el segundo no permita automatizar el corpus. Esta versión presenta el protocolo implementado y el desarrollo completado; las respuestas empíricas finales a P1--P3 permanecen pendientes.
 
@@ -99,7 +99,7 @@ Miehling et al. \cite{Miehling2025} estudian sentimiento basado en aspectos en c
 
 \section{Método propuesto}
 \subsection{Diseño y estado del estudio}
-El estudio mantiene dos ramas (Fig.~\ref{fig:metodo}): medición de historiales y clasificación dirigida. La recolección y el análisis se ejecutan localmente; el entrenamiento se ejecutó en GPU en Kaggle con recursos privados. Configuraciones, particiones, semillas, versiones y hashes permiten verificar procedencia. La comparación de desarrollo está completada; la captura ampliada y las nuevas muestras aún no están cerradas.
+El estudio mantiene dos ramas (Fig.~\ref{fig:metodo}): medición de historiales y clasificación dirigida. La recolección y el análisis se ejecutan localmente; el entrenamiento se ejecutó en GPU en Kaggle con recursos privados. Configuraciones, particiones, semillas, versiones y hashes permiten verificar procedencia. La comparación de desarrollo y la captura ampliada están completadas; las nuevas referencias humanas aún no están cerradas.
 
 \begin{figure*}[t]
 \centering
@@ -107,11 +107,11 @@ El estudio mantiene dos ramas (Fig.~\ref{fig:metodo}): medición de historiales 
  box/.style={draw,rounded corners,align=center,font=\small,text width=43mm,minimum height=12mm},
  pending/.style={box,dashed}]
 \node[box] (source) {YouTube Data API\\Marco histórico preparado};
-\node[pending,right=of source] (capture) {Completar captura\\y congelar corpus};
-\node[pending,right=of capture] (sample) {Muestras: historiales\\y referencia independiente};
+\node[box,right=of source] (capture) {Captura completa\\Corpus congelado};
+\node[pending,right=of capture] (sample) {Muestras: historiales\\y referencia para evaluación};
 \node[pending,below=of sample] (human) {Anotación y revisión\\Medición humana por usuario};
 \node[box,left=of human] (training) {Desarrollo humano anterior\\12 ajustes completados};
-\node[pending,left=of training] (eval) {Evaluación independiente\\de clasificadores};
+\node[pending,left=of training] (eval) {Evaluación revisada\\de clasificadores};
 \draw[->] (source)--(capture); \draw[->] (capture)--(sample);
 \draw[->] (sample)--(human); \draw[->] (training)--(eval);
 \draw[->] (human.south)--++(0,-7mm)-|(eval.south);
@@ -135,15 +135,15 @@ Conjunto & Tamaño / estado\\\midrule
 Corpus dirigido anterior (comentarios) & 805,039\\
 Unión histórica preparada (filas únicas) & 760,839\\
 Marco de videos para recaptura & 11,280\\
-Corpus ampliado congelado & Pendiente\\
-Cohorte comparable (objetivo de usuarios) & 800\\
-Benchmark independiente (objetivo de comentarios) & 3,000\\\bottomrule
+Corpus ampliado congelado (comentarios) & 1,012,515\\
+Prefijo examinado (techo de usuarios) & 300\\
+Benchmark separado del desarrollo (comentarios) & 3,000\\\bottomrule
 \end{tabular}
 \end{table}
 
 La captura ampliada pagina los comentarios principales en orden temporal y completa las respuestas faltantes por identificador del comentario padre. La API advierte que las respuestas incluidas en un hilo pueden ser incompletas \cite{YoutubeThreads}. Se conservan fecha de captura, identificadores, tipo de comentario y vínculo de hilo. Este vínculo no garantiza identificar al destinatario discursivo de cada respuesta.
 
-El histórico tuvo límites de extracción por video; la recaptura busca completar las páginas disponibles de los videos del marco. No recupera comentarios eliminados ni sus versiones originales. Para IDs repetidos se preserva la primera observación local y se registran versiones posteriores; conflictos de autor o video detienen la integración. Los videos pendientes por presupuesto no se confunden con recursos indisponibles. El presupuesto local de 2,500 solicitudes por día UTC es un control de ejecución, no una propiedad del fenómeno.
+El histórico tuvo límites de extracción por video; la recaptura busca completar las páginas disponibles de los videos del marco. No recupera comentarios eliminados ni sus versiones originales. Para IDs repetidos se preserva la primera observación local y se registran versiones posteriores; conflictos de autor o video detienen la integración. Los videos pendientes por presupuesto no se confunden con recursos indisponibles. El presupuesto operativo local de hasta 9,000 unidades por día del Pacífico es un control de ejecución, no una propiedad del fenómeno.
 
 \begin{algorithm}[t]
 \caption{Captura y congelación del corpus dirigido}
@@ -179,16 +179,18 @@ Para medir al usuario se colapsan los objetivos en eventos comentario--bloque. V
 \subsection{Referencias humanas y muestras}
 La referencia v2 anterior contiene 2,000 comentarios cerrados: 1,200 de entrenamiento, 300 de validación y 500 reservados para prueba, separados por video. Las anotaciones fueron confirmadas o corregidas individualmente por un único revisor humano. La revisión está terminada, incluida la anotación de los 500 reservados; sus etiquetas no se han usado para evaluar los modelos y permanecen excluidas de los paquetes de esta comparación. El procedimiento utilizó anotaciones preliminares y no permite estimar acuerdo entre dos humanos independientes.
 
-La nueva cohorte utiliza historiales completos disponibles en el corpus congelado, incluidos comentarios sin candidatos. Los usuarios con oportunidad estructural de comparación se ordenan mediante un hash con semilla fija 57 y se incorporan en lotes de 100. Se revisa el prefijo completo del orden, sin seleccionar usuarios por su polarización prevista. La meta son los primeros 800 que satisfagan los criterios de comparabilidad tras la revisión humana, o el tamaño alcanzado si se agota el marco. Las anotaciones preliminares permiten un análisis provisional; las correcciones humanas pueden exigir continuar el mismo orden.
+La nueva cohorte utiliza historiales completos disponibles en el corpus congelado, incluidos comentarios sin candidatos. Los usuarios con oportunidad estructural de comparación se ordenan mediante un hash con semilla fija 57 y se incorporan en lotes de 100. Se revisa el prefijo completo del orden, sin seleccionar usuarios por su polarización prevista. Una enmienda por disponibilidad de recursos fija el cierre en los primeros 300 usuarios examinados e incorpora a todos sus comparables reales. Sustituye la planificación original de 800 comparables sin cambiar los criterios. Se decidió con el avance de anotación conocido, incluidos 79 comparables entre los primeros 200; no constituye una decisión previa al inicio del estudio. Las anotaciones preliminares permiten análisis provisionales; las correcciones humanas pueden reabrir lecturas dentro del mismo prefijo, sin ampliarlo según los resultados.
 
-La planificación por precisión sigue la distinción entre tamaño disponible, precisión deseada y potencia descrita por Lakens \cite{lakens2022sample}. Para un gap acotado en $[-2,2]$, usando varianza máxima 4 y \emph{suponiendo} efecto de diseño 2, el margen aproximado con 800 usuarios sería $1.96\sqrt{4\cdot2/800}\approx0.196$. Estos supuestos son decisiones de planificación del estudio: no garantizan ese margen, un efecto positivo ni suficiencia editorial. El intervalo observado prevalece.
+La planificación por precisión sigue la distinción entre tamaño disponible, precisión deseada y potencia descrita por Lakens \cite{lakens2022sample}. Para un gap acotado en $[-2,2]$, usando varianza máxima 4 y \emph{suponiendo} efecto de diseño 2, el margen aproximado con 800 usuarios sería $1.96\sqrt{4\cdot2/800}\approx0.196$. Esta planificación original no determina el tamaño efectivo del alcance vigente de 300 examinados. Los supuestos no garantizan ese margen, un efecto positivo ni suficiencia editorial. Se informa el intervalo observado, aun cuando su margen supere .20, sin ampliar la muestra por ese motivo.
 
-El benchmark independiente planificado contiene 3,000 comentarios: 1,000 con candidatos de izquierda, 1,000 de derecha, 500 solo con objetivos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan a una cuota mediante hash. Dentro de cada cuota se estratifica por procedencia editorial, mes y tipo de comentario, con probabilidades de selección documentadas. Se excluyen videos y textos usados en referencias o desarrollo auxiliar anteriores. El revisor debe identificar todos los objetivos explícitos, incluidos los omitidos por el extractor.
+El benchmark separado del desarrollo contiene 3,000 comentarios: 1,000 con candidatos de izquierda, 1,000 de derecha, 500 solo con objetivos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan a una cuota mediante hash. Dentro de cada cuota se estratifica por procedencia editorial, mes y tipo de comentario, con probabilidades de selección documentadas. Se excluyen videos y textos usados en referencias o desarrollo auxiliar anteriores. El revisor debe identificar todos los objetivos explícitos, incluidos los omitidos por el extractor.
 
-Las anotaciones de la cohorte requerirán confirmación o corrección individual por un revisor humano; la referencia final del benchmark tendrá anotación humana ciega a anotaciones preliminares y predicciones. Las anotaciones preliminares del benchmark solo pueden sustentar comparaciones provisionales, no una estimación independiente de exactitud. Ninguna anotación preliminar se registra como decisión humana.
+Las anotaciones de la cohorte y del benchmark requerirán confirmación o corrección individual por un revisor humano, después de obtener resultados provisionales. El revisor podrá consultar y corregir las anotaciones preliminares; esta revisión conserva dependencia del etiquetado inicial. Las comparaciones previas al cierre describen concordancia con anotaciones preliminares y no una estimación independiente de exactitud. Ninguna anotación preliminar se registra como decisión humana.
 
 \subsection{Afinidad operacional y comparación entre bloques}
 Los videos se dividen por hash en A y B, con semilla 42, independientemente de sus resultados. Para el usuario $i$ se asigna afinidad al bloque con mayoría positiva única en A, siempre que reúna al menos dos eventos positivos en al menos dos videos y una proporción dominante de positivos $\geq2/3$. En otro caso la afinidad es indeterminada; ello no permite inferir abstención electoral, desafección o ausencia de identidad política.
+
+La lectura se organiza primero en A, por videos con menos comentarios y desempate por identificador. Puede omitirse el resto de un historial únicamente cuando una cota conservadora demuestra que ningún bloque alcanzaría los mínimos de afinidad, aun considerando cada comentario pendiente como un posible apoyo. Las omisiones conservan su motivo y no se anotan como ausencia de objetivos. Para quienes califican se completa la anotación de A y B; las correcciones del revisor recalculan la cota y pueden reabrir comentarios pendientes. Así se conserva la selección primaria sin exigir la lectura íntegra de historiales excluidos de forma demostrable.
 
 La evaluación usa exclusivamente B. Un usuario es comparable si tiene eventos evaluables hacia ambos bloques, al menos tres eventos en total y al menos dos videos. Estos criterios definen una subpoblación observada; no autorizan generalizar a todos los comentaristas. La partición reduce el uso de la misma evidencia para asignar y evaluar afinidad, pero no elimina dependencia entre expresiones de un mismo usuario.
 
@@ -226,7 +228,7 @@ Solo se define con evidencia en ambos bloques. Su promedio atribuye igual contri
 \State Separar anotaciones preliminares y decisiones humanas.
 \State Colapsar objetivos en eventos comentario--bloque.
 \State Asignar afinidad con A y comprobar cobertura en B.
-\If{hay 800 comparables o se agotó el marco}
+\If{se examinaron los 300 usuarios del prefijo fijado}
 \State Finalizar selección; conservar todos los examinados.
 \State \textbf{Salir del bucle de lotes.}
 \EndIf
@@ -253,7 +255,7 @@ Se promedian las probabilidades de las tres semillas. La temperatura y los umbra
 
 El macro-F1 informado promedia las clases positiva, negativa y neutral; las cinco clases participan en las predicciones y sus errores. La precisión aceptada se calcula después de aplicar umbrales. La cobertura de desarrollo es la fracción ponderada de todos los pares candidatos comunes que reciben una predicción aceptada positiva, negativa o neutral; no incluye objetivos omitidos por el extractor.
 
-La evaluación independiente pendiente separará extracción integral (omisiones incluidas) y clasificación condicional con contexto común. Reportará desempeño por bloque objetivo, fuente y tipo de comentario; intervalos por remuestreo de videos y seis contrastes pareados entre modelos, con Holm. La comparación con sentimiento general solo puede hacerse sobre exactamente el mismo subconjunto con baseline disponible. Los errores de AP/gap en historiales son un diagnóstico de medición, no una evaluación predictiva independiente si comparten desarrollo. Ninguna etapa promueve automáticamente modelos para inferencia del corpus.
+La evaluación revisada pendiente separará extracción integral (omisiones incluidas) y clasificación condicional con contexto común. Reportará desempeño por bloque objetivo, fuente y tipo de comentario; intervalos por remuestreo de videos y seis contrastes pareados entre modelos, con Holm. La comparación con sentimiento general solo puede hacerse sobre exactamente el mismo subconjunto con baseline disponible. Los errores de AP/gap en historiales son un diagnóstico de medición, no una evaluación predictiva independiente si comparten desarrollo. Ninguna etapa promueve automáticamente modelos para inferencia del corpus.
 
 \section{Resultados disponibles y resultados pendientes}
 \subsection{Comparación de desarrollo completada}
@@ -278,22 +280,23 @@ RoBERTuito obtiene el mayor macro-F1 y BETO la mayor cobertura condicional. Los 
 La importación verificó doce ajustes y 99 archivos de resultados, incluidos checkpoints y calibración. Esta integridad respalda la trazabilidad de la ejecución, no la validez sustantiva de una medida de polarización. No se atribuyen diferencias frente a rondas anteriores a una arquitectura cuando cambiaron receta o subconjunto.
 
 \subsection{Composición final del corpus y la cohorte}
-\pendiente{Cerrar la captura, congelar la unión y reportar comentarios únicos, respuestas, videos, canales y exclusiones. Informar usuarios examinados, comparables tras revisión, indeterminados y pérdidas por criterio. Los 800 usuarios son una meta, no un resultado alcanzado.}
+La captura de los 11,280 videos del marco concluyó y la unión congelada contiene 1,012,515 comentarios únicos. El marco estructural comprende 4,443 usuarios; esta elegibilidad no confirma su comparabilidad afectiva.
+\pendiente{Completar el desglose de respuestas, canales y exclusiones. Informar usuarios examinados, comparables tras revisión, indeterminados y pérdidas por criterio. El techo son 300 usuarios examinados; el número comparable se obtiene aplicando los criterios sin reducirlos.}
 
 \subsection{Medición de polarización expresada}
 \pendiente{Incorporar balances internos y externos, AP, spread, gap global y por afinidad, con intervalos y réplicas válidas a partir de la referencia humana final. No hay todavía una estimación cerrada que permita afirmar presencia o magnitud de polarización.}
 
-\subsection{Robustez y evaluación independiente}
-\pendiente{Presentar las sensibilidades preespecificadas y la evaluación del benchmark humano ciego: extracción, clasificación, cobertura integral e intervalos. Las anotaciones preliminares y sus análisis deben identificarse como provisionales si se presentan antes del cierre humano.}
+\subsection{Robustez y evaluación revisada}
+\pendiente{Presentar las sensibilidades preespecificadas y la evaluación del benchmark revisado: extracción, clasificación, cobertura integral e intervalos. Las anotaciones preliminares y sus análisis deben identificarse como provisionales si se presentan antes del cierre humano.}
 
 \section{Discusión y limitaciones}
 Los resultados de desarrollo muestran una tensión entre admitir predicciones y alcanzar precisión en el subconjunto aceptado. Las clases deshabilitadas y la baja cobertura impiden tratar las etiquetas automáticas como sustituto de una referencia completa. Tampoco aumentar el volumen de comentarios corrige por sí solo una atribución errónea del objetivo. La rama anotada permite investigar P1 y P2 sin condicionar la medición al éxito de un clasificador.
 
 La medición sigue condicionada al registro explícito y a la documentación de bloques. Puede omitir referencias implícitas, apodos no registrados o actores de bloque desconocido. La cohorte comparable exige actividad y evidencia hacia ambos bloques; no representa a usuarios poco activos o sin afinidad determinada. Se mantiene la auditoría de todos los examinados para hacer visibles estas exclusiones.
 
-La revisión de anotaciones preliminares por un único humano puede conservar sesgos del etiquetado inicial y no estima acuerdo entre codificadores. La anotación ciega del nuevo benchmark mejora la independencia respecto de las predicciones, pero no aporta por sí sola una medida de acuerdo humano. La revisión pendiente no debe describirse como validación ya obtenida.
+La revisión de anotaciones preliminares por un único humano puede conservar sesgos del etiquetado inicial y no estima acuerdo entre codificadores. La corrección posterior del benchmark permite revisar errores, pero conserva dependencia de las propuestas iniciales y no aporta una medida de acuerdo humano. La revisión pendiente no debe describirse como validación ya obtenida.
 
-La independencia del benchmark se refiere a su separación respecto del desarrollo de los modelos. Antes del cierre se auditará si el revisor vio previamente sus comentarios dentro de historiales de la cohorte; ocultar propuestas en la interfaz no elimina esa exposición. Cualquier solapamiento y exposición previa deberán declararse al interpretar la referencia.
+La separación del benchmark se refiere a su exclusión del desarrollo de los modelos; no implica independencia de las anotaciones preliminares que verá el revisor. Antes del cierre se auditará si el revisor vio previamente sus comentarios dentro de historiales de la cohorte; ocultar propuestas en la interfaz no elimina esa exposición. Cualquier solapamiento y exposición previa deberán declararse al interpretar la referencia.
 
 La captura tardía no reconstruye un archivo exhaustivo del discurso de enero--junio. Eliminación, edición, moderación, desigualdad entre canales y límites del histórico afectan la cobertura. Las respuestas identifican pertenencia al hilo, no necesariamente interacción afectiva entre autores concretos. Los intervalos agrupados no corrigen todos estos sesgos.
 
@@ -304,9 +307,9 @@ Los datos provienen de comentarios públicos, sin contacto con sus autores. Esta
 \pendiente{Completar la declaración de acceso a código y materiales y, si corresponde, la revisión ética institucional documentada antes del envío. No publicar automáticamente textos ni identificadores.}
 
 \section{Conclusiones y trabajo pendiente}
-Se implementó un diseño que separa valoración dirigida, afinidad operacional y procedencia editorial, con medición por historiales y evaluación independiente de clasificadores como ramas distintas. La comparación cerrada de desarrollo completó doce ajustes; RoBERTuito obtuvo el mayor macro-F1 y BETO la mayor cobertura condicional, sin que ningún modelo habilite producción automática.
+Se implementó un diseño que separa valoración dirigida, afinidad operacional y procedencia editorial, con medición por historiales y evaluación de clasificadores como ramas distintas. La comparación cerrada de desarrollo completó doce ajustes; RoBERTuito obtuvo el mayor macro-F1 y BETO la mayor cobertura condicional, sin que ningún modelo habilite producción automática.
 
-El artículo todavía no ofrece conclusiones empíricas finales sobre la polarización expresada. Completar captura, referencias humanas, incertidumbre y sensibilidades es necesario para responder las preguntas sustantivas. Los resultados futuros deberán informarse aun si muestran balances nulos, contrarios a lo esperado o imprecisos, sin cambiar criterios para obtener evidencia afirmativa.
+El artículo todavía no ofrece conclusiones empíricas finales sobre la polarización expresada. Completar las referencias humanas, la incertidumbre y las sensibilidades es necesario para responder las preguntas sustantivas. Los resultados futuros deberán informarse aun si muestran balances nulos, contrarios a lo esperado o imprecisos, sin cambiar criterios para obtener evidencia afirmativa.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,docs/references}

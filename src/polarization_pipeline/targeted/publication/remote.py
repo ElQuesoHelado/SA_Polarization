@@ -85,6 +85,8 @@ def prepare(settings, plan, parent, study, registry, task):
         raise ValueError("Recursos de publicación deben ser distintos de los anteriores")
     atomic_json(dataset / "dataset-metadata.json", dict(id=ids["dataset_id"], title="SA Polarization Publication Data", licenses=[dict(name="other")]))
     kernel_title = "SA Polarization Publication " + ("Training" if task == "train" else "Predict")
+    if task == "predict" and (study / "scope.json").exists():
+        kernel_title += " Benchmark"
     atomic_json(kernel / "kernel-metadata.json", dict(id=kernel_id, title=kernel_title, code_file="kernel.py",
         language="python", kernel_type="script", is_private=True, enable_gpu=True, enable_internet=True,
         dataset_sources=[ids["dataset_id"]], competition_sources=[], kernel_sources=[]))

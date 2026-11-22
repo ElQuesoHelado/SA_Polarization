@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 
 import pandas as pd
 
@@ -48,10 +49,86 @@ def checked(study, name):
     state = json.loads((folder / "proposal_state.json").read_text())
     if state["sha256"] != sha256(folder / "ai_proposals.json"):
         raise ValueError("Propuestas alteradas fuera del importador")
+    manifest = effective_policy(folder, manifest, state)
     return folder, read_csv(folder / "sample.csv"), manifest, state
 
 
+def effective_policy(folder, manifest, state, *, require_link=True):
+    policy_folder = folder / "review_policy"
+    if not policy_folder.exists():
+        if state.get("review_policy_sha256"):
+            raise ValueError("Falta la política de revisión registrada")
+        return manifest
+    verify_seal(policy_folder)
+    policy = json.loads((policy_folder / "policy.json").read_text())
+    if (policy.get("schema_version") != 1 or policy.get("from") != "blind" or policy.get("to") != "assisted"
+            or manifest["human_mode"] != "blind" or not policy.get("authorization")
+            or policy["original_manifest_sha256"] != sha256(folder / "manifest.json")
+            or policy["sample_sha256"] != sha256(folder / "sample.csv")
+            or policy["study_freeze_sha256"] != manifest["study_freeze_sha256"]):
+        raise ValueError("Política de revisión incompatible con la muestra original")
+    if require_link and state.get("review_policy_sha256") != sha256(policy_folder / "manifest.json"):
+        raise ValueError("Transición de revisión incompleta; reanudar enable-assisted-review")
+    return {**manifest, "original_human_mode": "blind", "human_mode": "assisted",
+            "review_policy_sha256": sha256(policy_folder / "manifest.json")}
+
+
+def enable_assisted_review(study, name):
+    """Explicit, prospective amendment; original sample seals and human forms are retained."""
+    verify(study, frozen=True)
+    folder = folder_for(study, name)
+    with lock(folder / "human_review.lock"), lock(folder / "proposal_import.lock"):
+        manifest = verify_seal(folder)
+        if manifest["study_freeze_sha256"] != sha256(study / "freeze.json"):
+            raise ValueError("La muestra pertenece a otro snapshot")
+        state = json.loads((folder / "proposal_state.json").read_text())
+        if state["sha256"] != sha256(folder / "ai_proposals.json"):
+            raise ValueError("Propuestas alteradas fuera del importador")
+        if (folder / "reference.json").exists():
+            raise ValueError("Referencia cerrada: no cambiar la política de revisión")
+        destination = folder / "review_policy"
+        if destination.exists() and state.get("review_policy_sha256") == sha256(destination / "manifest.json"):
+            effective_policy(folder, manifest, state)
+            return dict(sample=name, human_mode="assisted", original_human_mode="blind", changed=False,
+                        policy_sha256=state["review_policy_sha256"], human_decisions_written=0)
+        form = read_csv(folder / "human_review.csv")
+        if form[["review_complete", "annotation_json", "reviewer_id", "reviewed_at", "decision", "proposal_sha256"]].ne("").any().any():
+            raise ValueError("Existen decisiones humanas: no cambiar la política de revisión")
+        if manifest["human_mode"] == "assisted" and not destination.exists():
+            return dict(sample=name, human_mode="assisted", changed=False, human_decisions_written=0)
+        existed = destination.exists()
+        if not existed:
+            pending = folder / "review_policy_pending"
+            if pending.exists():
+                raise ValueError("Preparación de política incompleta; conservar y auditar review_policy_pending")
+            pending.mkdir()
+            for filename in ("manifest.json", "proposal_state.json", "human_review.csv"):
+                shutil.copy2(folder / filename, pending / ("original_" + filename))
+            atomic_json(pending / "policy.json", dict(schema_version=1, created_at=stamp(),
+                authorization="Explicit enable-assisted-review command authorized by study operator",
+                **{"from": "blind", "to": "assisted"},
+                original_manifest_sha256=sha256(folder / "manifest.json"), sample_sha256=sha256(folder / "sample.csv"),
+                study_freeze_sha256=manifest["study_freeze_sha256"]))
+            seal(pending, [p.name for p in pending.iterdir()], policy="prospective_assisted_review")
+            pending.rename(destination)
+        effective_policy(folder, manifest, state, require_link=False)
+        policy_hash = sha256(destination / "manifest.json")
+        if state.get("review_policy_sha256") != policy_hash:
+            if state.get("review_policy_sha256") or sha256(folder / "proposal_state.json") != sha256(destination / "original_proposal_state.json"):
+                raise ValueError("Estado incompatible con la transición de revisión")
+            state["review_policy_sha256"] = policy_hash
+            atomic_json(folder / "proposal_state.json", state)
+        effective_policy(folder, manifest, state)
+        return dict(sample=name, human_mode="assisted", original_human_mode="blind", changed=not existed,
+                    policy_sha256=policy_hash, human_decisions_written=0)
+
+
 def import_proposals(study, name, batch, registry):
+    with lock(folder_for(study, name) / "proposal_import.lock"):
+        return _import_proposals(study, name, batch, registry)
+
+
+def _import_proposals(study, name, batch, registry):
     folder, sample, _, state = checked(study, name)
     if (folder / "reference.json").exists():
         raise ValueError("Referencia cerrada")
@@ -82,6 +159,11 @@ def import_proposals(study, name, batch, registry):
 
 
 def decisions(study, name, registry, stage):
+    from . import screening
+    if name.startswith("cohort_") and screening.enabled(study):
+        if stage == "final" and (folder_for(study,name)/"reference.json").exists():
+            verify_seal(folder_for(study,name),"reference.json")
+        return screening.decisions(screening.policy_settings(study), study, name, registry, stage)
     folder, sample, manifest, _ = checked(study, name)
     targets = {t["target_id"] for t in load_registry(registry, frozen=True)["targets"]}
     proposals = json.loads((folder / "ai_proposals.json").read_text())
@@ -121,13 +203,22 @@ def decisions(study, name, registry, stage):
 
 
 def close_reference(study, name, registry):
-    folder, _, _, _ = checked(study, name)
+    folder, _, manifest, _ = checked(study, name)
     frame = decisions(study, name, registry, "final")
     if (folder / "reference.json").exists():
         verify_seal(folder, "reference.json")
         return folder
     frame.to_csv(folder / "gold.csv", index=False)
-    seal(folder, ["gold.csv", "human_review.csv", "ai_proposals.json"], filename="reference.json",
+    screening_files = []
+    from . import screening
+    if name.startswith("cohort_") and screening.enabled(study):
+        certificate, _, _ = screening.inspect(screening.policy_settings(study), study, registry, name, "final")
+        atomic_json(folder / "affinity_exclusions.json", certificate)
+        screening_files = ["affinity_exclusions.json"]
+    files = ["gold.csv", "human_review.csv", "ai_proposals.json", *screening_files]
+    if (folder / "review_policy").exists():
+        files.extend(["review_policy/manifest.json", "review_policy/policy.json"])
+    seal(folder, files, filename="reference.json", human_mode=manifest["human_mode"],
          status="human_reviewed", single_reviewer=True, interrater_agreement=None)
     return folder
 
@@ -147,12 +238,18 @@ def _review(study, name, registry, *, batch_number=None):
         raise ValueError("Referencia cerrada")
     form = read_csv(folder / "human_review.csv")
     from .batches import indices, SIZE
-    pending = form.index[~form.review_complete.str.lower().eq("true")].tolist()
+    from . import screening
+    screening_mode = name.startswith("cohort_") and screening.enabled(study)
+    required = None
+    if screening_mode:
+        info, _, screening_values = screening.inspect(screening.policy_settings(study),study,registry,name,"final")
+        required = set(info['required_sample_ids'])
+    pending = form.index[~form.review_complete.str.lower().eq("true") & (form.sample_id.isin(required) if required is not None else True)].tolist()
     if not pending:
-        print("Muestra completamente revisada.")
+        print("Anotaciones necesarias completas; consultar exclusiones certificadas." if screening_mode else "Muestra completamente revisada.")
         return
     number = batch_number if batch_number is not None else pending[0] // SIZE + 1
-    selected = list(indices(len(form), number))
+    selected = list(indices(len(form), number)) if batch_number is not None or not screening_mode else pending[:SIZE]
     print(f"Tanda {number}/{(len(form)+SIZE-1)//SIZE}; pendientes en la muestra: {len(pending)}")
     proposals = json.loads((folder / "ai_proposals.json").read_text())
     targets = {t["target_id"]: t["name"] for t in load_registry(registry)["targets"]}
@@ -166,6 +263,10 @@ def _review(study, name, registry, *, batch_number=None):
     for index, row in form.iloc[selected].iterrows():
         if row.review_complete.lower() == "true":
             continue
+        if screening_mode:
+            current = screening.assess(sample,screening_values,registry,screening.policy_settings(study))
+            if row.sample_id not in current['required_sample_ids']:
+                continue
         print("\n" + row.text)
         if blind:
             print("Anotación ciega: identifica todos los objetivos explícitos; [] también requiere lectura completa.")
@@ -192,10 +293,23 @@ def _review(study, name, registry, *, batch_number=None):
         form.loc[index, ["review_complete", "annotation_json", "reviewer_id", "reviewed_at", "decision", "proposal_sha256"]] = [
             "true", json.dumps(items, ensure_ascii=False), reviewer, stamp(), decision, digest]
         save_csv(form, folder / "human_review.csv")
+        if screening_mode:
+            screening_values[row.sample_id] = items
 
 
-def cohort_samples(study, registry, stage):
+def cohort_samples(study, registry, stage, *, screened_users=None):
     folders = sorted((study / "annotations").glob("cohort_[0-9][0-9][0-9][0-9]"))
+    if screened_users is not None:
+        selected=[];users=set()
+        for folder in folders:
+            if len(users)==screened_users:break
+            ids=set(read_csv(folder/'sample.csv').user_id)
+            if ids & users or len(users | ids)>screened_users:
+                raise ValueError('El corte debe coincidir con cohortes completas')
+            users.update(ids);selected.append(folder)
+        if len(users)!=screened_users:
+            raise ValueError('El corte solicitado todavía no está seleccionado')
+        folders=selected
     frames = [decisions(study, f.name, registry, stage) for f in folders]
     if not frames:
         raise ValueError("No hay lotes por usuario")
@@ -208,6 +322,8 @@ def cohort_samples(study, registry, stage):
 def next_batch(settings, plan, study, registry, *, stage="provisional"):
     from .analysis import events_from_annotations, scores
     verify(study, frozen=True)
+    from .fixed_scope import policy
+    fixed=policy(study)
     folders = sorted((study / "annotations").glob("cohort_[0-9][0-9][0-9][0-9]"))
     ranked = read_csv(study / "eligible_users.csv")
     used = set()
@@ -218,9 +334,15 @@ def next_batch(settings, plan, study, registry, *, stage="provisional"):
         if used != expected:
             raise ValueError("Los lotes no conservan el prefijo del orden congelado")
         current = scores(events_from_annotations(frame, registry), settings)
-        if int(current.paired.sum()) >= plan["comparable_users"]:
+        if fixed and len(used)>fixed['screened_users']:
+            raise ValueError('Usuarios fuera del techo fijo')
+        if fixed and len(used)==fixed['screened_users']:
+            return dict(status='fixed_user_scope_reached',stage=stage,screened_users=len(used),
+                comparable=int(current.paired.sum()),no_stopping_by_effect=True)
+        if not fixed and int(current.paired.sum()) >= plan["comparable_users"]:
             return dict(status="target_reached", stage=stage, screened_users=len(used), comparable=int(current.paired.sum()))
-    selected = ranked.iloc[len(used):len(used)+plan["batch_users"]]
+    stop=min(len(used)+plan["batch_users"],fixed["screened_users"]) if fixed else len(used)+plan["batch_users"]
+    selected = ranked.iloc[len(used):stop]
     if selected.empty:
         return dict(status="frame_exhausted", screened_users=len(used))
     corpus = read_csv(study / "corpus.csv")

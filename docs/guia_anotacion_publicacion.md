@@ -4,10 +4,12 @@ La anotación identifica todos los actores políticos explícitos de cada coment
 
 ## Orden de trabajo
 
-Primero anota el benchmark a ciegas; después revisa las propuestas de los historiales. Las tandas de 50 comentarios organizan la lectura de una muestra ya fijada: no eliminan textos ni cambian el orden de usuarios o los criterios de comparabilidad.
+El usuario autorizó obtener resultados provisionales y revisar después las propuestas tanto del benchmark como de los historiales. En el estudio activo el benchmark pasó a revisión asistida mediante una política adicional sellada; su manifiesto original y exportaciones ciegas permanecen conservados. Otras ejecuciones mantienen su modo ciego original. Las tandas de 50 comentarios organizan una muestra ya fijada: no eliminan textos ni cambian el orden de usuarios o los criterios de comparabilidad.
 
 ```bash
-# Exportar una tanda del benchmark: únicamente ID y texto, sin propuestas ni pistas.
+# Consultar el avance y la parada por comparabilidad.
+.venv/bin/sa-polarization targeted publication annotation-progress
+# Exportar una tanda según la política efectiva de revisión.
 .venv/bin/sa-polarization targeted publication annotation-batch --sample benchmark --batch-number 1
 # Abre la primera tanda con pendientes; guarda cada confirmación y permite reanudar.
 .venv/bin/sa-polarization targeted publication review --sample benchmark
@@ -39,3 +41,25 @@ Un apodo explícito que identifique al actor puede anotarse aunque el extractor 
 ## Cierre
 
 Tras completar todas las tandas, cerrar la referencia con `publication reference-close --sample benchmark` o el lote correspondiente. Las propuestas, las confirmaciones y el cierre son archivos distintos. Los resultados provisionales no sustituyen la referencia humana; la aceptación de propuestas no estima acuerdo entre humanos ni exactitud independiente. Las correcciones pueden exigir revisar más usuarios en el mismo orden hasta alcanzar la meta o agotar el marco.
+
+## Estado de la primera cohorte
+
+`ap_publication_20261117_v1` tiene propuestas completas para los 4,701 comentarios de `cohort_0001` (100 usuarios, 95 tandas) y para los 3,000 comentarios del benchmark (60 tandas). Las fuentes de lectura y las correcciones posteriores se conservan separadas; ninguna propuesta constituye una confirmación humana. La ampliación conserva historiales completos por orden congelado y ahora cierra únicamente los tres lotes ya seleccionados (300 usuarios examinados, todos sus comparables); la lectura ahora aplica el screening exacto descrito abajo. `annotation-progress` registra el estado reanudable y no usa AP/gap para decidir la parada.
+
+Cuando comience la revisión humana, usa `review --sample benchmark` y repite el comando para reanudar las tandas pendientes. Tras confirmar o corregir las 3,000 propuestas, ejecuta `reference-close --sample benchmark`. Revisa del mismo modo cada `cohort_NNNN` y cierra sus referencias solo después de sus confirmaciones reales. Todos estos subcomandos llevan el prefijo `.venv/bin/sa-polarization targeted publication`. Estas revisiones están aplazadas y no bloquean el avance provisional autorizado.
+
+El informe local de preparación e integridad queda en `outputs/targeted/ap_publication_20261117_v1/cohort_proposals_0001/completion.json`. Sus conteos describen propuestas pendientes; no estiman exactitud, acuerdo entre revisores ni polarización final.
+
+
+## Lectura acelerada por afinidad
+
+Desde la enmienda del 21 de noviembre, `screening-batch --sample cohort_NNNN` exporta los comentarios necesarios para resolver primero la afinidad en A. Tras importar cada tanda, repetirlo: la cola cambia al incorporar evidencia. Los participantes que califican deben tener A y B completamente anotados. Una exclusión solo puede omitir lectura si una cota conservadora demuestra que ningún bloque alcanzaría la afinidad exigida aunque todos los textos pendientes fueran favorables. No se excluye por una predicción ni por ausencia de pistas del extractor.
+
+`screening-status --sample cohort_NNNN` muestra los IDs pendientes y las exclusiones. `screening-status --sample cohort_NNNN --stage final` recalcula todo usando exclusivamente decisiones humanas reales. `review` prioriza esa evidencia; `reference-close` exige que no falten lecturas necesarias. Una corrección puede reabrir textos de A o B. Un comentario sin leer conserva anotación nula y motivo `skipped_affinity`; no equivale a una lista vacía revisada. El benchmark sigue requiriendo la revisión individual de sus 3,000 comentarios.
+
+La inferencia y comparación del benchmark pueden avanzar mediante `predict`, `remote` y `benchmark` con `--scope benchmark`, sin esperar la ampliación de usuarios. Los resultados de esta rama se guardan separados y siguen siendo provisionales hasta la revisión.
+
+
+## Techo vigente de revisión
+
+La política `fixed_user_scope/` sustituye la meta anterior de 800 comparables por **300 usuarios examinados**. Revisar las propuestas de `cohort_0001`, `cohort_0002` y `cohort_0003`, además del benchmark de 3,000 comentarios. No crear una cuarta cohorte. El screening se recalcula con cada corrección humana y puede requerir leer comentarios antes omitidos de esos mismos usuarios. Los resultados actuales son provisionales; los formularios humanos continúan separados y pendientes.

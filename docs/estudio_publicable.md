@@ -6,7 +6,7 @@ Diagnóstico local ya ejecutado: [hallazgos y comprobación de requisitos de eva
 
 Estudio `ap_publication_20261117_v1`, protocolo `targeted-publication-v1`, configuración `config/targeted_publication.toml`. Deriva de `targeted_20261115_v2` sin sustituir su registro, referencia, modelos ni resultados. Las revisiones aplazadas del piloto anterior se conservan. Los 500 finales siguen reservados y no se decodifican sus anotaciones para este flujo.
 
-El objetivo es medir **800 usuarios realmente comparables**, no 800 usuarios con menciones ni un número fijo de comentarios. El cálculo aproximado `1.96 * sqrt(4 * 2 / 800) = 0.196` usa la varianza máxima de gap en [-2,2] y **supone** efecto de diseño 2. No garantiza el margen alcanzado, un efecto positivo, diferencias entre bloques ni aceptación editorial. Véase [Lakens (2022)](referencias/lakens-2022.md).
+La enmienda operativa autorizada el 21 de noviembre fija **300 usuarios examinados** como techo por recursos, e incluye a todos los comparables reales de ese prefijo. Se conserva un corte inicial de 200. La planificación original era de **800 comparables**, actualmente sustituida; no se cambian A/B, mínimos de afinidad ni criterios para alcanzar un número determinado de comparables. El techo se decidió con el avance de anotación conocido (79 comparables en los primeros 200), antes de calcular los nuevos contrastes, y no debe presentarse como el diseño original. El cálculo aproximado `1.96 * sqrt(4 * 2 / 800) = 0.196` usa la varianza máxima de gap en [-2,2] y **supone** efecto de diseño 2. No garantiza el margen alcanzado, un efecto positivo, diferencias entre bloques ni aceptación editorial. Véase [Lakens (2022)](referencias/lakens-2022.md).
 
 La publicación separa la medida anotada por usuario y la comparación de clasificadores. La primera puede cerrarse aunque los modelos no sean aptos para inferencia automática del corpus. La afinidad es operacional y las inferencias corresponden a expresiones observadas en el marco de canales/videos/actores; no a votantes ni a toda la población peruana.
 
@@ -41,15 +41,15 @@ Cada ejecución deja un informe bajo `outputs/targeted/<study_id>/collection_run
 
 La oportunidad estructural y A/B conservan semilla 42 y mínimos anteriores. Los usuarios se ordenan por SHA-256 de `ap-publication:57:<user_id>`. Cada lote incorpora los siguientes 100 usuarios, con **todos** sus comentarios disponibles en el marco, incluidos aquellos sin candidatos. Se examina el prefijo completo: no se seleccionan usuarios por sus propuestas, AP, precisión del modelo ni significación.
 
-`next` exige propuestas completas de los lotes previos; `next --stage final` exige decisiones humanas completas. Detiene nuevas propuestas al alcanzar 800 comparables provisionales; las correcciones humanas pueden exigir continuar el mismo orden. Si se agota el marco, se informa el tamaño alcanzado. El análisis primario usa los primeros 800 que califican, manteniendo todos los demás examinados en la auditoría. No se atribuye la probabilidad ficticia 800/N a los usuarios potenciales ni se aplican pesos de muestreo por comentario a esta cohorte.
+`next` exige propuestas completas o un screening de afinidad completo y verificable de los lotes previos; `next --stage final` exige decisiones humanas suficientes para reproducir esa selección y medición. Con la política sellada `fixed_user_scope/`, detiene nuevos lotes tras examinar 300 usuarios y el análisis incluye a todos sus comparables, manteniendo los demás en la auditoría. Las correcciones humanas pueden reabrir lecturas de esos mismos usuarios, sin extender el prefijo para mejorar el resultado. No se atribuye la probabilidad ficticia 800/N a los usuarios potenciales ni se aplican pesos de muestreo por comentario a esta cohorte.
 
-La referencia independiente contiene 3,000 comentarios: 1,000 con candidatos de izquierda, 1,000 de derecha, 500 solo desconocidos y 500 sin candidatos. Menciones a ambos bloques se asignan por hash a una cuota. La selección es proporcional por fuente/mes/tipo dentro de cada cuota, con al menos una observación por estrato y probabilidades explícitas. Excluye videos/textos utilizados antes en referencias y entrenamiento auxiliar. Todos los objetivos del texto requieren anotación; no solo los candidatos mostrados.
+La referencia separada del desarrollo contiene 3,000 comentarios: 1,000 con candidatos de izquierda, 1,000 de derecha, 500 solo desconocidos y 500 sin candidatos. Menciones a ambos bloques se asignan por hash a una cuota. La selección es proporcional por fuente/mes/tipo dentro de cada cuota, con al menos una observación por estrato y probabilidades explícitas. Excluye videos/textos utilizados antes en referencias y entrenamiento auxiliar. Todos los objetivos del texto requieren anotación; no solo los candidatos mostrados.
 
 ```bash
 .venv/bin/sa-polarization targeted publication benchmark-init
 .venv/bin/sa-polarization targeted publication next
 .venv/bin/sa-polarization targeted publication proposals --sample cohort_0001 --batch lote.json
-# Completar primero el benchmark a ciegas para reducir exposición previa.
+# Revisión humana cuando finalice el avance provisional autorizado.
 .venv/bin/sa-polarization targeted publication review --sample benchmark
 .venv/bin/sa-polarization targeted publication reference-close --sample benchmark
 # Después repetir propuestas/next y revisiones completas de cohorte en orden.
@@ -58,7 +58,9 @@ La referencia independiente contiene 3,000 comentarios: 1,000 con candidatos de 
 
 La [guía de anotación por tandas de 50](guia_anotacion_publicacion.md) explica exportación, progreso y reanudación; `review` procesa la primera tanda pendiente o la indicada con `--batch-number`. Cada carpeta de anotación tiene muestra sellada, cola sin usuario/fuente/bloque/fold, propuestas IA, lotes con procedencia y formulario humano separado. Lote JSON: `sample_sha256`, `origin`, `proposals`; cada propuesta contiene `sample_id`, `annotations`, `note`. Cada anotación usa `target_id`, `valence`, `mention_start`, `mention_end`; `unregistered:nombre` permite registrar omisiones sin ampliar el registro. Las etiquetas son `positive`, `negative`, `neutral`, `mixed`, `not_evaluable`. La política principal es explícita; no resolver pronombres por título/padre ni usar intensidad de confianza como intensidad afectiva.
 
-La cohorte utiliza revisión asistida; el benchmark solicita anotación humana ciega, ocultando propuestas y predicciones. Puede avanzarse con propuestas IA y análisis **provisionales**, que no se denominan referencia humana ni exactitud independiente. Un único revisor no permite estimar acuerdo entre humanos. Las referencias cerradas no se reescriben.
+La cohorte utiliza revisión asistida. El usuario autorizó el mismo modo para el benchmark y aplazó las confirmaciones humanas hasta después de obtener resultados provisionales. La transición conserva el manifiesto ciego original y añade una política sellada; las ejecuciones sin transición mantienen la anotación ciega. Puede avanzarse con propuestas IA y análisis **provisionales**, que no se denominan referencia humana ni exactitud independiente. Un único revisor no permite estimar acuerdo entre humanos. Las referencias cerradas no se reescriben.
+
+La transición explícita usa `publication enable-assisted-review --sample benchmark`. No cambia las muestras ni escribe decisiones humanas y rechaza referencias cerradas o revisiones ya iniciadas. `publication annotation-progress` guarda el avance reanudable. Se completan únicamente los tres lotes ya seleccionados (300 de 4,443 usuarios); el valor de AP/gap no interviene en esa parada. La inferencia diagnóstica privada del benchmark puede ejecutarse antes de cerrar la cohorte, en un alcance aislado, sin etiquetas nuevas y con los checkpoints existentes.
 
 ## Comparación cerrada de modelos
 
@@ -133,3 +135,56 @@ Se conservan AP_In, AP_Out, AP y spread; contraste principal `gap=(Pos_in-Neg_in
 `gap>0` mide favoritismo relativo; no prueba por sí solo valoración externa negativa, intensidad psicológica, segregación ni causalidad. Los resultados se interpretan con sus intervalos y sensibilidades. Un nulo o una estimación imprecisa no se convierte en evidencia afirmativa cambiando los criterios.
 
 Salidas locales bajo `outputs/targeted/<study_id>/`; datos bajo `data/targeted/<study_id>/`, ignorados por Git. Cada análisis crea artefactos y manifiesto; los anteriores no se sobrescriben. Solo el cierre final actualiza su propia subsección generada en AGENTS. El manuscrito histórico permanece protegido mientras falte el cierre humano y estadístico; la integración editorial utilizará los artefactos finales y las correcciones interpretativas pendientes. Ningún comando de este flujo abre la prueba histórica ni habilita producción automática del corpus.
+
+
+## Lectura por afinidad y benchmark paralelo (enmienda del 21 de noviembre)
+
+El orden de usuarios, A/B, registro y umbrales permanecen fijados. La enmienda posterior de alcance sustituye la antigua meta de 800 por 300 usuarios examinados. Los historiales completos se conservan en la muestra. La lectura comienza en A, por videos de menor número de comentarios y desempate por ID. Cada comentario pendiente se considera un posible positivo para cualquiera de los bloques: solo se excluye cuando ninguno puede alcanzar dos positivos, dos videos y la proporción dominante exigida, incluso bajo esa mejor situación posible. No se usa el extractor para descartar comentarios sin candidatos.
+
+Quienes califican en A requieren lectura completa de A y B, incluidos los comentarios sin candidatos. Para los excluidos se conserva un certificado calculado desde anotaciones realmente realizadas; los textos omitidos son `skipped_affinity` con anotación nula, nunca `[]`. Los conteos de eventos de todo el prefijo son parciales cuando hay omisiones; los de usuarios primarios permanecen completos. Cada corrección humana recalcula la cota y puede reabrir A/B. La referencia final no cierra mientras falten lecturas necesarias según las decisiones humanas.
+
+```bash
+.venv/bin/sa-polarization targeted publication enable-affinity-screening
+.venv/bin/sa-polarization targeted publication screening-audit --samples cohort_0001 cohort_0002
+.venv/bin/sa-polarization targeted publication screening-batch --sample cohort_0003
+.venv/bin/sa-polarization targeted publication screening-status --sample cohort_0003
+# Confirmaciones humanas posteriores: review selecciona primero la evidencia necesaria de A.
+.venv/bin/sa-polarization targeted publication review --sample cohort_0003
+```
+
+Las colas contienen propuestas pendientes; completar por lectura real e importar mediante `proposals --sample ... --batch ...`. Recalcular la cola después de cada importación; no avanzar con una exportación antigua sin comprobar sus IDs. Las fuentes guardadas antes de la enmienda se conservan e importan sin borrar anotaciones.
+
+El benchmark usa `--scope benchmark`, con una vista local bajo `prediction_jobs/`, kernel propio y resultados separados. El alcance contiene solo los 3,000 comentarios del benchmark y candidatos del registro congelado; no contiene etiquetas ni formularios. No requiere propuestas de cohortes. La rama por defecto `--scope all` conserva su comportamiento anterior.
+
+```bash
+.venv/bin/sa-polarization targeted publication predict --scope benchmark
+.venv/bin/sa-polarization targeted publication remote --task predict --scope benchmark --operation submit
+# start comprueba la versión exacta ready antes del push.
+.venv/bin/sa-polarization targeted publication remote --task predict --scope benchmark --operation start
+.venv/bin/sa-polarization targeted publication remote --task predict --scope benchmark --operation status
+.venv/bin/sa-polarization targeted publication remote --task predict --scope benchmark --operation fetch
+.venv/bin/sa-polarization targeted publication benchmark --scope benchmark --stage provisional
+```
+
+La comparación sigue siendo concordancia provisional con propuestas, sin promoción, reentrenamiento ni apertura de la prueba histórica. La referencia del benchmark permanece separada de la medición por usuario; no se imputan errores de cohorte con predicciones de alcance exclusivamente benchmark.
+
+
+## Alcance fijo y salidas provisionales (21 de noviembre)
+
+La política adicional se sella sin editar `config/targeted_publication.toml`, los historiales ni el registro. Se distingue el techo de usuarios examinados del número de comparables obtenido. El margen .20 se conserva como referencia de planificación: un intervalo más ancho no reabre el muestreo. Las decisiones humanas siguen pendientes; los informes provisionales no actualizan el bloque productivo ni promueven modelos.
+
+```bash
+# Ya sellado para esta ejecución; idénticos argumentos son idempotentes.
+.venv/bin/sa-polarization targeted publication enable-fixed-scope --screened-users 300 --initial-report-users 200
+# Cada informe es inmutable; no repetir si su carpeta ya existe.
+.venv/bin/sa-polarization targeted publication analyze --stage provisional --screened-users 200
+.venv/bin/sa-polarization targeted publication analyze --stage provisional --screened-users 300
+.venv/bin/sa-polarization targeted publication annotation-progress
+# Con el tercer lote completo, devuelve fixed_user_scope_reached sin crear cohort_0004.
+.venv/bin/sa-polarization targeted publication next --stage provisional
+```
+
+Las salidas se separan en `analysis_provisional_users_0200/` y `analysis_provisional_users_0300/`. Conservan hashes de muestras, propuestas, formularios y política; cuentan por separado comentarios anotados y omitidos mediante certificado de afinidad. Los usuarios primarios requieren lectura completa. El análisis humano final exige todas las decisiones necesarias del mismo prefijo, y puede cambiar el número de comparables.
+
+
+El cierre provisional vigente reúne **300 examinados y 122 comparables** (68 de afinidad izquierda y 54 derecha), con 13,888 comentarios de historial, 13,179 propuestas y 709 omisiones certificadas. El gap es **1.4424, IC95% [1.2733, 1.6827]**, frente a 1.4567 [1.2160, 1.7186] en el corte inicial (79 comparables/200). Balance interno normalizado: .5829 [.4430, .7700]; externo: -.8594 [-.9480, -.7919]. Las sensibilidades puntuales mantienen gap positivo (1.4470–1.5203) con tamaños efectivos distintos; no constituyen seis pruebas independientes. La diferencia derecha menos izquierda es -.0526, IC95% [-.4624, .3868], inconclusa. El semiancho .2047 supera ligeramente la meta .20 y se conserva `target_not_met`. Son estimaciones sobre propuestas, pendientes de revisión humana; el bootstrap no incorpora ese error de anotación. No habilitan inferencia del corpus completo. Artefactos y comprobaciones locales en `fixed_scope_comparison/`; el bloque histórico no se actualiza con estas salidas.
