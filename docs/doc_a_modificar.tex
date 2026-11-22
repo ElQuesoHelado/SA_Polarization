@@ -21,7 +21,7 @@
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
 %% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% FITNESS FOR A PARTICULAR PURPOSE!
 %% User assumes all risk.
 %% In no event shall IEEE or any contributor to this code be liable for
 %% any damages or losses, including, but not limited to, incidental,
@@ -150,7 +150,7 @@
 % graphicx was written by David Carlisle and Sebastian Rahtz. It is
 % required if you want graphics, photos, etc. graphicx.sty is already
 % installed on most LaTeX systems. The latest version and documentation can
-% be obtained at: 
+% be obtained at:
 % http://www.ctan.org/tex-archive/macros/latex/required/graphics/
 % Another good source of documentation is "Using Imported Graphics in
 % LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
@@ -275,7 +275,7 @@
 % IEEEtran.cls handling of captions and this will result in nonIEEE style
 % figure/table captions. To prevent this problem, be sure and preload
 % caption.sty with its "caption=false" package option. This is will preserve
-% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later 
+% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later
 % (recommended due to many improvements over 1.2) of subfig.sty supports
 % the caption=false option directly:
 %\usepackage[caption=false,font=footnotesize]{subfig}
@@ -391,7 +391,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Análisis de sentimiento dirigido y polarización afectiva en comentarios de YouTube durante las elecciones 
+\title{Análisis de sentimiento dirigido y polarización afectiva en comentarios de YouTube durante las elecciones
 presidenciales peruanas de 2026}
 
 
@@ -422,10 +422,10 @@ presidenciales peruanas de 2026}
 
 % for over three affiliations, or if they all won't fit within the width
 % of the page, use this alternative format:
-% 
+%
 %\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
 %Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3}, 
+%James Kirk\IEEEauthorrefmark{3},
 %Montgomery Scott\IEEEauthorrefmark{3} and
 %Eldon Tyrell\IEEEauthorrefmark{4}}
 %\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
@@ -481,50 +481,50 @@ Polarización afectiva, sentimiento dirigido, YouTube, Transformer, afinidad ope
 
 \section{Introducción}
 
-Las redes sociales se han consolidado como uno de los principales espacios 
-para la discusión política y la expresión de opiniones ciudadanas. Plataformas 
-como Facebook, Twitter/X y Youtube permiten que millones de usuarios compartan 
-publicaciones, comentarios e interacciones relacionadas con acontecimientos 
-políticos, generando grandes volúmenes de información que reflejan la 
-percepción pública sobre candidatos, partidos y 
-políticas gubernamentales \cite{statista2026}. Debido a su alcance e 
-influencia, estas plataformas constituyen 
-una fuente relevante para estudiar el comportamiento político y las tendencias 
-de opinión mediante técnicas de 
-procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con 
-contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios. 
-Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se 
-correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como 
-herramientas de movilización como canales de confrontacion discursiva. En este contexto, el análisis automático 
-del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión 
+Las redes sociales se han consolidado como uno de los principales espacios
+para la discusión política y la expresión de opiniones ciudadanas. Plataformas
+como Facebook, Twitter/X y Youtube permiten que millones de usuarios compartan
+publicaciones, comentarios e interacciones relacionadas con acontecimientos
+políticos, generando grandes volúmenes de información que reflejan la
+percepción pública sobre candidatos, partidos y
+políticas gubernamentales \cite{statista2026}. Debido a su alcance e
+influencia, estas plataformas constituyen
+una fuente relevante para estudiar el comportamiento político y las tendencias
+de opinión mediante técnicas de
+procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con
+contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios.
+Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se
+correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como
+herramientas de movilización como canales de confrontacion discursiva. En este contexto, el análisis automático
+del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión
 pública durante procesos electorales.
 
-Una de las principales soluciones computacionales empleadas para este 
-problema es el análisis automático de sentimientos, mediante el cual se 
-identifica la polaridad expresada en un texto y se clasifica generalmente 
-como positiva, negativa o neutra. En años recientes, los avances en aprendizaje 
-profundo y modelos basados en la arquitectura Transformer han permitido mejorar 
-drásticamente el desempeño en clasificación textual al capturar dependencias 
-contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas 
-específicamente al análisis de polarización política: Martínez-España et al. 
-\cite{polariz} propusieron una formulación pionera para cuantificar la polarización 
-afectiva individual a partir de publicaciones en redes sociales; Bor et al. 
-\cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de 
-política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones 
-previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024, 
-Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos 
-polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía 
-Navarrete \cite{Mejia2024} describió la intensificación histórica de la 
+Una de las principales soluciones computacionales empleadas para este
+problema es el análisis automático de sentimientos, mediante el cual se
+identifica la polaridad expresada en un texto y se clasifica generalmente
+como positiva, negativa o neutra. En años recientes, los avances en aprendizaje
+profundo y modelos basados en la arquitectura Transformer han permitido mejorar
+drásticamente el desempeño en clasificación textual al capturar dependencias
+contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas
+específicamente al análisis de polarización política: Martínez-España et al.
+\cite{polariz} propusieron una formulación pionera para cuantificar la polarización
+afectiva individual a partir de publicaciones en redes sociales; Bor et al.
+\cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de
+política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones
+previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024,
+Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos
+polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía
+Navarrete \cite{Mejia2024} describió la intensificación histórica de la
 polarización política en el país entre 2000 y 2023.
 
-A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado, 
-la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado 
-exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes 
-barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta 
-concentración motiva ampliar el estudio de plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate 
-comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de 
-lenguaje masivos preentrenados sobre corpus generales en español neutro o peninsular resultan insuficientes para 
-capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos 
+A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado,
+la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado
+exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes
+barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta
+concentración motiva ampliar el estudio de plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate
+comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de
+lenguaje masivos preentrenados sobre corpus generales en español neutro o peninsular resultan insuficientes para
+capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos
 de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la necesidad de distinguir la procedencia editorial del contenido de la identidad política del objetivo valorado: un comentario bajo una fuente neutral puede expresar apoyo o rechazo hacia actores de cualquier bloque.
 
 Para abordar esta brecha, el presente trabajo propone un procedimiento reproducible que analiza el sentimiento político dirigido y la polarización afectiva individual a partir de un corpus ampliado de 1\,012\,515 comentarios públicos de YouTube del periodo enero--junio de 2026. Se examinan 300 historiales de usuarios siguiendo un orden fijado; 122 reúnen evidencia evaluable hacia ambos bloques políticos. Se calculan AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y \textit{spread}, complementados por un gap normalizado y sus intervalos de incertidumbre.
@@ -550,15 +550,15 @@ Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio s
 
 Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
 
-Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en 
-YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias 
-durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente 
-que la valencia general de un comentario no necesariamente refleja la postura del autor hacia una entidad política 
+Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en
+YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias
+durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente
+que la valencia general de un comentario no necesariamente refleja la postura del autor hacia una entidad política
 específica. Este hallazgo motiva la separación entre sentimiento general y valoración comentario--objetivo adoptada en el presente trabajo.
 
-En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del 
-discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas 
-metodologías hacia plataformas audiovisuales masivas como YouTube, distinguir la procedencia editorial de los objetivos políticos y adaptar 
+En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del
+discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas
+metodologías hacia plataformas audiovisuales masivas como YouTube, distinguir la procedencia editorial de los objetivos políticos y adaptar
 las representaciones a la jerga y particularidades dialectales regionales.
 
 \section{Método Propuesto}
@@ -855,4 +855,3 @@ Entre los 122 usuarios comparables, el gap medio de 1.4424 se acompaña de un ba
 
 
 \end{document}
-
