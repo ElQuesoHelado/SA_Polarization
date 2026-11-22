@@ -1,0 +1,29 @@
+{
+  "downloaded_at": "2026-11-22T15:05:42.144432+00:00",
+  "sources": [
+    {
+      "id": "mrbert-2026",
+      "url": "https://arxiv.org/pdf/2602.21379v2",
+      "version": "arXiv:2602.21379v2",
+      "path": "pdfs/contexto/mrbert-2026.pdf",
+      "sha256": "9363f76bf723025f0531e62928e290607aaf9beb132f4f2d4b85792de9c2b3c2",
+      "bytes": 701081
+    },
+    {
+      "id": "debertav3-2023",
+      "url": "https://arxiv.org/pdf/2111.09543v4",
+      "version": "arXiv:2111.09543v4",
+      "path": "pdfs/contexto/debertav3-2023.pdf",
+      "sha256": "7a9419d3335150cd96797b02672e682916b08129aad40b90198bb325432e6baf",
+      "bytes": 760596
+    },
+    {
+      "id": "sinai-finances-2023",
+      "url": "https://ceur-ws.org/Vol-3496/finances-paper3.pdf",
+      "version": "CEUR-WS Vol-3496, paper 3",
+      "path": "pdfs/contexto/sinai-finances-2023.pdf",
+      "sha256": "0e6300b93e5c3f0ce64599835bb3b215dbe8171144c8615bbec307e76e76f4dc",
+      "bytes": 1004371
+    }
+  ]
+}

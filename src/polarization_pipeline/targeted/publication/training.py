@@ -39,6 +39,9 @@ def development_pairs(settings, parent):
 
 
 def validate_plan(plan):
+    from .model_extension import is_extension, validate
+    if is_extension(plan):
+        return validate(plan)
     expected = dict(maximum_fits=12, model_seeds=[42, 43, 44], maximum_epochs=8, patience=2,
                     effective_batch_size=16, learning_rate=2e-5, weight_decay=.01, gradient_clip=1.)
     if any(plan.get(k) != v for k, v in expected.items()) or [m["model"] for m in plan["models"]] != MODELS:
@@ -51,6 +54,9 @@ def validate_plan(plan):
 
 
 def prepare(settings, plan, parent, study):
+    from .model_extension import is_extension, prepare_training
+    if is_extension(plan):
+        return prepare_training(settings, plan, parent, study)
     verify(study)
     validate_plan(plan)
     folder = study / "training_input"
@@ -104,7 +110,7 @@ def train_worker(settings, study):
     common_train, common_validation = np.ones(len(training), dtype=bool), np.ones(len(validation), dtype=bool)
     capacities = {}
     for spec in plan["models"]:
-        tokenizer = AutoTokenizer.from_pretrained(spec["model"], revision=spec["revision"], use_fast=False)
+        tokenizer = AutoTokenizer.from_pretrained(spec["model"], revision=spec["revision"], use_fast=spec.get("use_fast", False))
         cfg = AutoConfig.from_pretrained(spec["model"], revision=spec["revision"])
         maximum = maximum_length(cfg, tokenizer, spec["maximum_tokens"])
         capacities[spec["id"]] = maximum
@@ -112,6 +118,9 @@ def train_worker(settings, study):
         common_validation &= complete_context(tokenizer, model_frame(validation, spec["id"]), maximum)
     if not common_train.any() or not common_validation.any():
         raise ValueError("No hay contexto completo común a los cuatro modelos")
+    if plan.get('require_all_context') and (not common_train.all() or not common_validation.all()
+            or len(training) != plan['expected_training_pairs'] or len(validation) != plan['expected_validation_pairs']):
+        raise ValueError('La ampliación debe conservar todos los pares originales con contexto completo')
     shared_training, shared_validation = training.loc[common_train], validation.loc[common_validation]
     shared_training[["comment_id", "target_id"]].to_csv(root / "shared_training_pairs.csv", index=False)
     shared_validation[["comment_id", "target_id"]].to_csv(root / "shared_validation_pairs.csv", index=False)
@@ -154,7 +163,7 @@ def train_worker(settings, study):
         from ..learning import classification_metrics
         metrics = classification_metrics(val.label, np.array(LABELS)[selected], val.weight.astype(float))
         results.append(dict(model_id=spec["id"], metrics=metrics, calibration=calibration))
-    atomic_json(root / "comparison.json", dict(models=results, completed_fits=12, production_enabled=False,
+    atomic_json(root / "comparison.json", dict(models=results, completed_fits=plan['maximum_fits'], production_enabled=False,
         evaluation_reference_used=False, training_input_sha256=sha256(study / "training_input/manifest.json"),
         selection_basis="reused_assisted_validation_only"))
     seal(root, [str(p.relative_to(root)) for p in root.rglob("*") if p.is_file() and p.name != "manifest.json"], status="complete")
@@ -188,7 +197,7 @@ def predict_worker(settings, study):
         raise ValueError("La inferencia diagnóstica no recibe etiquetas")
     destination = study / "predictions"
     destination.mkdir(exist_ok=False)
-    ids = ["robertuito", "beto", "bertin", "xlm_roberta"]
+    ids = [m['model_id'] for m in json.loads((study / 'training/comparison.json').read_text())['models']]
     for model_id in ids:
         folder = study / "training" / model_id / "model"
         manifest = json.loads((folder / "training_manifest.json").read_text())
@@ -196,7 +205,7 @@ def predict_worker(settings, study):
         all_probs = []
         for revision in manifest["revisions"]:
             checkpoint = folder / str(revision["seed"])
-            tokenizer = AutoTokenizer.from_pretrained(checkpoint, use_fast=False)
+            tokenizer = AutoTokenizer.from_pretrained(checkpoint, use_fast=manifest['model'].get('use_fast', False))
             classifier = load_classifier(checkpoint).cuda()
             logits = predict_logits(classifier, tokenizer, transformed, manifest["maximum_tokens"], batch_size=4)
             all_probs.append(probabilities(logits))

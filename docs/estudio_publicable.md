@@ -12,6 +12,14 @@ La publicación separa la medida anotada por usuario y la comparación de clasif
 
 La [contingencia de medición anotada](contingencia_medicion_anotada.md) concreta esta separación: `measurement-preflight` comprueba la preparación humana sin exigir modelos ni predicciones. El cierre añade cobertura, motivos de exclusión y precisión estadística observada sin modificar métricas ni criterios.
 
+## Ampliación de modelos del 22 de noviembre
+
+La [ampliación aislada de encoders](ampliacion_modelos_publicacion.md) incorpora
+MrBERT-es y mDeBERTa-v3-base y conserva RoBERTuito, BETO y XLM-R como referencias.
+Solo agrega seis ajustes y una comparación nueva sobre el benchmark ya examinado;
+BERTIN y los informes anteriores permanecen archivados. La configuración original,
+las muestras y la medición anotada no se modifican.
+
 ## Datos y captura
 
 `prepare` conserva el histórico y el panel con procedencia, excluye los videos de la prueba reservada por metadata y prepara los videos de canales configurados. La preparación real contiene **11,280 videos para recapturar**; no cambia canales ni enero–junio de 2026. El histórico canónico conserva sus **805,039 comentarios** y su análisis de participación anterior; no se reemplaza por la muestra anotada.

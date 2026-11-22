@@ -7,7 +7,7 @@ from .state import load
 
 
 def add_parser(actions):
-    parser = actions.add_parser("publication", help="Estudio ampliado aislado: datos, cohorte y cuatro modelos")
+    parser = actions.add_parser("publication", help="Estudio ampliado aislado: datos, cohorte y comparación de modelos")
     commands = parser.add_subparsers(dest="publication_command", required=True)
     for name in ("prepare", "prepare-local", "advance", "runtime-status", "start-services", "annotation-batch", "audit-capture", "collect", "status", "freeze", "next", "benchmark-init", "proposals", "review",
                  "reference-close", "enable-assisted-review", "enable-affinity-screening", "enable-fixed-scope", "screening-audit", "screening-status", "screening-batch", "annotation-progress", "train", "training-report", "diagnose-development", "evaluation-preflight", "measurement-preflight", "predict", "remote", "benchmark", "analyze"):
@@ -18,6 +18,9 @@ def add_parser(actions):
     commands.choices['analyze'].add_argument('--screened-users',type=int)
     for name in ('predict','remote','benchmark'):
         commands.choices[name].add_argument('--scope',choices=['all','benchmark'],default='all')
+    for name in ('train', 'training-report', 'predict', 'remote', 'benchmark'):
+        commands.choices[name].add_argument('--experiment-id')
+    commands.choices['train'].add_argument('--training-config', type=Path)
     for name in ('screening-status','screening-batch'):
         commands.choices[name].add_argument('--sample',required=True)
         commands.choices[name].add_argument('--stage',choices=['provisional','final'],default='provisional')
@@ -50,7 +53,19 @@ def run(args):
     from . import annotations, data, analysis, benchmark, remote
     settings, plan, parent, study, registry = load(args.config)
     action = args.publication_command
-    if getattr(args,'scope','all') == 'benchmark':
+    experiment_id = getattr(args, 'experiment_id', None)
+    if experiment_id:
+        from .model_extension import view, combine_predictions
+        if (action in ('predict', 'benchmark') or (action == 'remote' and args.task == 'predict')) and args.scope != 'benchmark':
+            raise ValueError('La ampliación solo permite predicción diagnóstica --scope benchmark')
+        study, plan = view(settings, plan, study, experiment_id, getattr(args, 'training_config', None), create=action == 'train')
+        if action == 'benchmark':
+            if args.stage != 'provisional':
+                raise ValueError('La ampliación usa benchmark previamente examinado; no cierra referencia humana')
+            study, plan = combine_predictions(study)
+    elif getattr(args, 'training_config', None) is not None:
+        raise ValueError('--training-config requiere --experiment-id')
+    elif getattr(args,'scope','all') == 'benchmark':
         if action == 'remote' and args.task != 'predict':
             raise ValueError('scope benchmark solo permite predicción')
         from .prediction_scope import benchmark_view

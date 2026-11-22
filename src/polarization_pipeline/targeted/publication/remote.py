@@ -87,6 +87,8 @@ def prepare(settings, plan, parent, study, registry, task):
     kernel_title = "SA Polarization Publication " + ("Training" if task == "train" else "Predict")
     if task == "predict" and (study / "scope.json").exists():
         kernel_title += " Benchmark"
+    if plan.get('model_extension_protocol'):
+        kernel_title = kernel_id.split('/')[1].replace('-', ' ').title()
     atomic_json(kernel / "kernel-metadata.json", dict(id=kernel_id, title=kernel_title, code_file="kernel.py",
         language="python", kernel_type="script", is_private=True, enable_gpu=True, enable_internet=True,
         dataset_sources=[ids["dataset_id"]], competition_sources=[], kernel_sources=[]))
@@ -148,10 +150,12 @@ def import_result(study, archive_path, task):
         raise FileExistsError("Resultado ya importado; no sobrescribir")
     if task == "train":
         summary = json.loads((source / "comparison.json").read_text())
-        if (summary.get("completed_fits") != 12 or summary.get("production_enabled") is not False
+        expected = json.loads((study / "training_input/plan.json").read_text())
+        from .training import validate_plan
+        validate_plan(expected)
+        if (summary.get("completed_fits") != expected['maximum_fits'] or summary.get("production_enabled") is not False
                 or summary.get("training_input_sha256") != sha256(study / "training_input/manifest.json")):
             raise ValueError("Comparación remota incompatible")
-        expected = json.loads((study / "training_input/plan.json").read_text())
         if [m["model_id"] for m in summary.get("models", [])] != [m["id"] for m in expected["models"]]:
             raise ValueError("Faltan modelos de la comparación autorizada")
         for model in expected["models"]:

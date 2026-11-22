@@ -55,6 +55,11 @@ def measure(frame, weights=None):
 
 
 def compare(settings, plan, study, registry, *, stage="provisional"):
+    model_ids = tuple(plan.get('comparison_model_ids', MODEL_IDS))
+    if model_ids != MODEL_IDS:
+        from .model_extension import MODEL_IDS as EXTENSION_IDS, is_extension
+        if not is_extension(plan) or model_ids != EXTENSION_IDS:
+            raise ValueError('Lista de modelos de comparación incompatible')
     verify(study, frozen=True)
     manifest = verify_seal(study / "predictions")
     if not manifest.get("diagnostic_only"):
@@ -69,7 +74,7 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
     expected_keys = set(expected.itertuples(index=False, name=None))
     frames, comparisons = {}, []
     all_predictions = {}
-    for model_id in MODEL_IDS:
+    for model_id in model_ids:
         prediction = read_csv(study / "predictions" / f"{model_id}.csv")
         prediction = prediction.loc[prediction.comment_id.isin(set(sample.comment_id))].copy()
         if set(prediction.model_id) != {model_id} or set(prediction[["comment_id", "target_id", "post_id"]].itertuples(index=False, name=None)) != expected_keys:
@@ -102,7 +107,7 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
                                        low_support=len(subset)<10, **measure(subset)))
     rng = np.random.default_rng(plan["selection_seed"])
     videos = sample.post_id.unique()
-    draws = {model: [] for model in MODEL_IDS}
+    draws = {model: [] for model in model_ids}
     for _ in range(plan["bootstrap_iterations"]):
         counts = rng.multinomial(len(videos), np.full(len(videos), 1/len(videos)))
         mapping = dict(zip(videos, counts))
@@ -110,7 +115,7 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
             weights = frame.weight.to_numpy(dtype=float) * frame.post_id.map(mapping).to_numpy(dtype=float)
             draws[model_id].append(measure(frame, weights))
     intervals, contrasts = [], []
-    for model_id in MODEL_IDS:
+    for model_id in model_ids:
         point = measure(frames[model_id])
         for metric in ("macro_f1", "coverage", "positive_precision", "negative_precision"):
             values = np.array([draw[metric] for draw in draws[model_id]])
@@ -120,8 +125,8 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
             intervals.append(dict(model_id=model_id, metric=metric, estimate=number(point[metric]),
                 ci_low=number(low), ci_high=number(high), valid_replicates=len(values),
                 status="estimated" if sufficient else "insufficient_support"))
-    for i, left in enumerate(MODEL_IDS):
-        for right in MODEL_IDS[i+1:]:
+    for i, left in enumerate(model_ids):
+        for right in model_ids[i+1:]:
             difference = measure(frames[left])["macro_f1"]-measure(frames[right])["macro_f1"]
             values = np.array([a["macro_f1"]-b["macro_f1"] for a, b in zip(draws[left], draws[right])])
             low, high = np.quantile(values, [.025, .975])
@@ -161,7 +166,7 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
         pd.DataFrame(result).to_csv(destination / "historical_baseline_matched.csv", index=False)
     _, _, annotation_policy, _ = checked(study, "benchmark")
     review_mode = annotation_policy["human_mode"]
-    summary = dict(stage=stage, comments=len(sample), evaluated_models=list(MODEL_IDS),
+    summary = dict(stage=stage, comments=len(sample), evaluated_models=list(model_ids),
         reference="ai_proposals_agreement_only" if stage == "provisional" else "single_human_" + review_mode,
         human_review_mode=review_mode,
         model_selected_for_production=None, reserved_test_opened=False,
@@ -174,12 +179,13 @@ def compare(settings, plan, study, registry, *, stage="provisional"):
     tp = extraction.loc[extraction.gold_target_present & extraction.candidate_present, "weight"].sum()
     predicted = extraction.loc[extraction.candidate_present, "weight"].sum()
     actual = extraction.loc[extraction.gold_target_present, "weight"].sum()
+    summary["benchmark_previously_examined"] = bool(plan.get("model_extension_protocol"))
     summary["extraction_precision"] = number(tp/predicted) if predicted else None
     summary["extraction_recall"] = number(tp/actual) if actual else None
     atomic_json(destination / "summary.json", summary)
-    (destination / "report.md").write_text("# Comparación de cuatro modelos\n\n"+json.dumps(summary, ensure_ascii=False, indent=2)+
+    (destination / "report.md").write_text(("# Comparación de cinco modelos\n\n" if len(model_ids) == 5 else "# Comparación de cuatro modelos\n\n")+json.dumps(summary, ensure_ascii=False, indent=2)+
         "\n\ncomparison.csv separa evaluación integral y candidatos de contexto completo común.\n"+
-        "Los intervalos remuestrean videos; los seis contrastes macro-F1 usan Holm. Ningún resultado habilita producción.\n")
+        f"Los intervalos remuestrean videos; los {len(contrasts)} contrastes macro-F1 usan Holm. Ningún resultado habilita producción.\n")
     if stage == "final":
         close_reference(study, "benchmark", registry)
     seal(destination, [p.name for p in destination.iterdir() if p.is_file()], status="complete", stage=stage)

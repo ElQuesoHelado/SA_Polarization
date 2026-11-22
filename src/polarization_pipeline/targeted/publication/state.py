@@ -85,7 +85,12 @@ def verify_seal(folder, filename="manifest.json"):
 
 
 def output(settings, study):
-    path = settings["outputs"] / study.name
+    extension = study if (study / 'extension.json').exists() else study.parent
+    if (extension / 'extension.json').exists():
+        source = json.loads((extension / 'extension.json').read_text())
+        path = settings['outputs'] / Path(source['source_study']).name / 'model_experiments' / extension.name
+    else:
+        path = settings["outputs"] / study.name
     path.mkdir(parents=True, exist_ok=True)
     return path
 

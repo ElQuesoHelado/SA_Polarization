@@ -86,13 +86,16 @@ def load_classifier(path, **kwargs):
     if value == "marked_target_max":
         from .target_model import TargetMaxBertForSequenceClassification
         return TargetMaxBertForSequenceClassification.from_pretrained(path, config=config, **kwargs)
+    if config.model_type == 'modernbert':
+        config.reference_compile = False
+        kwargs.setdefault('attn_implementation', 'sdpa')
     return AutoModelForSequenceClassification.from_pretrained(path, config=config, **kwargs)
 
 
 def initialize_model(model_spec: dict):
     from transformers import AutoConfig, AutoTokenizer
     import inspect
-    tokenizer = AutoTokenizer.from_pretrained(model_spec["model"], revision=model_spec["revision"], use_fast=False)
+    tokenizer = AutoTokenizer.from_pretrained(model_spec["model"], revision=model_spec["revision"], use_fast=model_spec.get('use_fast', False))
     value = model_spec.get("representation", "pair_cls")
     config = AutoConfig.from_pretrained(model_spec["model"], revision=model_spec["revision"], num_labels=len(LABELS),
                                       id2label=dict(enumerate(LABELS)), label2id={label: i for i, label in enumerate(LABELS)})

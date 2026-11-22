@@ -21,6 +21,13 @@ La captura contabiliza el presupuesto compartido por día del Pacífico (`Americ
 
 El entrenamiento ampliado terminó y sus 12 ajustes están importados y verificados. `targeted publication training-report` reproduce la comparación local desde logits y calibración guardados: mayor macro-F1 de desarrollo, RoBERTuito 0.6439; mayor cobertura condicional de candidatos, BETO 37.16%. No habilita producción ni sustituye la evaluación independiente pendiente. No reenviar ese entrenamiento; el informe existente está sellado y no se sobrescribe.
 
+La [ampliación de modelos del 22 de noviembre](docs/ampliacion_modelos_publicacion.md)
+conserva RoBERTuito, BETO y XLM-R e incorpora MrBERT-es y mDeBERTa-v3-base. Solo
+ajusta las dos bases nuevas (seis ajustes) y conserva los pares de desarrollo,
+sin abrir prueba ni repetir trabajos anteriores. `--experiment-id
+encoder_extension_20261122_v1` aísla preparación, operación remota, predicción
+del benchmark e informes. BERTIN mantiene sus resultados históricos.
+
 Para mantener el trabajo independiente de la conversación, usar `targeted publication start-services --daily-api-budget 9000` y consultar `targeted publication runtime-status`. Los servicios de usuario conservan registros y se detienen ante errores; no arrancan tras reiniciar el equipo. `targeted publication audit-capture` genera el informe local del aporte de las capturas y la carga provisional de anotación. La [guía de anotación](docs/guia_anotacion_publicacion.md) explica las tandas de 50 comentarios y los modos de revisión del benchmark.
 
 La [lectura por afinidad](docs/estudio_publicable.md#lectura-por-afinidad-y-benchmark-paralelo-enmienda-del-21-de-noviembre) permite omitir comentarios de usuarios cuya exclusión ya está demostrada mediante una cota conservadora. `screening-batch` organiza primero A; quienes califican mantienen A y B completos, y las correcciones humanas pueden reabrir lecturas. `predict`, `remote` y `benchmark` admiten `--scope benchmark` para comparar los 3,000 comentarios sin esperar el cierre de cohortes. No cambia los criterios ni habilita producción.

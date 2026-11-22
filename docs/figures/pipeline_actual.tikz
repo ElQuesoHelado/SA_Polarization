@@ -1,4 +1,3 @@
-% Fuente compartida por el artículo y la exportación independiente.
 \begin{tikzpicture}[x=1cm,y=1cm,>=Latex,
  box/.style={draw=black!25,rounded corners=2mm,fill=black!2,
    text width=4.6cm,minimum height=1.55cm,align=center,
@@ -12,29 +11,29 @@
 \node[box] (prep) at (8.5,0) {{\Large\faFilter}\\
   \textbf{Preparación}\\Fechas, procedencia y deduplicación};
 \node[box] (corpus) at (14.5,0) {{\Large\faDatabase}\\
-  \textbf{Corpus congelado}\\Unión histórica y captura ampliada};
+  \textbf{Conjunto de comentarios}\\Datos fijados para el estudio};
 \draw[flow] (api)--(prep); \draw[flow] (prep)--(corpus);
 \node[leftbox] (users) at (4.2,-2.6) {{\Large\faUsers}\\
-  \textbf{Historiales de 300 usuarios}\\Prefijo del orden fijado; todos sus comentarios};
+  \textbf{Historiales de 300 usuarios}\\Primeros usuarios del orden fijado; todos sus comentarios};
 \node[rightbox] (benchmark) at (12.8,-2.6) {{\Large\faClipboardList}\\
-  \textbf{Benchmark de 3,000 comentarios}\\Objetivos y valencias anotados};
+  \textbf{Muestra de evaluación}\\3,000 comentarios; objetivos y valoraciones anotados};
 \draw[flow] (corpus.south)--++(0,-.3)-|(users.north);
 \draw[flow] (corpus.south)--++(0,-.3)-|(benchmark.north);
 \node[leftbox] (targets) at (4.2,-4.9) {{\Large\faTags}\\
   \textbf{Valoración comentario--objetivo}\\Menciones explícitas y eventos por bloque};
 \node[rightbox] (train) at (12.8,-4.9) {{\Large\faMicrochip}\\
-  \textbf{Entrenamiento · Kaggle GPU}\\Desarrollo separado: cuatro bases, tres semillas};
+  \textbf{Entrenamiento · Kaggle GPU}\\Tres referencias y dos bases nuevas\\Tres semillas por base};
 \draw[flow] (users)--(targets);
 \node[leftbox] (ab) at (4.2,-7.2) {{\Large\faProjectDiagram}\\
-  \textbf{Separación de videos A/B}\\A: afinidad operacional · B: comparación afectiva};
+  \textbf{Separación de videos A/B}\\A: afinidad política observada\\B: comparación afectiva};
 \node[rightbox] (eval) at (12.8,-7.2) {{\Large\faBalanceScale}\\
   \textbf{Evaluación de clasificadores}\\Extracción integral y contexto común};
 \draw[flow] (targets)--(ab);
 \draw[flow] (train)--node[lab,right]{Predicciones}(eval);
 \draw[flow] (benchmark.east)--++(.65,0)|-node[lab,pos=.65,right]{Referencia}(eval.east);
-\node[leftbox] (measure) at (4.2,-9.5) {{\Large\faChartBar}\\
-  \textbf{Medición por usuario}\\AP\textsubscript{In}, AP\textsubscript{Out}, AP, spread\\Gap, intervalos y sensibilidades};
-\node[rightbox] (models) at (12.8,-9.5) {{\Large\faChartLine}\\
+\node[leftbox] (measure) at (4.2,-10.1) {{\Large\faChartBar}\\
+  \textbf{Medición por usuario}\\AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersión\\Brecha normalizada e intervalos\\Análisis de sensibilidad};
+\node[rightbox] (models) at (12.8,-10.1) {{\Large\faChartLine}\\
   \textbf{Comparación de modelos}\\Macro-F1, cobertura y errores};
 \draw[flow] (ab)--(measure); \draw[flow] (eval)--(models);
 \end{tikzpicture}

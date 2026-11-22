@@ -5,13 +5,13 @@ config:
 ---
 flowchart TB
     A["Extracción · YouTube Data API<br>Comentarios y respuestas"] --> B["Preparación<br>Fechas, procedencia y deduplicación"]
-    B --> C["Corpus congelado<br>Unión histórica y captura ampliada"]
-    C --> H["Historiales de 300 usuarios<br>Prefijo del orden fijado"]
-    C --> K["Benchmark de 3,000 comentarios<br>Objetivos y valencias anotados"]
+    B --> C["Conjunto de comentarios<br>Datos fijados para el estudio"]
+    C --> H["Historiales de 300 usuarios<br>Primeros usuarios del orden fijado"]
+    C --> K["Muestra de evaluación de 3,000 comentarios<br>Objetivos y valoraciones anotados"]
     H --> T["Valoración comentario–objetivo<br>Menciones explícitas y eventos por bloque"]
-    T --> AB["Separación de videos A/B<br>A: afinidad · B: comparación afectiva"]
-    AB --> M["Medición por usuario<br>AP_In · AP_Out · AP · spread<br>Gap, intervalos y sensibilidades"]
-    D["Desarrollo etiquetado separado<br>Cuatro bases · tres semillas<br>Entrenamiento · Kaggle GPU"] -->|Predicciones| E["Evaluación de clasificadores<br>Extracción integral y contexto común"]
+    T --> AB["Separación de videos A/B<br>A: afinidad política observada · B: comparación afectiva"]
+    AB --> M["Medición por usuario<br>AP_In · AP_Out · AP · dispersión<br>Brecha normalizada e intervalos<br>Análisis de sensibilidad"]
+    D["Desarrollo etiquetado separado<br>Tres referencias y dos bases nuevas<br>Tres semillas por base<br>Entrenamiento · Kaggle GPU"] -->|Predicciones| E["Evaluación de clasificadores<br>Extracción integral y contexto común"]
     K -->|Referencia| E
     E --> R["Comparación de modelos<br>Macro-F1, cobertura y errores"]
     classDef shared fill:#f7f7f7,stroke:#666

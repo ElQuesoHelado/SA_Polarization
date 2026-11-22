@@ -1,7 +1,7 @@
 # Registro de referencias bibliográficas
 
-**Actualizado:** 2026-11-18
-**Uso:** contexto compartido para agentes y para el paper (`docs/doc.tex`).
+**Actualizado:** 2026-11-22
+**Uso:** contexto compartido para agentes y para el documento activo (`docs/doc_a_modificar.tex`); `docs/doc.tex` se conserva como histórico.
 
 Este registro es la fuente de verdad sobre la literatura del proyecto. Cada PDF local tiene una nota con cita completa, hallazgos citables, límites y uso previsto. Los agentes deben consultar este índice antes de citar o interpretar literatura; si se agrega, retira o reclasifica una referencia, actualizar el índice y la nota en el mismo cambio.
 
@@ -13,10 +13,22 @@ El manuscrito propio se reescribió alrededor de historiales anotados y comparac
 |---|---|---|
 | `BestvaterMonroe2023` | [Bestvater y Monroe (2023)](bestvater-monroe-2023.md), DOI 10.1017/pan.2022.10 | Sentimiento frente a postura dirigida; texto editorial consultado, sin PDF local |
 | `BETOResource` | [BETO](beto-modelo.md) | Recurso técnico, sin transferencia de benchmarks |
-| `BERTINResource` | [BERTIN](bertin-modelo.md) | Recurso técnico, ficha primaria |
+| `BERTINResource` | [BERTIN](bertin-modelo.md) | Comparación histórica archivada; retirado de la ampliación activa |
 | `XLMR2020` | [Conneau et al.](xlm-roberta-modelo.md), arXiv:1911.02116 v2 | Base multilingüe, registro primario consultado |
+| `MrBERT2026`, `MrBERTesResource` | [MrBERT y MrBERT-es](mrbert-2026.md) | Nueva base español/inglés; no transfiere puntuaciones generales |
+| `DeBERTaV32023`, `mDeBERTaResource` | [DeBERTaV3 y mDeBERTa](debertav3-2023.md) | Nueva arquitectura multilingüe dirigida |
+| `SINAI2023FinancES` | [SINAI/FinancES 2023](sinai-finances-2023.md) | Antecedente de sentimiento dirigido en español financiero |
 | `YoutubeThreads` | [YouTube Data API](youtube-api.md) | Captura de hilos y respuestas |
 | `lakens2022sample` | [Lakens (2022)](lakens-2022.md) | Dimensionamiento por precisión; supuestos locales explícitos |
+
+## Ampliación de encoders (2026-11-22)
+
+La comparación activa conserva RoBERTuito, BETO y XLM-R como referencias e incorpora
+MrBERT-es y mDeBERTa-v3-base. BERTIN mantiene sus resultados archivados y referencias
+para documentos históricos. Solo se ajustan las dos bases nuevas, sin usar etiquetas
+del benchmark ni abrir la prueba histórica. La nueva comparación usa un benchmark
+ya examinado y no debe presentarse como prueba final independiente. PDFs y hashes:
+[manifiesto de descargas](encoder-extension-downloads.json).
 
 ## Criterio de uso
 

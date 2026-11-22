@@ -47,7 +47,12 @@ def report(settings, study):
     verify_seal(study / "training")
     root = study / "training"
     stored = json.loads((root / "comparison.json").read_text())
-    if stored["completed_fits"] != 12 or stored["production_enabled"] is not False:
+    input_plan_path = study / "training_input/plan.json"
+    input_plan = json.loads(input_plan_path.read_text()) if input_plan_path.exists() else {"maximum_fits": 12}
+    expected_fits = input_plan["maximum_fits"]
+    if expected_fits not in (6, 12):
+        raise ValueError("Presupuesto de ajustes incompatible")
+    if stored["completed_fits"] != expected_fits or stored["production_enabled"] is not False:
         raise ValueError("Comparación incompleta o incompatible")
     validation = read_csv(study / "training_input/validation.csv")
     pairs = read_csv(root / "shared_validation_pairs.csv")
@@ -83,13 +88,13 @@ def report(settings, study):
     pd.DataFrame(rows).to_csv(destination / "comparison.csv", index=False)
     context = json.loads((root / "common_context.json").read_text())
     atomic_json(destination / "comparison.json", dict(created_at=stamp(), models=models, common_context=context,
-        completed_fits=12, production_enabled=False, independent_evaluation=False, reserved_test_opened=False,
+        completed_fits=expected_fits, production_enabled=False, independent_evaluation=False, reserved_test_opened=False,
         training_manifest_sha256=sha256(root / "manifest.json"),
         coverage_scope="conditional_on_extracted_shared_candidate_pairs; not end-to-end target coverage"))
-    lines = ["# Comparación de desarrollo: cuatro modelos", "",
+    lines = [f"# Comparación de desarrollo: {len(models)} modelos", "",
         "Validación reutilizada y asistida; no es evaluación independiente ni habilita producción.", "",
         f"Contexto completo común: {context['train_shared']}/{context['train_total']} pares de entrenamiento y "
-        f"{context['validation_shared']}/{context['validation_total']} de validación. Doce ajustes completados.", "",
+        f"{context['validation_shared']}/{context['validation_total']} de validación. {expected_fits} ajustes completados.", "",
         "| Modelo | Macro-F1 ponderado | Precisión positiva aceptada | Precisión negativa aceptada | Cobertura de pares candidatos |",
         "|---|---:|---:|---:|---:|"]
     percent = lambda value: "Sin predicciones" if value is None else f"{value:.2%}"

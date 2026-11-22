@@ -341,7 +341,7 @@ def fit_seed(settings: dict, training: pd.DataFrame, validation: pd.DataFrame, f
                 best_epoch = epoch + 1
             print(f"REFINEMENT seed={seed} epoch={epoch + 1} fixed_final_epoch=2", flush=True)
             continue
-        logits = predict_logits(model, tokenizer, validation, maximum)
+        logits = predict_logits(model, tokenizer, validation, maximum, batch_size=model_spec.get('validation_batch_size', 32))
         probability = probabilities(logits)
         loss_value = float(np.average(-np.log(probability[np.arange(len(y)), y].clip(1e-12)), weights=validation.weight.astype(float)))
         history.append({"epoch": epoch + 1, "validation_loss": loss_value})
@@ -356,7 +356,7 @@ def fit_seed(settings: dict, training: pd.DataFrame, validation: pd.DataFrame, f
     del model, optimizer
     torch.cuda.empty_cache()
     selected = load_classifier(destination).cuda()
-    logits = predict_logits(selected, tokenizer, validation, maximum)
+    logits = predict_logits(selected, tokenizer, validation, maximum, batch_size=model_spec.get('validation_batch_size', 32))
     del selected
     torch.cuda.empty_cache()
     np.save(folder / f"validation_logits_{seed}.npy", logits, allow_pickle=False)
