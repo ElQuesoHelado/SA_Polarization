@@ -10,12 +10,15 @@ def add_parser(actions):
     parser = actions.add_parser("publication", help="Estudio ampliado aislado: datos, cohorte y comparación de modelos")
     commands = parser.add_subparsers(dest="publication_command", required=True)
     for name in ("prepare", "prepare-local", "advance", "runtime-status", "start-services", "annotation-batch", "audit-capture", "collect", "status", "freeze", "next", "benchmark-init", "proposals", "review",
-                 "reference-close", "enable-assisted-review", "enable-affinity-screening", "enable-fixed-scope", "screening-audit", "screening-status", "screening-batch", "annotation-progress", "train", "training-report", "diagnose-development", "evaluation-preflight", "measurement-preflight", "predict", "remote", "benchmark", "analyze"):
+                 "reference-close", "enable-assisted-review", "enable-affinity-screening", "enable-fixed-scope", "screening-audit", "screening-status", "screening-batch", "annotation-progress", "train", "training-report", "diagnose-development", "diagnose-measurement", "evaluation-preflight", "measurement-preflight", "predict", "remote", "benchmark", "analyze"):
         sub = commands.add_parser(name)
         sub.add_argument("--config", default="config/targeted_publication.toml")
     commands.choices['enable-fixed-scope'].add_argument('--screened-users',type=int,default=300)
     commands.choices['enable-fixed-scope'].add_argument('--initial-report-users',type=int,default=200)
     commands.choices['analyze'].add_argument('--screened-users',type=int)
+    commands.choices['diagnose-measurement'].add_argument('--analysis-id',required=True)
+    commands.choices['diagnose-measurement'].add_argument('--stage',choices=['provisional'],default='provisional')
+    commands.choices['diagnose-measurement'].add_argument('--diagnostic-config',type=Path)
     for name in ('predict','remote','benchmark'):
         commands.choices[name].add_argument('--scope',choices=['all','benchmark'],default='all')
     for name in ('train', 'training-report', 'predict', 'remote', 'benchmark'):
@@ -45,7 +48,7 @@ def add_parser(actions):
         commands.choices[name].add_argument("--stage", choices=["provisional", "final"], default="provisional")
     remote = commands.choices["remote"]
     remote.add_argument("--task", choices=["train", "predict"], required=True)
-    remote.add_argument("--operation", choices=["submit", "start", "status", "fetch"], required=True)
+    remote.add_argument("--operation", choices=["submit", "start", "status", "fetch", "retry"], required=True)
     remote.add_argument("--create-dataset", action="store_true")
 
 
@@ -140,6 +143,9 @@ def run(args):
     elif action == "diagnose-development":
         from .development_diagnostics import diagnose
         result = diagnose(settings, plan, parent, study, registry)
+    elif action == 'diagnose-measurement':
+        from .observational import run
+        result = run(settings, plan, study, registry, args.analysis_id,stage=args.stage,config_path=args.diagnostic_config)
     elif action == "evaluation-preflight":
         from .evaluation_preflight import preflight
         result = preflight(settings, plan, study, registry)

@@ -28,9 +28,30 @@ sin abrir prueba ni repetir trabajos anteriores. `--experiment-id
 encoder_extension_20261122_v1` aísla preparación, operación remota, predicción
 del benchmark e informes. BERTIN mantiene sus resultados históricos.
 
+La ampliación ya terminó: entrenamiento y predicción privados importados, cinco
+modelos comparados sobre los 3,000 comentarios y RoBERTuito con mayor macro-F1
+integral (.3836). No repetir esos trabajos. El artículo presenta macro-F1 e IC95%
+en la tabla principal; la cobertura por modelo y precisión aceptada quedan en el
+suplemento. PDFs vigentes: `outputs/manuscrito/threshold_rationale_20261122/`.
+La comparación sigue siendo provisional y no habilita inferencia productiva.
+
 Para mantener el trabajo independiente de la conversación, usar `targeted publication start-services --daily-api-budget 9000` y consultar `targeted publication runtime-status`. Los servicios de usuario conservan registros y se detienen ante errores; no arrancan tras reiniciar el equipo. `targeted publication audit-capture` genera el informe local del aporte de las capturas y la carga provisional de anotación. La [guía de anotación](docs/guia_anotacion_publicacion.md) explica las tandas de 50 comentarios y los modos de revisión del benchmark.
 
 La [lectura por afinidad](docs/estudio_publicable.md#lectura-por-afinidad-y-benchmark-paralelo-enmienda-del-21-de-noviembre) permite omitir comentarios de usuarios cuya exclusión ya está demostrada mediante una cota conservadora. `screening-batch` organiza primero A; quienes califican mantienen A y B completos, y las correcciones humanas pueden reabrir lecturas. `predict`, `remote` y `benchmark` admiten `--scope benchmark` para comparar los 3,000 comentarios sin esperar el cierre de cohortes. No cambia los criterios ni habilita producción.
+
+## Medición observacional y diagnósticos
+
+El [informe observacional](docs/resultados_observacionales.md) reúne selección,
+estadísticos robustos, incertidumbre, soporte, estabilidad entre mitades y límites
+de automatización. `targeted publication diagnose-measurement --analysis-id
+observational_strengthening_20261122_v1 --stage provisional` verifica y devuelve
+el informe sellado; no modifica anotaciones, producción ni la prueba reservada.
+El documento activo es `docs/doc_a_modificar.tex`, con tablas completas en
+`docs/observational_supplement.tex`. La edición actual conserva en español
+título, abstract y estado del arte; el resto del artículo y todos los elementos
+visuales están en inglés. Las dos gráficas de brecha y soporte se exportan por
+separado para conservar legibilidad. La medición se limita a los usuarios con
+evidencia suficiente en ambos bloques; las revisiones humanas permanecen pendientes.
 
 ## Requisitos
 

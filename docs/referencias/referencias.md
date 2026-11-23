@@ -21,6 +21,32 @@ El manuscrito propio se reescribió alrededor de historiales anotados y comparac
 | `YoutubeThreads` | [YouTube Data API](youtube-api.md) | Captura de hilos y respuestas |
 | `lakens2022sample` | [Lakens (2022)](lakens-2022.md) | Dimensionamiento por precisión; supuestos locales explícitos |
 
+## Contexto electoral y edición bilingüe (2026-11-22)
+
+| Clave | Documento | Uso y límite |
+|---|---|---|
+| `JNE11352026` | JNE, Resolución 1135-2026-JNE (17 de mayo) | Cronología y organizaciones del balotaje; no medición afectiva. |
+| `Defensoria2842026` | Defensoría del Pueblo, Informe Defensorial 284 (junio) | Disputas y rechazo de candidaturas documentados; separar observaciones y prospectiva. |
+
+[Nota y páginas utilizadas](peru-2026-electoral-context.md).
+[Descargas, versiones y hashes](peru-2026-context-downloads.json).
+No se extrapolan estos documentos a la muestra ni se les atribuye validación de
+las anotaciones. La traducción final autorizada posteriormente dejó todo el artículo y sus
+elementos visuales en inglés, salvo nombres propios y títulos bibliográficos originales.
+
+## Diagnóstico observacional (2026-11-22)
+
+| Clave | Fuente / nota | Uso y límite |
+|---|---|---|
+| `GrimmerStewart2013` | [Grimmer y Stewart (2013)](grimmer-stewart-2013.md) | Validación sustantiva del análisis textual; no garantiza validez local. |
+| `Pronk2022SplitHalf` | [Pronk et al. (2022)](pronk-split-half-2022.md) | Variación entre particiones; sin transferir umbrales cognitivos a comentarios políticos. |
+| `Egami2023Surrogates` | [Egami et al. (2023)](egami-surrogates-2023.md) | Etiquetas imperfectas e inferencia posterior; no se implementa su estimador DSL. |
+
+PDFs locales en `pdfs/contexto/`, versiones y hashes en
+[manifiesto de descargas](observational-downloads.json). El análisis adverso local
+es una cota condicional sobre valoraciones de B, sin equivaler a una corrección de
+error del proceso completo.
+
 ## Ampliación de encoders (2026-11-22)
 
 La comparación activa conserva RoBERTuito, BETO y XLM-R como referencias e incorpora
@@ -29,6 +55,15 @@ para documentos históricos. Solo se ajustan las dos bases nuevas, sin usar etiq
 del benchmark ni abrir la prueba histórica. La nueva comparación usa un benchmark
 ya examinado y no debe presentarse como prueba final independiente. PDFs y hashes:
 [manifiesto de descargas](encoder-extension-downloads.json).
+
+## Abstención y calibración (2026-11-22)
+
+| Clave | Fuente / nota | Uso y límite |
+|---|---|---|
+| `Geifman2017Selective` | [Geifman y El-Yaniv (2017)](threshold-rationale-2017.md) | Marco de error/cobertura; no prescribe 0.85/diez ni transfiere garantías de riesgo al pipeline. |
+| `Guo2017Calibration` | [Guo et al. (2017)](threshold-rationale-2017.md) | Calibración mediante temperatura; no prescribe los criterios numéricos de aceptación. |
+
+PDFs locales y hashes: [procedencia de descargas](threshold-rationale-downloads.json).
 
 ## Criterio de uso
 

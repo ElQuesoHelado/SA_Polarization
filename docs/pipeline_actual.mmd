@@ -4,16 +4,16 @@ config:
   theme: base
 ---
 flowchart TB
-    A["Extracción · YouTube Data API<br>Comentarios y respuestas"] --> B["Preparación<br>Fechas, procedencia y deduplicación"]
-    B --> C["Conjunto de comentarios<br>Datos fijados para el estudio"]
-    C --> H["Historiales de 300 usuarios<br>Primeros usuarios del orden fijado"]
-    C --> K["Muestra de evaluación de 3,000 comentarios<br>Objetivos y valoraciones anotados"]
-    H --> T["Valoración comentario–objetivo<br>Menciones explícitas y eventos por bloque"]
-    T --> AB["Separación de videos A/B<br>A: afinidad política observada · B: comparación afectiva"]
-    AB --> M["Medición por usuario<br>AP_In · AP_Out · AP · dispersión<br>Brecha normalizada e intervalos<br>Análisis de sensibilidad"]
-    D["Desarrollo etiquetado separado<br>Tres referencias y dos bases nuevas<br>Tres semillas por base<br>Entrenamiento · Kaggle GPU"] -->|Predicciones| E["Evaluación de clasificadores<br>Extracción integral y contexto común"]
-    K -->|Referencia| E
-    E --> R["Comparación de modelos<br>Macro-F1, cobertura y errores"]
+    A["Extraction · YouTube Data API<br>Comments and replies"] --> B["Preparation<br>Dates, provenance, and deduplication"]
+    B --> C["Comment collection<br>Frozen study data"]
+    C --> H["Histories of 300 users<br>First users in the fixed order"]
+    C --> K["Evaluation sample of 3,000 comments<br>Annotated targets and evaluations"]
+    H --> T["Comment–target evaluation<br>Explicit mentions and events by political bloc"]
+    T --> AB["A/B video split<br>A: observed political affinity · B: affective comparison"]
+    AB --> M["Observational measurement<br>AP_In · AP_Out · AP · dispersion<br>Normalized gap, intervals, and support<br>Sensitivity and individual stability"]
+    D["Separate labeled development data<br>Three references and two additional models<br>Three seeds per model<br>Training · Kaggle GPU"] -->|Predictions| E["Classifier evaluation<br>End-to-end extraction and common context"]
+    K -->|Reference| E
+    E --> R["Model comparison<br>Per-class F1, coverage, and errors"]
     classDef shared fill:#f7f7f7,stroke:#666
     classDef measurement fill:#f1f6fc,stroke:#235987
     classDef models fill:#f0f8f6,stroke:#137b80

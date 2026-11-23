@@ -1,0 +1,29 @@
+{
+  "downloaded_at": "2026-11-22T17:45:41.368096+00:00",
+  "sources": [
+    {
+      "id": "grimmer-stewart-2013",
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/F7AAC8B2909441603FEB25C156448F20/S1047198700013401a.pdf/div-class-title-text-as-data-the-promise-and-pitfalls-of-automatic-content-analysis-methods-for-political-texts-div.pdf",
+      "version": "Political Analysis 21(3), 2013",
+      "path": "pdfs/contexto/grimmer-stewart-2013.pdf",
+      "bytes": 943469,
+      "sha256": "24018dd0ad1dd6fa11d6ee2fb501222dc34cde53a8fa02f9cd37f53fb3d724e0"
+    },
+    {
+      "id": "pronk-split-half-2022",
+      "url": "https://link.springer.com/content/pdf/10.3758/s13423-021-01948-3.pdf",
+      "version": "Psychonomic Bulletin & Review 29, 2022; online 2021",
+      "path": "pdfs/contexto/pronk-split-half-2022.pdf",
+      "bytes": 412233,
+      "sha256": "c3332786b6c17f2da03d30c17570cd05ba2910dc9943d9032ce2be39a14ed8bc"
+    },
+    {
+      "id": "egami-surrogates-2023",
+      "url": "https://arxiv.org/pdf/2306.04746v3",
+      "version": "arXiv:2306.04746v3, 2024-01-14; NeurIPS 2023",
+      "path": "pdfs/contexto/egami-surrogates-2023.pdf",
+      "bytes": 1256147,
+      "sha256": "c96c6ca3e0bd1c19d1d0883c9b5254db29ac4f7473792acb0b8ce0e59fd8340e"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+\begin{abstract}
+%% hay que mejorar el cierre... que se gana o logra con el estudio
+
+\section{Introducción}
+
+Las redes sociales se han consolidado como uno de los principales espacios 
+para la discusión política y la expresión de opiniones ciudadanas. Plataformas 
+como Facebook, Twitter/X y Youtube permiten que millones de usuarios compartan 
+publicaciones, comentarios e interacciones relacionadas con acontecimientos 
+políticos, generando grandes volúmenes de información que reflejan la 
+percepción pública sobre candidatos, partidos y 
+políticas gubernamentales \cite{statista2026}. Debido a su alcance e 
+influencia, estas plataformas constituyen 
+una fuente relevante para estudiar el comportamiento político y las tendencias 
+de opinión mediante técnicas de 
+procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con 
+contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios. 
+Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se 
+correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como 
+herramientas de movilización como canales de confrontacion discursiva. En este contexto, el análisis automático 
+del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión 
+pública durante procesos electorales.
+
+Una de las principales soluciones computacionales empleadas para este 
+problema es el análisis automático de sentimientos, mediante el cual se 
+identifica la polaridad expresada en un texto y se clasifica generalmente 
+como positiva, negativa o neutra. En años recientes, los avances en aprendizaje 
+profundo y modelos basados en la arquitectura Transformer han permitido mejorar 
+drásticamente el desempeño en clasificación textual al capturar dependencias 
+contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas 
+específicamente al análisis de polarización política: Martínez-España et al. 
+\cite{polariz} propusieron una formulación pionera para cuantificar la polarización 
+afectiva individual a partir de publicaciones en redes sociales; Bor et al. 
+\cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de 
+política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones 
+previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024, 
+Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos 
+polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía 
+Navarrete \cite{Mejia2024} describió la intensificación histórica de la 
+polarización política en el país entre 2000 y 2023.
+
+A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado, 
+la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado 
+exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes 
+barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta 
+concentración motiva ampliar el estudio de plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate 
+comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de 
+lenguaje masivos preentrenados sobre conjuntos generales de textos en español neutro o peninsular resultan insuficientes para 
+capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos 
+de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la necesidad de distinguir la procedencia editorial del contenido de la identidad política del objetivo valorado: un comentario bajo una fuente neutral puede expresar apoyo o rechazo hacia actores de cualquier bloque.
+
+Para abordar esta brecha, el presente trabajo propone un procedimiento reproducible que analiza el sentimiento político dirigido y la polarización afectiva individual a partir de un conjunto ampliado de 1\,012\,515 comentarios públicos de YouTube del periodo enero--junio de 2026. Se examinan 300 historiales de usuarios siguiendo un orden fijado; 122 reúnen evidencia evaluable hacia ambos bloques políticos. Se calculan AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y el indicador de dispersión (\textit{spread}), complementados por una brecha normalizada y sus intervalos de incertidumbre.
+
+Si bien este enfoque toma como punto de partida la formulación de polarización afectiva individual propuesta por Martínez-España et al. \cite{polariz}, introduce diferencias conceptuales y metodológicas para su aplicación a YouTube. En primer lugar, se valoran menciones explícitas a actores políticos dentro de comentarios y respuestas; la orientación editorial del canal se conserva como procedencia, sin transferirla al autor ni al objetivo. En segundo lugar, se separan los videos utilizados para asignar afinidad y para evaluar la valoración interna y externa. En tercer lugar, se mantienen fuentes neutrales como parte del marco de observación, sin convertirlas en un tercer bloque objetivo ni en un control experimental. Finalmente, la medición por historiales se distingue de una comparación de cuatro clasificadores Transformer: la disponibilidad de un conjunto amplio de comentarios no equivale a contar con predicciones suficientemente fiables sobre todos sus comentarios.
+
+El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos y la polarización política computacional. La Sección III describe el método propuesto, detallando la adquisición y preprocesamiento de datos, el clasificador Transformer y la formulación matemática de las métricas. La Sección IV expone los resultados empíricos y su discusión metodológica. Finalmente, la Sección V presenta las limitaciones y la Sección VI las conclusiones y el trabajo futuro.
+
+\section{Estado del Arte}
+El análisis de sentimientos aplicado al ámbito político ha adquirido una creciente relevancia debido al incremento del contenido generado por usuarios en redes sociales y a la disponibilidad de técnicas avanzadas de procesamiento del lenguaje natural. Las investigaciones recientes han abordado este problema desde diferentes perspectivas, incluyendo el estudio de la polarización política, la clasificación automática de opiniones y el desarrollo de modelos especializados para lenguaje informal.
+
+Una de las principales líneas de investigación corresponde al análisis de la polarización política mediante técnicas de análisis de sentimientos. Martínez-España et al. \cite{polariz} propusieron una metodología para medir la polarización afectiva individual utilizando modelos basados en Transformers sobre datos obtenidos de redes sociales. Su trabajo proporciona un antecedente computacional para estudiar expresiones afectivas; estas mediciones textuales y las encuestas no constituyen instrumentos equivalentes. De forma similar, Bor et al. \cite{bor2023} emplearon análisis de sentimientos para cuantificar la polarización política en Twitter considerando distintos grupos políticos y diversas políticas públicas en Estados Unidos, evidenciando diferencias significativas en los niveles de polarización según el tema analizado.
+
+Otra línea de investigación se ha enfocado en la clasificación automática de sentimientos políticos utilizando técnicas de aprendizaje automático y aprendizaje profundo. En el contexto peruano, Ayma et al. \cite{Ayma2024} analizaron mensajes publicados en Twitter/X durante las elecciones presidenciales de 2021 empleando representaciones textuales como TF-IDF y Word2Vec en combinación con algoritmos tradicionales de clasificación, obteniendo valores de F1-score superiores a 0.93. Posteriormente, Carrera et al. \cite{Carrera2026} compararon representaciones textuales tradicionales y modelos basados en Transformers para clasificar comentarios relacionados con proyectos de ley peruanos. Sus resultados mostraron que los modelos Transformer superaron consistentemente a los enfoques clásicos, alcanzando precisiones superiores al 88\%.
+
+Pandey et al. \cite{pandey2025twitter} analizaron el sentimiento de los votantes durante las elecciones legislativas de Bihar de 2025 utilizando más de 1\,100 publicaciones obtenidas mediante la API de Twitter. Los autores compararon tres métodos de clasificación de sentimientos: Random Forest, Support Vector Machine (SVM) y el modelo basado en transformadores BERT. Inicialmente, las publicaciones fueron etiquetadas utilizando VADER y posteriormente se evaluaron las tendencias de cada partido político mediante el \textit{Net Sentiment Score} (NSS). Los resultados mostraron que BERT obtuvo una exactitud del 80\%, superando a los modelos tradicionales y evidenciando la capacidad de los modelos basados en transformadores para realizar análisis de sentimientos en escenarios electorales con conjuntos de datos de tamaño reducido.
+
+% Chire Saire y Vilca Zuñiga \cite{chire2021analysis} analizaron la reacción de los usuarios de Twitter ante el proceso de vacancia presidencial ocurrido en Perú durante la pandemia por COVID-19. El estudio tuvo como objetivo identificar los principales temas de discusión y evaluar el impacto que la crisis política generó en la población peruana a partir de las publicaciones realizadas en esta red social. Los autores recopilaron mensajes relacionados con el proceso de destitución presidencial y realizaron un análisis de las opiniones expresadas por los usuarios para identificar tendencias en el debate político. Los resultados evidenciaron que Twitter constituyó una fuente relevante para analizar la percepción ciudadana y la reacción de la población frente a los acontecimientos políticos ocurridos durante dicho periodo.
+
+Rizk et al. \cite{rizk2023predicting} propusieron un modelo para predecir los resultados de las elecciones presidenciales de Estados Unidos de 2020 utilizando publicaciones geolocalizadas de Twitter. La metodología combinó análisis de sentimientos, un clasificador Multinomial Naive Bayes y técnicas de aprendizaje automático para estimar tanto el voto popular como los votos del colegio electoral en los 50 estados. Además, los autores eliminaron publicaciones generadas por bots y valores atípicos, analizaron la evolución temporal y espacial de la opinión pública, y emplearon análisis de redes y detección de comunidades para identificar patrones de interacción entre los usuarios. Los resultados mostraron que el modelo predijo correctamente la victoria de Joe Biden, alcanzando una concordancia del 89.9\% con los resultados oficiales de las elecciones.
+
+Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio sobre el análisis de sentimientos en publicaciones de Twitter relacionadas con las elecciones presidenciales españolas de 2019. Los autores recopilaron miles de publicaciones realizadas antes y después del proceso electoral y propusieron una metodología basada en dos etapas: una caracterización estadística utilizando métricas como entropía, información mutua y el \textit{Compounded Aggregated Positivity Index} (CAPI), seguida de la extracción de características mediante técnicas de aprendizaje no lineal, incluyendo autoencoders y métodos de incrustación estocástica. Los resultados mostraron que tanto las métricas estadísticas como las representaciones obtenidas permitieron caracterizar la evolución temporal del sentimiento y evidenciar diferencias en la polaridad entre los distintos partidos políticos y sus líderes durante el periodo electoral.
+
+Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
+
+Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias 
+durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente 
+que el sentimiento general de un comentario no necesariamente refleja la postura del autor hacia una entidad política 
+específica. Este hallazgo motiva la separación entre sentimiento 
+general y valoración comentario objetivo adoptada en el presente trabajo.
+
+En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del 
+discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas 
+metodologías hacia plataformas audiovisuales masivas como YouTube, distinguir la procedencia editorial de los objetivos políticos y adaptar 
+las representaciones a la jerga y particularidades dialectales regionales.
+
+\section{Método Propuesto}
+
+\begin{figure*}[t]
+\centering
+\resizebox{0.95\textwidth}{!}{\input{figures/pipeline.tikz}}
+\caption{Flujo de trabajo del estudio. La extracción y preparación construyen el conjunto de comentarios; la rama izquierda mide expresiones afectivas en historiales y la derecha evalúa clasificadores con desarrollo separado. El entrenamiento no constituye un requisito de la medición anotada.}
+\label{fig:metodo}
+\end{figure*}
+
+La Figura~\ref{fig:metodo} ilustra las etapas del modelo implementado a través de su flujo de trabajo con las siguientes etapas: adquisición programática mediante YouTube Data API v3, preprocesamiento y unificación con procedencia editorial, construcción de muestras de historiales y evaluación, y cómputo de métricas. Donde las etapas de medición por usuario y la comparación de clasificadores son ramas complementarias, con entradas y denominadores distintos.
+
+\subsection{Obtención de datos}
+
+Frente a las restricciones de acceso a datos de otras plataformas \cite{ANTONAKAKI2021114006}, se seleccionó YouTube como fuente primaria de información. Dado que su API oficial proporciona una estructura modular basada en canales y videos, lo que permite asociar de forma trazable el origen editorial del contenido con los comentarios publicados por las audiencias.
+
+La asignación editorial se fundamentó en fuentes externas documentadas, como reportes de propiedad mediática, afiliación partidaria y documentación sobre línea editorial. La unión observada contiene 40 canales: diez de derecha, ocho de izquierda y 22 fuentes neutrales. Esta composición incluye el histórico y la captura ampliada; no implica una distribución equilibrada de las fuentes. La etiqueta \textit{party} identifica exclusivamente la procedencia editorial y no la adscripción del autor ni el bloque del objetivo mencionado. Las fuentes neutrales no constituyen un control experimental.
+
+Dado que esta investigación esta enmarcada en las elecciones presidenciales 2026 del Perú, se exigió que las fechas del video y del comentario pertenecieran a enero--junio de 2026. La captura ampliada completó 11\,280 videos, paginando comentarios y recuperando respuestas faltantes mediante el identificador del padre \cite{YoutubeThreads}. Tras integrar las observaciones históricas elegibles y de duplicar por identificador, el conjunto fijado para el estudio reúne 1\,012\,515 comentarios de 11\,361 videos. Los videos recapturados y los presentes en la unión son conjuntos con funciones distintas. El vínculo de respuesta identifica el hilo de la API y no necesariamente el destinatario discursivo.
+ 
+\subsection{Preprocesado de los atributos}
+El preprocesamiento estandariza los registros y consolida los atributos temporales, lingüísticos y de participación: texto original, identificadores de autor, comentario, video y canal, fecha de comentario y video, título, reacciones, respuestas y procedencia editorial. Se conservan emojis, mayúsculas y formas coloquiales relevantes para interpretar la valoración. Las transformaciones específicas de tokenización se aplican en la rama de clasificación.
+
+Se integra el histórico elegible con las capturas completas, conservando la primera observación de cada comentario y registrando versiones posteriores y conflictos. Las filas de videos incompletos no entran al cierre del conjunto de comentarios. El Algoritmo~\ref{alg:preprocess} resume la integración; el registro de objetivos y los archivos se fijan para el estudio y se guardan sus huellas digitales (hashes) para verificar su integridad.
+
+\begin{algorithm}[h]
+\caption{Preprocesamiento, estandarización y unificación del conjunto de comentarios}
+\label{alg:preprocess}
+\begin{algorithmic}[1]
+\Require Histórico y capturas completas, periodo y grupos de fuente.
+\Ensure Comentarios sin duplicados, procedencia y orden de usuarios verificables.
+\ForAll{observación de comentario}
+\State Verificar identidades y fechas de video y comentario.
+\State Conservar texto, autor, hilo y procedencia editorial.
+\State Excluir fechas fuera del periodo; registrar la exclusión.
+\State Deduplicar por comentario; conservar versiones y conflictos.
+\EndFor
+\State Construir unión y comprobar integridad de historiales.
+\State Fijar los comentarios y el registro de objetivos; guardar sus huellas digitales.
+\State Construir marco elegible y muestras separadas.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Objetivos políticos y construcción de muestras}
+
+La unidad de valoración es el par comentario--objetivo con mención explícita. El registro de actores fijado para el estudio contiene 124 identidades: 22 con bloque documentado de inclinaciones por la izquierda o derecha y 102 con bloque desconocido. En cuanto a las etiquetas, se distinguen cinco tipos: favorable, desfavorable, neutral, mixta y no evaluable. Una mención neutral no es ausencia de objetivo; una mezcla o una referencia desconocida no se convierte en neutral. Las referencias resueltas únicamente por título o comentario padre no entran al principal de evidencia explícita. Los objetivos omitidos durante la extracción pueden incorporarse a la anotación conservando su bloque desconocido cuando no hay clasificación documental.
+
+Las valoraciones hacia objetivos de un mismo comentario se agrupan por bloque. Si hay valoraciones favorables y desfavorables simultáneas hacia ese bloque, el evento es mixto. Solo eventos favorables, desfavorables y neutrales con bloque conocido aportan a los balances; un comentario puede aportar un evento a cada bloque.
+
+La selección inicial reúne 4\,443 usuarios potencialmente comparables, ordenados por SHA-256 de una clave fija con semilla 57. Se examinan los primeros 300 usuarios del orden fijado, en lotes de 100, conservando todos sus comentarios disponibles en los datos del estudio. El cierre usa el número examinado, no el signo de la brecha normalizada ni la significación. Las condiciones afectivas se comprueban después; elegibilidad estructural no equivale a comparabilidad confirmada.
+
+Finalmente, la muestra de evaluación, separada de los datos de desarrollo, contiene 3\,000 comentarios: 1\,000 con candidatos de izquierda, 1\,000 de derecha, 500 solo con candidatos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan por hash a una cuota; dentro de cada cuota se estratifica por fuente, mes y tipo de comentario. Asimismo, se han conservado probabilidades de inclusión y se excluyeron videos y textos utilizados en el desarrollo anterior. Esta muestra evalúa clasificadores; no reemplaza los historiales utilizados para medir polarización.
+
+\subsection{Clasificación de sentimiento dirigido con Transformers}
+
+En esta etapa se han seleccionado cinco bases complementarias: RoBERTuito, BETO, XLM-RoBERTa-base, MrBERT-es y mDeBERTa-v3-base. RoBERTuito se preentrenó con 500 millones de tuits y aporta una referencia adaptada al lenguaje generado por usuarios en español \cite{robertuito}. BETO proporciona una referencia monolingüe generalista, preentrenada con enmascaramiento de palabras completas, que permite contrastar el lenguaje social con una base de español de propósito general \cite{BETOResource}. XLM-RoBERTa-base incorpora una referencia multilingüe preentrenada con textos de 100 idiomas; su inclusión responde a ese alcance lingüístico, sin presuponer un rendimiento inferior \cite{XLMR2020}.
+
+MrBERT-es incorpora una base español/inglés de 150 millones de parámetros sobre ModernBERT, con adaptación de vocabulario y preentrenamiento bilingüe \cite{MrBERT2026,MrBERTesResource}. mDeBERTa-v3-base aporta una arquitectura multilingüe con detección de unidades de texto (tokens) reemplazadas y uso compartido de representaciones vectoriales con gradientes desacoplados \cite{DeBERTaV32023,mDeBERTaResource}. Su elección también se apoya en un antecedente de uso de mDeBERTa para sentimiento dirigido en titulares financieros en español \cite{SINAI2023FinancES}; ese dominio y sus resultados no se transfieren a comentarios políticos peruanos. Las dos bases se han incorporado como candidatos adicionales, mientras que las otras tres conservaron sus ajustes y predicciones existentes.
+
+Cada modelo recibe el nombre del objetivo y el comentario, y estima las probabilidades de las cinco clases, como se muestra en la Ec. \ref{eq:robertuito}.  La adaptación ha sido específica para valoración dirigida: no se reutilizó como medición dirigida la predicción triclase del antiguo modelo de sentimiento general.
+\begin{equation}
+\boldsymbol{p}_{c,t}=f_{\theta}(\text{objetivo }t,\text{comentario }c).
+\label{eq:robertuito}
+\end{equation}
+El desarrollo etiquetado contiene 1\,291 / 278 pares de entrenamiento / validación antes del filtro de contexto y el conjunto común fijado en la comparación inicial contiene 1\,148 / 264 pares completos; las dos incorporaciones utilizan exactamente esos pares, etiquetas y pesos. RoBERTuito admite efectivamente 128 de estas unidades de texto y las otras bases se limitan a 512 en este experimento. La capacidad máxima publicada de MrBERT-es es mayor, pero no se utiliza para ampliar la ventana de esta comparación. Las etiquetas del nuevo grupo de usuarios y de la muestra de evaluación no se consideraron en el entrenamiento y las 500 observaciones de prueba histórica se han mantenido apartadas.
+
+La comparación inicial completó doce ajustes en GPU en Kaggle, con tres semillas (42, 43, 44) por base, donde se conservaron los ajustes de las tres referencias y se ejecutó una ampliación de seis ajustes para MrBERT-es y mDeBERTa-v3-base, sin repetir los entrenamientos anteriores. La configuracion común usa AdamW con una tasa de $2\times10^{-5}$, y un decaimiento de .01, un lote efectivo 16, con un máximo de ocho épocas y detención cuando la validación no mejora durante dos épocas. Se promediaron probabilidades por semilla; temperatura y los umbrales por clase se ajustaron solo en la validación. 
+
+En cuanto a la precisión aceptada se consideró .85 y al menos diez predicciones para habilitar un umbral; en otro caso se deshabilitó la clase. Asimismo, las entradas sin contexto completo se han abstienido. La confianza se empleó para aceptar predicciones y no como intensidad afectiva del usuario.
+
+En la parte de la evaluación se ha distingido extracción integral, con omisiones, y clasificación condicional a candidatos de contexto completo común. El macro-F1 se promedió las clases favorable, desfavorable y neutral antes de abstención. Donde la cobertura integral se consideró como la proporción ponderada de objetivos evaluables anotados que reciben una predicción aceptada evaluable y la cobertura condicional restringe el denominador al subconjunto común de evaluación. Así también se usaron los pesos inversos de inclusión de comentarios y la muestra de evaluación no se interpretó como una muestra simple de todo el conjunto de comentarios.
+
+\subsection{Modelado de métricas de favorabilidad y polarización afectiva}
+
+Con el objetivo de caracterizar la valoración hacia actores y la polarización individual, se distingue el balance dirigido de las diferencias entre bloques, donde la fuente editorial no determina el destino de la valoración.
+
+\subsubsection{Afinidad y balances dirigidos}
+
+La afinidad política observada se asignó a partir del apoyo expresado por el usuario en sus comentarios. Los videos se separaron por Hash en dos partes A y B con semilla 42. En el grupo A, el bloque de afinidad $g_i$ es el de mayoría positiva única, con al menos dos positivos en al menos dos videos y cuota dominante $\geq2/3$ de los positivos a ambos bloques. Si se produce un empates o evidencia insuficiente genera una afinidad indeterminada; lo que no implican una preferencia electoral específica. Esta condicion esta determinada en la Ec. \ref{eq:ingroup}.
+
+\begin{equation}
+g_i=\operatorname*{argmax}_{g\in\{L,R\}}\Pos^A_{ig}
+\quad\text{si satisface los mínimos de afinidad.}
+\label{eq:ingroup}
+\end{equation}
+
+La lectura comienza por la parte A, por videos de menor tamaño y desempate por identificador. Solo se omite el resto de un historial cuando una cota demuestra que ningún bloque alcanzaría los mínimos, aun suponiendo cada comentario pendiente como posible apoyo. Las omisiones se conservaron como tales, sin anotarlas como ausencia de objetivos. Para quienes califican, A y B requieren lectura completa.
+
+Cuando la evaluación utiliza B, se exige evidencia evaluable hacia ambos bloques, al menos tres eventos en total y dos videos. Para cada usuario comparable y bloque $g$, se define en la Ec. \ref{eq:favorabilidad_neta}.
+
+\begin{equation}
+N^B_{ig}=\Pos^B_{ig}+\Neg^B_{ig}+\Neu^B_{ig},\qquad b^B_{ig}=\Pos^B_{ig}-\Neg^B_{ig}.
+\label{eq:favorabilidad_neta}
+\end{equation}
+El balance normalizado $b^B_{ig}/N^B_{ig}$ está en $[-1,1]$ e incluye los neutrales evaluables en su denominador.
+
+\subsubsection{Indicador de polarización afectiva individual y dispersión}
+\label{subsubsec:ap_individual}
+El indicador individual se adaptó a la formulación de Martínez-España et al. \cite{polariz}, distinguiendo afinidad política observada y valoración en videos separados. Si $\bar g_i$ es el bloque opuesto, el indicador se define por las Ec. \ref{eq:ap_in}, \ref{eq:ap_out} y \ref{eq:ap_final}.
+
+\begin{align}
+\mathrm{AP}_{In,i}&=b^B_{i,g_i},\label{eq:ap_in}\\
+\mathrm{AP}_{Out,i}&=b^B_{i,\bar g_i},\label{eq:ap_out}\\
+\mathrm{AP}_i&=\mathrm{AP}_{In,i}-\mathrm{AP}_{Out,i}.\label{eq:ap_final}
+\end{align}
+
+El grupo externo es el bloque político opuesto; definido por la Ec. \ref{eq:spread},  y no incluye las fuentes neutrales como destino adicional. AP conserva balances de conteos y depende de la actividad.
+\begin{equation}
+\mathrm{spread}_i=\sqrt{\frac{(b^B_{iL})^2+(b^B_{iR})^2}{N^B_{iL}+N^B_{iR}}}.
+\label{eq:spread}
+\end{equation}
+Donde el denominador cuenta eventos comentario--bloque evaluables, incluidos neutrales. Esta adaptación de dispersión \cite{wagner2021affective,polariz} no elimina toda dependencia del volumen ni constituye una escala psicológica equivalente a una encuesta. No se asignan niveles universales bajo, medio o alto.
+
+Asimismo, la brecha normalizada, definida en la Ec. \ref{eq:gap}, esta denotada por $\mathrm{gap}_i$, y es considerada como el contraste principal y se calcula como la diferencia entre los balances normalizados:
+\begin{equation}
+\mathrm{gap}_i=\frac{\mathrm{AP}_{In,i}}{N^B_{i,g_i}}-\frac{\mathrm{AP}_{Out,i}}{N^B_{i,\bar g_i}}\in[-2,2].
+\label{eq:gap}
+\end{equation}
+Su promedio atribuye igual contribución a cada usuario comparable. Una brecha normalizada positiva indica favoritismo relativo, pero no exige un balance externo negativo; este se examina por separado.
+
+\begin{algorithm}[t]
+\caption{Cómputo de polarización afectiva individual y dispersión}
+\label{alg:polarization}
+\begin{algorithmic}[1]
+\Require Comentarios fijados para el estudio, objetivos anotados y orden fijado.
+\Ensure Usuarios comparables, métricas y motivos de exclusión.
+\ForAll{usuario entre los primeros 300 del orden fijado}
+\State Conservar su historial y agrupar las valoraciones por bloque.
+\State Asignar videos a A/B y comprobar afinidad en A.
+\State Certificar exclusiones según la cota de pendientes.
+\State Para afinidad válida, completar A/B y comprobar cobertura B.
+\If{afinidad válida, ambos bloques, tres eventos y dos videos en B}
+\State Calcular AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersión y brecha normalizada.
+\Else
+\State Registrar motivo de exclusión, sin reemplazar al usuario.
+\EndIf
+\EndFor
+\State Promediar por usuario y calcular intervalos y análisis de sensibilidad.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Incertidumbre y sensibilidad}
+Se ejecutaron 2\,000 remuestreos cruzados de usuarios y canales, con canales estratificados por fuente, recalculando afinidad y elegibilidad en cada réplica. Los intervalos percentiles del 95\% han requerido al menos 80\% de réplicas válidas donde la brecha normalizada global es el contraste principal; Holm se aplica a los contrastes secundarios. Estos intervalos describen variación dentro del marco observado.
+
+Los análisis de sensibilidad ha mantenido los usuarios primarios y se ha recalculado la comparabilidad con :  A/B invertido, contribución equilibrada por video, exclusión individual de los tres actores más frecuentes y uso del componente histórico sin ampliación. Cada variante es capaz de informar sobre la cantidad de usuarios que conservan comparabilidad. Demostrando así que son comprobaciones de estabilidad y no seis estudios independientes.

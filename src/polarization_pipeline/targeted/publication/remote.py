@@ -4,11 +4,25 @@ from __future__ import annotations
 import json
 import shutil
 import tarfile
+import time
 from pathlib import Path
 
 from ..common import atomic_json, sha256, stamp
-from ..remote import KERNEL, _kaggle, start_job, status_job, submit_job
-from .state import verify, verify_seal
+from ..remote import KERNEL, _kaggle, start_job, status_job, submit_job, validate_job
+from .state import verify, verify_seal, lock
+
+
+def query_status(settings, arguments):
+    """Retry only read-only status queries; submissions and downloads never repeat."""
+    if tuple(arguments[:2]) not in (('kernels','status'), ('datasets','status')):
+        raise ValueError('Only read-only kernel/dataset status queries may be retried')
+    for attempt in range(3):
+        try:
+            return _kaggle(settings, arguments)
+        except RuntimeError:
+            if attempt == 2:
+                raise
+            time.sleep(30)
 
 
 def remote_settings(settings, plan):
@@ -19,6 +33,79 @@ def stage(study, task):
     if task not in ("train", "predict"):
         raise ValueError("Solo entrenamiento y predicción diagnóstica; prueba histórica no disponible")
     return study / "kaggle" / ("train" if task == "train" else "infer")
+
+
+def frozen_execution_package(study):
+    """Use the exact training sources even while the local analysis evolves."""
+    payload = stage(study, 'train') / 'payload'
+    manifest = json.loads((payload / 'payload_manifest.json').read_text())
+    archived = stage(study, 'train') / 'dataset/targeted_payload.tar.gz'
+    job = json.loads((stage(study, 'train') / 'job_manifest.json').read_text())
+    if sha256(archived) != job['payload_sha256']:
+        raise ValueError('Payload de entrenamiento alterado')
+    # Bind the expanded manifest to the originally published archive, not to itself.
+    with tarfile.open(archived) as archive:
+        matches = [m for m in archive.getmembers() if m.name == 'payload_manifest.json']
+        if len(matches) != 1 or json.loads(archive.extractfile(matches[0]).read()) != manifest:
+            raise ValueError('Manifiesto de código congelado incompatible')
+    expected = {name: digest for name, digest in manifest.items() if name.startswith('src/')}
+    actual = {str(p.relative_to(payload)) for p in (payload / 'src').rglob('*')
+              if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc'}
+    if actual != set(expected) or any(sha256(payload / name) != digest for name, digest in expected.items()):
+        raise ValueError('Código congelado de entrenamiento alterado')
+    return payload / 'src/polarization_pipeline'
+
+
+def retry(settings, plan, study, task):
+    """One explicit retry after acknowledged cancellation; preserve every attempt."""
+    if not plan.get('model_extension_protocol') or task != 'train':
+        raise ValueError('Reintento limitado al entrenamiento de la ampliación')
+    destination = stage(study, task)
+    remote = remote_settings(settings, plan)
+    with lock(destination / 'retry.lock'):
+        job = json.loads((destination / 'job_manifest.json').read_text())
+        validate_job(remote, destination, job)
+        if not job.get('started') or not job.get('kernel_ref') or (study / 'training').exists():
+            raise ValueError('No hay ejecución cancelada reintentable o ya hay resultados')
+        attempts = destination / 'attempts'
+        if attempts.exists():
+            for path in attempts.glob('*/retry.json'):
+                if json.loads(path.read_text())['state'] in ('submitting', 'submission_unknown'):
+                    raise ValueError('Envío anterior incierto; verificar versión remota antes de reenviar')
+        status = _kaggle(remote, ['kernels', 'status', job['kernel_ref']])
+        if 'cancel_acknowledged' not in status.lower() and 'cancelled' not in status.lower():
+            raise ValueError('Kaggle debe confirmar cancelación; no duplicar una ejecución activa')
+        logs = _kaggle(remote, ['kernels', 'logs', job['kernel_ref']]).strip()
+        if logs:
+            raise ValueError('Hay registros de ejecución; auditar ajustes parciales antes de repetir')
+        quota = json.loads(_kaggle(remote, ['quota', '--format', 'json']))
+        gpu = next((r for r in quota if r['resource'] == 'GPU'), None)
+        if not gpu or float(gpu['remaining'].rstrip('h')) <= 0:
+            raise ValueError('Sin cuota GPU disponible')
+        frozen_execution_package(study)
+        previous = destination / 'attempts' / f"{len(list(attempts.glob('*'))) + 1:04d}"
+        previous.mkdir(parents=True, exist_ok=False)
+        shutil.copy2(destination / 'job_manifest.json', previous / 'job_manifest.json')
+        record = dict(state='submitting', created_at=stamp(), previous_ref=job['kernel_ref'],
+                      cancellation_status=status.strip(), empty_logs=True, quota=quota,
+                      old_manifest_sha256=sha256(previous / 'job_manifest.json'), production_enabled=False)
+        atomic_json(previous / 'retry.json', record)
+        # Operational pointer only; the immutable previous manifest is retained above.
+        fresh = {k:v for k,v in job.items() if k not in
+                 ('kernel_ref', 'kernel_version', 'resolved_kernel_id', 'started_at', 'verified_dataset_version')}
+        fresh.update(started=False, retry_of=job['kernel_ref'], retry_archive=str(previous))
+        atomic_json(destination / 'job_manifest.json', fresh)
+        try:
+            start_job(remote, study, 'train')
+            current = json.loads((destination / 'job_manifest.json').read_text())
+            if not current.get('kernel_ref') or current['kernel_ref'] == job['kernel_ref']:
+                raise RuntimeError('Kaggle no confirmó una versión nueva y exacta')
+        except Exception:
+            atomic_json(previous / 'retry.json', {**record, 'state':'submission_unknown', 'updated_at':stamp()})
+            raise
+        atomic_json(previous / 'retry.json', {**record, 'state':'submitted', 'updated_at':stamp(),
+                                            'new_ref':current['kernel_ref']})
+        return current['kernel_ref']
 
 
 def prepare(settings, plan, parent, study, registry, task):
@@ -41,7 +128,8 @@ def prepare(settings, plan, parent, study, registry, task):
     dataset.mkdir(); kernel.mkdir()
     payload_root = destination / "payload"
     payload_root.mkdir()
-    package = settings["_root"] / "src/polarization_pipeline"
+    package = (frozen_execution_package(study) if task == 'predict' and plan.get('model_extension_protocol')
+               else settings["_root"] / "src/polarization_pipeline")
     shutil.copytree(package, payload_root / "src/polarization_pipeline", ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
     config_dir = payload_root / "config"
     config_dir.mkdir()
@@ -107,6 +195,8 @@ def action(settings, plan, study, task, operation, *, create=False):
         return submit_job(remote, study, remote_task, create=create)
     if operation == "start":
         return start_job(remote, study, remote_task)
+    if operation == 'retry':
+        return retry(settings, plan, study, task)
     if operation == "status":
         return status_job(remote, study, remote_task)
     if operation != "fetch":

@@ -1,5 +1,7 @@
 # Cierre del manuscrito dirigido
 
+> Nota del 2026-11-22: este registro describe la versión histórica del 18 de noviembre. El documento activo es `docs/doc_a_modificar.tex`; el estado actual y la edición bilingüe se documentan en `docs/resultados_observacionales.md` y `AGENTS.md`. Los resultados y metas históricos siguientes no se presentan como estado vigente.
+
 Actualizado el 2026-11-18. El manuscrito es un borrador del enfoque vigente, con desarrollo completado y resultados afectivos finales pendientes. La edición no modifica el protocolo ni los artefactos científicos. Los marcadores visibles del PDF deben sustituirse con resultados reales antes del envío.
 
 | Parte del artículo | Condición para completarla | Artefactos previstos |

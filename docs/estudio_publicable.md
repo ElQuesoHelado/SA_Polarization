@@ -196,3 +196,13 @@ Las salidas se separan en `analysis_provisional_users_0200/` y `analysis_provisi
 
 
 El cierre provisional vigente reúne **300 examinados y 122 comparables** (68 de afinidad izquierda y 54 derecha), con 13,888 comentarios de historial, 13,179 propuestas y 709 omisiones certificadas. El gap es **1.4424, IC95% [1.2733, 1.6827]**, frente a 1.4567 [1.2160, 1.7186] en el corte inicial (79 comparables/200). Balance interno normalizado: .5829 [.4430, .7700]; externo: -.8594 [-.9480, -.7919]. Las sensibilidades puntuales mantienen gap positivo (1.4470–1.5203) con tamaños efectivos distintos; no constituyen seis pruebas independientes. La diferencia derecha menos izquierda es -.0526, IC95% [-.4624, .3868], inconclusa. El semiancho .2047 supera ligeramente la meta .20 y se conserva `target_not_met`. Son estimaciones sobre propuestas, pendientes de revisión humana; el bootstrap no incorpora ese error de anotación. No habilitan inferencia del corpus completo. Artefactos y comprobaciones locales en `fixed_scope_comparison/`; el bloque histórico no se actualiza con estas salidas.
+
+## Diagnóstico observacional complementario del 22 de noviembre
+
+La [guía de resultados observacionales](resultados_observacionales.md) documenta
+`diagnose-measurement`, la familia fija de sensibilidad, el embudo de exclusión,
+los intervalos y la estabilidad individual. No reemplaza las reglas del análisis
+principal, las anotaciones ni el cierre humano. El informe sellado conserva su
+base provisional; una revisión de etiquetas exige otra identidad de análisis.
+El manuscrito activo y su material complementario explican tanto el patrón
+agregado como la limitada estabilidad individual y el alcance condicional.

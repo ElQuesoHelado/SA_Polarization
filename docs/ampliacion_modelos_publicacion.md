@@ -80,7 +80,9 @@ conservan sus cifras y el contexto común inicial se identifica como tal.
 ## Seguimiento de la ejecución iniciada
 
 El entrenamiento privado exacto es
-`josealvacornejo/sa-polarization-pub-encoders-train/1`, con dataset nuevo v1 ready.
+`josealvacornejo/sa-polarization-pub-encoders-train/2`, con el mismo dataset privado v1 ready.
+La versión 1 fue cancelada por el usuario sin llegar a ejecutar; su manifiesto y
+la evidencia del reintento autorizado quedan bajo `kaggle/train/attempts/0001/`.
 No reenviarlo. El servicio transitorio de usuario
 `sa-polarization-encoder-extension-20261122.service` sigue ese trabajo, importa los
 resultados, prepara la predicción privada y genera la comparación. No arranca tras
@@ -89,6 +91,67 @@ reiniciar el equipo ni reintenta errores. Su controlador y registros están bajo
 
 `runtime_status.json` es un registro, no una prueba de liveness: consultar también
 el servicio y el bloqueo `continuation.lock`. La actualización posterior del
-artículo exige fuentes sin cambios respecto de `manuscript_guard.json`; si el
+artículo exige fuentes sin cambios respecto de `observational_manuscript_guard.json`; si el
 usuario editó el documento, conserva sus cambios y deja aviso pendiente. Las cifras
 se toman exclusivamente del informe sellado de cinco modelos.
+
+El reintento se ejecutó una vez tras confirmar cancelación, registros vacíos y
+cuota GPU disponible. `remote --operation retry --task train --experiment-id
+encoder_extension_20261122_v1` conserva versiones previas y rechaza trabajos
+activos, parcialmente ejecutados o envíos inciertos. No es un bucle automático.
+La predicción siguiente utiliza el paquete de código congelado del entrenamiento,
+verificado contra el manifiesto del archivo publicado, aunque cambie el código
+local de análisis. La integración posterior del manuscrito solo sustituye el
+bloque de modelos y preserva los diagnósticos observacionales.
+
+## Continuación verificada del 22 de noviembre
+
+El entrenamiento `/2` terminó y se importó tras verificar los **seis ajustes**,
+las tres semillas por modelo y **56 archivos**. El archivo descargado tiene
+SHA-256 `308abb30f38dd5e380bc94d66453685d9be8c2aa6fb4392ab0f8a57cd82b2dc6`.
+El informe local `training_development/` reproduce las métricas guardadas:
+
+| Modelo | Macro-F1 ponderado | Cobertura de pares candidatos |
+|---|---:|---:|
+| MrBERT-es | 0.5322 | 25.75% |
+| mDeBERTa-v3-base | 0.4451 | 14.88% |
+
+Son diagnósticos de validación reutilizada/asistida sobre 264 pares comunes,
+no resultados del benchmark ni cobertura integral de extracción. MrBERT-es
+habilita positivos y negativos; mDeBERTa solo positivos. Ninguno habilita
+neutrales con la calibración fijada. No se selecciona ni promueve un modelo.
+
+El controlador se reanudó después de importar el entrenamiento, bajo la
+invocación `3bf97a6f6ea04a9eb636fd8517695abc`. Las consultas de estado de
+datasets y kernels admiten hasta tres intentos, separados por 30 segundos,
+ante errores de transporte. Esta regla no repite publicaciones, envíos,
+descargas ni ejecuciones fallidas. La suite local ejecutó 260 pruebas:
+257 correctas y tres omitidas por dependencias de entrenamiento locales.
+
+## Comparación terminada y presentación del artículo
+
+La predicción privada exacta
+`josealvacornejo/sa-polarization-pub-encoders-predict/1` terminó usando el dataset
+v2 ready. Se importaron los dos CSV con verificación de muestra, entrenamiento y
+hashes; no repetir la ejecución. El informe sellado `benchmark_provisional/`
+compara cinco modelos sobre 3,000 comentarios, 5,165 pares integrales y 3,222
+candidatos comunes con contexto completo.
+
+RoBERTuito conserva el mayor macro-F1 integral (.3836), seguido por BETO (.3237),
+MrBERT-es (.3225), mDeBERTa (.3086) y XLM-R (.2832). Los contrastes por video con
+Holm favorecen RoBERTuito frente a las cuatro alternativas; BETO y MrBERT-es no
+presentan diferencia clara, sin demostrar equivalencia. Esta comparación sigue
+siendo acuerdo con propuestas IA pendientes de revisión humana, sobre una muestra
+ya examinada, no evaluación final independiente.
+
+La tabla principal muestra macro-F1 e IC95% en ambos ámbitos. La cobertura se
+resume una vez en el texto y se detalla en el suplemento con la precisión aceptada.
+Los intervalos comunes se derivan en `manuscript_statistics/`, fuera del informe
+original, mediante 2,000 remuestreos por video con semilla 57 y los mismos pesos y
+orden de videos. El generador rechaza intervalos incompatibles o alterados.
+El suplemento admite `--model-report PATH`; mantiene los diagnósticos históricos
+de tres referencias con su alcance explícito, sin atribuirlos a cinco modelos.
+
+PDF principal y suplemento: `outputs/manuscrito/model_presentation_20261122/`.
+La suite pasó 264 pruebas, con 261 correctas y tres omitidas. No se promueve un
+modelo ni se modifica la medición anotada de polarización.

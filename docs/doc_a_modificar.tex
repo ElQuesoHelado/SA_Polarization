@@ -367,21 +367,15 @@
 %
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish,es-tabla,es-noshorthands]{babel}
+\usepackage[spanish,english,es-tabla,es-noshorthands]{babel}
 \usepackage{array,amssymb,amsfonts,float,url}
 \usepackage{tikz,pgfplots,fontawesome5}
 \usetikzlibrary{arrows.meta,positioning,babel}
 \pgfplotsset{compat=1.18}
-\floatname{algorithm}{Algoritmo}
-\algrenewcommand{\algorithmicrequire}{\textbf{Entrada:}}
-\algrenewcommand{\algorithmicensure}{\textbf{Salida:}}
-\algrenewcommand{\algorithmicforall}{\textbf{para cada}}
-\algrenewcommand{\algorithmicdo}{\textbf{hacer}}
-\algrenewcommand{\algorithmicif}{\textbf{si}}
-\algrenewcommand{\algorithmicthen}{\textbf{entonces}}
-\algrenewcommand{\algorithmicelse}{\textbf{en otro caso}}
-\algrenewcommand{\algorithmicend}{\textbf{fin}}
-\algrenewcommand{\algorithmicfor}{\textbf{para}}
+\floatname{algorithm}{Algorithm}
+\algrenewcommand{\algorithmicrequire}{\textbf{Input:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Output:}}
+\addto\captionsspanish{\renewcommand{\figurename}{Figure}\renewcommand{\tablename}{Table}}
 \newcommand{\Pos}{\mathrm{Pos}}
 \newcommand{\Neg}{\mathrm{Neg}}
 \newcommand{\Neu}{\mathrm{Neu}}
@@ -391,8 +385,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Análisis de sentimiento dirigido y polarización afectiva en comentarios de YouTube durante las elecciones
-presidenciales peruanas de 2026}
+\title{Expressed Affective Polarization in YouTube Comments During the 2026 Peruvian Presidential Election: An Observational Study}
 
 
 % author names and affiliations
@@ -445,12 +438,14 @@ presidenciales peruanas de 2026}
 
 
 % make the title area
+\selectlanguage{english}
 \maketitle
 
 
 \begin{abstract}
-Hoy en día las plataformas digitales ofrecen una gran cantidad de información sobre las opiniones políticas de los ciudadanos; sin embargo, esa información no necesariamente representa las preferencias de la población. Por ello, este estudio analiza el sentimiento dirigido y la polarización afectiva expresada en comentarios de YouTube durante las elecciones presidenciales del Perú en 2026 mediante un procedimiento reproducible que combina valoración hacia actores políticos y métricas individuales. El conjunto de datos ampliado contiene 1\,012\,515 comentarios; se examinaron los historiales de 300 usuarios, de los cuales 122 cumplieron los criterios de comparación entre bloques. La afinidad política observada se identifica en una partición de videos y se evalúa en otra, distinguiendo el bloque del objetivo de la procedencia editorial del canal. La brecha media normalizada entre balances normalizados interno y externo fue 1.4424, con IC95\% [1.2733, 1.6827]; el balance interno fue positivo (0.5829) y el externo negativo ($-0.8594$). Los seis análisis de sensibilidad conservaron una brecha positiva, mientras que la diferencia entre afinidades de izquierda y derecha fue inconclusa. En paralelo, se evalúan clasificadores de sentimiento dirigido sobre una muestra de evaluación de 3\,000 comentarios. La contribución consiste en separar la medición de expresiones afectivas por usuario del desempeño de su clasificación automática, permitiendo caracterizar favoritismo relativo y valoración externa negativa dentro del marco observado.
+Electoral campaigns provided opportunities to observe how support for a political option coexisted with rejection of its opponents, but general comment sentiment did not identify the recipient of an evaluation. This study examined expressed affective polarization on YouTube during the 2026 Peruvian presidential election through explicit evaluations of political actors. Observed political affinity was identified in one partition of videos, while evaluations across blocs were compared in another, separating the evaluated target from the channel's editorial orientation. Among 122 users with sufficient evidence toward both blocs, the mean normalized gap was 1.44 (95\% CI [1.27, 1.68]). This contrast combined favorable evaluations of aligned actors with unfavorable evaluations of opponents, indicating affective differentiation between political options alongside general criticism. The aggregate pattern persisted across changes in event support, video contributions, and the presence of frequently mentioned actors, although individual scores showed limited stability. Within the observed community, the findings characterized expressions of support and rejection toward rival actors without representing the electorate or explaining the election outcome. The study provided a reproducible way to distinguish these expressions in Peruvian electoral discussion, while a separate classifier evaluation established the scope for automating their measurement.
 \end{abstract}
+\selectlanguage{english}
 
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -463,7 +458,7 @@ Hoy en día las plataformas digitales ofrecen una gran cantidad de información 
 
 
 \begin{IEEEkeywords}
-Polarización afectiva, sentimiento dirigido, YouTube, Transformer, afinidad política observada, Perú.
+Affective polarization, targeted sentiment, YouTube, Transformer, observed political affinity, Peru.
 \end{IEEEkeywords}
 
 
@@ -479,378 +474,392 @@ Polarización afectiva, sentimiento dirigido, YouTube, Transformer, afinidad pol
 
 
 
-\section{Introducción}
+\section{Introduction}
 
-Las redes sociales se han consolidado como uno de los principales espacios
-para la discusión política y la expresión de opiniones ciudadanas. Plataformas
-como Facebook, Twitter/X y Youtube permiten que millones de usuarios compartan
-publicaciones, comentarios e interacciones relacionadas con acontecimientos
-políticos, generando grandes volúmenes de información que reflejan la
-percepción pública sobre candidatos, partidos y
-políticas gubernamentales \cite{statista2026}. Debido a su alcance e
-influencia, estas plataformas constituyen
-una fuente relevante para estudiar el comportamiento político y las tendencias
-de opinión mediante técnicas de
-procesamiento del lenguaje natural (Natural Language Processing, NLP) \cite{ref1}. Además, la interacción con
-contenido político en redes sociales se ha relacionado con cambios en las actitudes políticas de los usuarios.
-Afyare \cite{afyare2025socialmedia} encontró que un mayor nivel de involucramiento con contenido político se
-correlaciona con opiniones más polarizadas, destacando que estas plataformas pueden funcionar tanto como
-herramientas de movilización como canales de confrontacion discursiva. En este contexto, el análisis automático
-del contenido generado por los usuarios constituye una alternativa para estudiar la dinámica de la opinión
-pública durante procesos electorales.
+Social media had become prominent spaces for political discussion and the expression of citizens' opinions. Platforms such as Facebook, Twitter/X, and YouTube hosted posts, comments, and exchanges about candidates, parties, and public policy \cite{statista2026}. These records provided material for studying political communication with natural language processing (NLP) \cite{ref1}. Engagement with political content had also been associated with more polarized opinions: Afyare \cite{afyare2025socialmedia} described platforms as spaces for both mobilization and confrontation. Analyzing public comments could therefore reveal how political options were discussed, while the people who commented remained distinct from the population of voters.
 
-Una de las principales soluciones computacionales empleadas para este
-problema es el análisis automático de sentimientos, mediante el cual se
-identifica la polaridad expresada en un texto y se clasifica generalmente
-como positiva, negativa o neutra. En años recientes, los avances en aprendizaje
-profundo y modelos basados en la arquitectura Transformer han permitido mejorar
-drásticamente el desempeño en clasificación textual al capturar dependencias
-contextuales complejas \cite{Singh2026}. Estas técnicas han sido aplicadas
-específicamente al análisis de polarización política: Martínez-España et al.
-\cite{polariz} propusieron una formulación pionera para cuantificar la polarización
-afectiva individual a partir de publicaciones en redes sociales; Bor et al.
-\cite{bor2023} midieron la polarización partidaria en Twitter según tópicos de
-política pública; y en el ámbito peruano, diversos trabajos han abordado elecciones
-previas mediante representaciones clásicas y modelos profundos \cite{Ayma2024,
-Carrera2026}. Asimismo, Ponte Torrel \cite{Ponte2022} documentó sentimientos
-polarizados en Twitter durante las elecciones peruanas de 2021, mientras que Mejía
-Navarrete \cite{Mejia2024} describió la intensificación histórica de la
-polarización política en el país entre 2000 y 2023.
+Sentiment analysis usually classified the polarity of a text as positive, negative, or neutral. Advances in deep learning and Transformer models had improved contextual text classification \cite{Singh2026}. These methods had also informed computational research on affective polarization. Martínez-España et al. \cite{polariz} proposed an individual measure derived from social media posts; Bor et al. \cite{bor2023} examined sentiment across political groups and policy issues. In Peru, earlier elections and political discussions had been studied using both conventional representations and deep models \cite{Ayma2024,Carrera2026}. Ponte Torrel \cite{Ponte2022} examined affective expressions during the 2021 presidential runoff, while Mejía Navarrete \cite{Mejia2024} analyzed political polarization over 2000--2023.
 
-A pesar de estos avances, la literatura contemporánea evidencia una marcada brecha de investigación. Por un lado,
-la gran mayoría de los marcos metodológicos para la medición de la polarización afectiva individual se ha diseñado
-exclusivamente para plataformas de microblogging como Twitter/X, caracterizadas por mensajes breves y crecientes
-barreras de acceso a datos tras cambios recientes en sus políticas de API \cite{ANTONAKAKI2021114006}. Esta
-concentración motiva ampliar el estudio de plataformas audiovisuales masivas como YouTube, cuyo ecosistema de debate
-comunitario en América Latina es prolífico y estructurado por líneas editoriales. Por otro lado, los modelos de
-lenguaje masivos preentrenados sobre conjuntos generales de textos en español neutro o peninsular resultan insuficientes para
-capturar el lenguaje informal, la jerga política local (\textit{slang}), el sarcasmo y los modismos característicos
-de las redes sociales peruanas \cite{10.1145/3446132.3446424, robertuito}. A ello se suma la necesidad de distinguir la procedencia editorial del contenido de la identidad política del objetivo valorado: un comentario bajo una fuente neutral puede expresar apoyo o rechazo hacia actores de cualquier bloque.
+The 2026 election provided a relevant setting for studying these expressions. The first presidential round took place on April 12, followed by a June 7 runoff between Fuerza Popular and Juntos por el Perú, as documented by the national electoral authority \cite{JNE11352026}. The Defensoría del Pueblo recorded disputes over the electoral process and opposition to political candidacies during this period \cite{Defensoria2842026}. These records established the context in which the comments were produced; they did not show that the same disputes caused any pattern measured here. The study's January--June window covered multiple stages of the contest, rather than a single electoral event.
 
-Para abordar esta brecha, el presente trabajo propone un procedimiento reproducible que analiza el sentimiento político dirigido y la polarización afectiva individual a partir de un conjunto ampliado de 1\,012\,515 comentarios públicos de YouTube del periodo enero--junio de 2026. Se examinan 300 historiales de usuarios siguiendo un orden fijado; 122 reúnen evidencia evaluable hacia ambos bloques políticos. Se calculan AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$ y el indicador de dispersión (\textit{spread}), complementados por una brecha normalizada y sus intervalos de incertidumbre.
+Two methodological issues motivated the study. First, access restrictions on platforms such as Twitter/X encouraged research on other discussion environments \cite{ANTONAKAKI2021114006}, including YouTube's channel--video--comment structure. Second, general language models could struggle with informal Spanish, local political slang, sarcasm, and dialectal variation \cite{10.1145/3446132.3446424,robertuito}. Interpretation also required identifying the recipient of an evaluation: a negative comment under a neutral news source could reject an actor from either political bloc. The source's editorial orientation could not simply be assigned to the author or the actor being discussed.
 
-Si bien este enfoque toma como punto de partida la formulación de polarización afectiva individual propuesta por Martínez-España et al. \cite{polariz}, introduce diferencias conceptuales y metodológicas para su aplicación a YouTube. En primer lugar, se valoran menciones explícitas a actores políticos dentro de comentarios y respuestas; la orientación editorial del canal se conserva como procedencia, sin transferirla al autor ni al objetivo. En segundo lugar, se separan los videos utilizados para asignar afinidad y para evaluar la valoración interna y externa. En tercer lugar, se mantienen fuentes neutrales como parte del marco de observación, sin convertirlas en un tercer bloque objetivo ni en un control experimental. Finalmente, la medición por historiales se distingue de una comparación de clasificadores Transformer: la disponibilidad de un conjunto amplio de comentarios no equivale a contar con predicciones suficientemente fiables sobre todos sus comentarios.
+This work developed a reproducible observational study of targeted political sentiment and expressed affective polarization using 1\,012\,515 public YouTube comments from January--June 2026. The study examined 300 user histories in a fixed order; 122 contained sufficient evaluable evidence toward both political blocs. The analysis calculated AP, $\mathrm{AP}_{In}$, $\mathrm{AP}_{Out}$, and dispersion (\textit{spread}), and used a normalized gap with uncertainty intervals as the primary contrast.
 
-El resto del artículo se organiza de la siguiente manera. La Sección II presenta el estado del arte relacionado con el análisis de sentimientos y la polarización política computacional. La Sección III describe el método propuesto, detallando la adquisición y preprocesamiento de datos, el clasificador Transformer y la formulación matemática de las métricas. La Sección IV expone los resultados empíricos y su discusión metodológica. Finalmente, la Sección V presenta las limitaciones y la Sección VI las conclusiones y el trabajo futuro.
+The method adapted the formulation of Martínez-España et al. \cite{polariz} to YouTube. It evaluated explicit mentions of political actors, retained editorial orientation as source information, and separated the videos used to identify observed political affinity from those used to measure evaluations. Neutral sources remained in the observation frame without becoming a third target bloc or an experimental control. User-level measurement was examined separately from Transformer classification: the availability of a large comment collection did not establish that every comment could be classified reliably. The resulting contribution concerned the direction, robustness, and limits of political evaluations expressed by the observed users.
 
-\section{Estado del Arte}
-El análisis de sentimientos aplicado al ámbito político ha adquirido una creciente relevancia debido al incremento del contenido generado por usuarios en redes sociales y a la disponibilidad de técnicas avanzadas de procesamiento del lenguaje natural. Las investigaciones recientes han abordado este problema desde diferentes perspectivas, incluyendo el estudio de la polarización política, la clasificación automática de opiniones y el desarrollo de modelos especializados para lenguaje informal.
+Section II reviewed related work. Section III described data acquisition, preprocessing, targeted classification, and the measurement definitions. Section IV presented results and their interpretation. Sections V and VI discussed limitations and conclusions, respectively.
 
-Una de las principales líneas de investigación corresponde al análisis de la polarización política mediante técnicas de análisis de sentimientos. Martínez-España et al. \cite{polariz} propusieron una metodología para medir la polarización afectiva individual utilizando modelos basados en Transformers sobre datos obtenidos de redes sociales. Su trabajo proporciona un antecedente computacional para estudiar expresiones afectivas; estas mediciones textuales y las encuestas no constituyen instrumentos equivalentes. De forma similar, Bor et al. \cite{bor2023} emplearon análisis de sentimientos para cuantificar la polarización política en Twitter considerando distintos grupos políticos y diversas políticas públicas en Estados Unidos, evidenciando diferencias significativas en los niveles de polarización según el tema analizado.
+\section{Related Work}
+Political sentiment analysis had gained attention as user-generated social media content increased and advanced NLP techniques became available. Recent research had approached this problem through the study of political polarization, automated opinion classification, and models specialized in informal language.
 
-Otra línea de investigación se ha enfocado en la clasificación automática de sentimientos políticos utilizando técnicas de aprendizaje automático y aprendizaje profundo. En el contexto peruano, Ayma et al. \cite{Ayma2024} analizaron mensajes publicados en Twitter/X durante las elecciones presidenciales de 2021 empleando representaciones textuales como TF-IDF y Word2Vec en combinación con algoritmos tradicionales de clasificación, obteniendo valores de F1-score superiores a 0.93. Posteriormente, Carrera et al. \cite{Carrera2026} compararon representaciones textuales tradicionales y modelos basados en Transformers para clasificar comentarios relacionados con proyectos de ley peruanos. Sus resultados mostraron que los modelos Transformer superaron consistentemente a los enfoques clásicos, alcanzando precisiones superiores al 88\%.
+One research strand examined political polarization through sentiment analysis. Martínez-España et al. \cite{polariz} proposed a methodology for measuring individual affective polarization using Transformer models applied to social media data. Their work provided a computational precedent for studying affective expressions; text-based measurements and surveys did not constitute equivalent instruments. Similarly, Bor et al. \cite{bor2023} used sentiment analysis to quantify political polarization on Twitter across political groups and public policy issues in the United States, finding significant differences in polarization levels by topic.
 
-Pandey et al. \cite{pandey2025twitter} analizaron el sentimiento de los votantes durante las elecciones legislativas de Bihar de 2025 utilizando más de 1\,100 publicaciones obtenidas mediante la API de Twitter. Los autores compararon tres métodos de clasificación de sentimientos: Random Forest, Support Vector Machine (SVM) y el modelo basado en transformadores BERT. Inicialmente, las publicaciones fueron etiquetadas utilizando VADER y posteriormente se evaluaron las tendencias de cada partido político mediante el \textit{Net Sentiment Score} (NSS). Los resultados mostraron que BERT obtuvo una exactitud del 80\%, superando a los modelos tradicionales y evidenciando la capacidad de los modelos basados en transformadores para realizar análisis de sentimientos en escenarios electorales con conjuntos de datos de tamaño reducido.
+Another strand focused on automated political sentiment classification using machine learning and deep learning. In Peru, Ayma et al. \cite{Ayma2024} analyzed Twitter/X posts from the 2021 presidential election using TF-IDF and Word2Vec representations with conventional classifiers, obtaining F1 scores above 0.93. Carrera et al. \cite{Carrera2026} subsequently compared conventional text representations and Transformer models for classifying comments about Peruvian legislative proposals. Their results showed that Transformers consistently outperformed conventional approaches, with reported accuracy above 88\%.
+
+Pandey et al. \cite{pandey2025twitter} analyzed voter sentiment during the 2025 Bihar legislative election using more than 1\,100 posts collected through the Twitter API. The authors compared Random Forest, Support Vector Machine (SVM), and BERT sentiment classifiers. Posts were initially labeled using VADER, and party-level trends were then evaluated with the \textit{Net Sentiment Score} (NSS). BERT achieved 80\% accuracy and outperformed the conventional models, illustrating the use of Transformers for electoral sentiment analysis with a small dataset.
 
 % Chire Saire y Vilca Zuñiga \cite{chire2021analysis} analizaron la reacción de los usuarios de Twitter ante el proceso de vacancia presidencial ocurrido en Perú durante la pandemia por COVID-19. El estudio tuvo como objetivo identificar los principales temas de discusión y evaluar el impacto que la crisis política generó en la población peruana a partir de las publicaciones realizadas en esta red social. Los autores recopilaron mensajes relacionados con el proceso de destitución presidencial y realizaron un análisis de las opiniones expresadas por los usuarios para identificar tendencias en el debate político. Los resultados evidenciaron que Twitter constituyó una fuente relevante para analizar la percepción ciudadana y la reacción de la población frente a los acontecimientos políticos ocurridos durante dicho periodo.
 
-Rizk et al. \cite{rizk2023predicting} propusieron un modelo para predecir los resultados de las elecciones presidenciales de Estados Unidos de 2020 utilizando publicaciones geolocalizadas de Twitter. La metodología combinó análisis de sentimientos, un clasificador Multinomial Naive Bayes y técnicas de aprendizaje automático para estimar tanto el voto popular como los votos del colegio electoral en los 50 estados. Además, los autores eliminaron publicaciones generadas por bots y valores atípicos, analizaron la evolución temporal y espacial de la opinión pública, y emplearon análisis de redes y detección de comunidades para identificar patrones de interacción entre los usuarios. Los resultados mostraron que el modelo predijo correctamente la victoria de Joe Biden, alcanzando una concordancia del 89.9\% con los resultados oficiales de las elecciones.
+Rizk et al. \cite{rizk2023predicting} proposed a model for predicting the 2020 United States presidential election using geolocated Twitter posts. Their methodology combined sentiment analysis, a Multinomial Naive Bayes classifier, and machine learning to estimate the popular vote and electoral votes across all 50 states. The authors also removed bot-generated posts and outliers, examined temporal and spatial changes in public opinion, and used network analysis and community detection to identify user interaction patterns. Their model correctly predicted Joe Biden's victory and achieved 89.9\% agreement with the official election results.
 
-Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} realizaron un estudio sobre el análisis de sentimientos en publicaciones de Twitter relacionadas con las elecciones presidenciales españolas de 2019. Los autores recopilaron miles de publicaciones realizadas antes y después del proceso electoral y propusieron una metodología basada en dos etapas: una caracterización estadística utilizando métricas como entropía, información mutua y el \textit{Compounded Aggregated Positivity Index} (CAPI), seguida de la extracción de características mediante técnicas de aprendizaje no lineal, incluyendo autoencoders y métodos de incrustación estocástica. Los resultados mostraron que tanto las métricas estadísticas como las representaciones obtenidas permitieron caracterizar la evolución temporal del sentimiento y evidenciar diferencias en la polaridad entre los distintos partidos políticos y sus líderes durante el periodo electoral.
+Rodríguez-Ibáñez et al. \cite{rodriguez2021sentiment} studied sentiment in Twitter posts related to the 2019 Spanish election. They collected thousands of posts before and after the election and proposed a two-stage methodology: statistical characterization using entropy, mutual information, and the \textit{Compounded Aggregated Positivity Index} (CAPI), followed by feature extraction through nonlinear learning, including autoencoders and stochastic embedding methods. Both the statistical metrics and learned representations characterized temporal changes in sentiment and differences in polarity across political parties and leaders during the electoral period.
 
-Chaudhry et al. \cite{chaudhry2022sentiment} realizaron un análisis de sentimientos sobre publicaciones de Twitter relacionadas con las elecciones presidenciales de Estados Unidos de 2020, considerando el periodo previo, durante y posterior a los comicios. Para ello, construyeron un conjunto de datos utilizando la API de Twitter, aplicaron técnicas de preprocesamiento y extracción de características mediante TF-IDF, y emplearon un clasificador Naive Bayes para determinar la polaridad de los mensajes. Los autores compararon los resultados obtenidos con los resultados oficiales de las elecciones y analizaron el comportamiento de los estados disputados y de aquellos considerados atípicos. Los experimentos mostraron que el sentimiento expresado en Twitter coincidió con los resultados electorales en la mayoría de los casos, además de evidenciar cambios en la opinión pública antes y después de las elecciones. El clasificador alcanzó una exactitud del 94.58\% y una precisión del 93.19\%.
+Chaudhry et al. \cite{chaudhry2022sentiment} analyzed Twitter sentiment before, during, and after the 2020 United States presidential election. They collected posts through the Twitter API, applied preprocessing and TF-IDF feature extraction, and used a Naive Bayes classifier to determine polarity. The authors compared their findings with official election results and examined swing states and states considered atypical. Expressed sentiment agreed with electoral outcomes in most cases and varied across the periods studied. The classifier achieved 94.58\% accuracy and 93.19\% precision.
 
-Más recientemente, diversos estudios han abordado la polarización y el análisis de sentimientos específicamente en
-YouTube. Miehling et al. \cite{Miehling2025} analizaron más de tres millones de comentarios de canales de noticias
-durante el conflicto Israel--Hamas utilizando análisis de sentimiento basado en aspectos, mostrando empíricamente
-que el sentimiento general de un comentario no necesariamente refleja la postura del autor hacia una entidad política
-específica. Este hallazgo motiva la separación entre sentimiento general y valoración comentario--objetivo adoptada en el presente trabajo.
+More recent studies examined polarization and sentiment specifically on YouTube. Miehling et al. \cite{Miehling2025} analyzed more than three million comments from news channels during the Israel--Hamas conflict using aspect-based sentiment analysis. Their findings showed that a comment's general sentiment did not necessarily reflect the author's stance toward a specific political entity. This distinction motivated the separation between general sentiment and comment--target evaluations adopted in this study.
 
-En conjunto, estos trabajos evidencian la efectividad de los modelos basados en Transformers para el análisis del
-discurso y el sentimiento político, pero revelan al mismo tiempo la marcada necesidad de extender estas
-metodologías hacia plataformas audiovisuales masivas como YouTube, distinguir la procedencia editorial de los objetivos políticos y adaptar
-las representaciones a la jerga y particularidades dialectales regionales.
+Together, these studies demonstrated the usefulness of Transformer models for analyzing political discourse and sentiment. They also motivated extending these methods to audiovisual platforms such as YouTube, distinguishing editorial provenance from political targets, and adapting representations to regional slang and dialectal variation.
 
-\section{Método Propuesto}
+
+\section{Proposed Method}
 
 \begin{figure*}[t]
 \centering
 \resizebox{0.95\textwidth}{!}{\input{docs/figures/pipeline_actual.tikz}}
-\caption{Flujo de trabajo del estudio. La extracción y preparación construyen el conjunto de comentarios; la rama izquierda mide expresiones afectivas en historiales y la derecha evalúa clasificadores con desarrollo separado. El entrenamiento no constituye un requisito de la medición anotada.}
+\caption{Study workflow. The left branch measured affective expressions in user histories and examined event support, sensitivity, and individual stability. The right branch evaluated classifiers using separate development data. User-history measurement did not depend on classifier training or predictions.}
 \label{fig:metodo}
 \end{figure*}
 
-La Figura~\ref{fig:metodo} ilustra las etapas del flujo de trabajo implementado: adquisición programática mediante YouTube Data API v3, preprocesamiento y unificación con procedencia editorial, construcción de muestras de historiales y evaluación, y cómputo de métricas. La medición por usuario y la comparación de clasificadores son ramas complementarias, con entradas y denominadores distintos.
+Figure~\ref{fig:metodo} summarized acquisition through YouTube Data API v3, preprocessing with editorial provenance, separate user-history and evaluation samples, and metric computation. User-level measurement and classifier evaluation had different inputs and denominators. Affective polarization was operationalized as differential evaluation of political actors across blocs; reply counts and survey-based ideological distance were separate constructs.
 
-\subsection{Obtención de datos}
-Frente a las restricciones de acceso a datos de otras plataformas \cite{ANTONAKAKI2021114006}, se seleccionó YouTube como fuente primaria de información. Su API oficial proporciona una estructura modular basada en canales y videos, lo que permite asociar de forma trazable el origen editorial del contenido con los comentarios publicados por las audiencias.
+\subsection{Data acquisition}
+YouTube was selected as the primary data source given access restrictions on other platforms \cite{ANTONAKAKI2021114006}. Its official API organized observations into channels and videos, allowing comments to retain traceable editorial provenance.
 
-La asignación editorial se fundamentó en fuentes externas documentadas, como reportes de propiedad mediática, afiliación partidaria y documentación sobre línea editorial. La unión observada contiene 40 canales: diez de derecha, ocho de izquierda y 22 fuentes neutrales. Esta composición incluye el histórico y la captura ampliada; no implica una distribución equilibrada de las fuentes. La etiqueta \textit{party} identifica exclusivamente la procedencia editorial y no la adscripción del autor ni el bloque del objetivo mencionado. Las fuentes neutrales no constituyen un control experimental.
+Editorial groups were documented using external sources on media ownership, party affiliation, and editorial orientation. The observed union contained 40 channels: ten right-wing, eight left-wing, and 22 neutral sources. This included historical records and the expanded capture and did not imply balanced source representation. The \textit{party} field identified source provenance only, not the author's affiliation or the target's bloc. Neutral sources were not an experimental control.
 
-Se exigió que las fechas del video y del comentario pertenecieran a enero--junio de 2026. La captura ampliada completó 11\,280 videos, paginando comentarios y recuperando respuestas faltantes mediante el identificador del padre \cite{YoutubeThreads}. Tras integrar las observaciones históricas elegibles y deduplicar por identificador, el conjunto fijado para el estudio reúne 1\,012\,515 comentarios de 11\,361 videos. Los videos recapturados y los presentes en la unión son conjuntos con funciones distintas. El vínculo de respuesta identifica el hilo de la API y no necesariamente el destinatario discursivo.
+To delimit the 2026 Peruvian presidential election period, both video and comment dates were required to fall within January--June 2026. The expanded capture completed 11\,280 videos by paginating comments and retrieving missing replies through parent identifiers \cite{YoutubeThreads}. After integrating eligible historical observations and deduplicating identifiers, the frozen study collection contained 1\,012\,515 comments from 11\,361 videos. Recaptured videos and videos present in the union served different roles. A reply link identified the API thread and did not necessarily identify the person or actor addressed in the text.
 
-\subsection{Preprocesado}
-El preprocesamiento estandariza los registros y consolida los atributos temporales, lingüísticos y de participación: texto original, identificadores de autor, comentario, video y canal, fecha de comentario y video, título, reacciones, respuestas y procedencia editorial. Se conservan emojis, mayúsculas y formas coloquiales relevantes para interpretar la valoración. Las transformaciones específicas de tokenización se aplican en la rama de clasificación.
+\subsection{Preprocessing}
+Preprocessing standardized records and consolidated temporal, linguistic, and participation attributes: original text; author, comment, video, and channel identifiers; comment and video dates; title; reactions; replies; and editorial provenance. Emojis, capitalization, and colloquial forms relevant to interpretation were preserved. Model-specific tokenization was applied in the classification branch.
 
-Se integra el histórico elegible con las capturas completas, conservando la primera observación de cada comentario y registrando versiones posteriores y conflictos. Las filas de videos incompletos no entran al cierre del conjunto de comentarios. El Algoritmo~\ref{alg:preprocess} resume la integración; el registro de objetivos y los archivos se fijan para el estudio y se guardan sus huellas digitales (hashes) para verificar su integridad.
+Eligible historical records were combined with completed captures, retaining each comment\textquotesingle s first observation and recording later versions and conflicts. Records from incomplete videos were excluded from the frozen collection. Algorithm~\ref{alg:preprocess} summarized integration. The target registry and input files were frozen and hashed to verify their integrity.
 
 \begin{algorithm}[t]
-\caption{Preprocesamiento, estandarización y unificación del conjunto de comentarios}
+\caption{Comment preprocessing and integration}
 \label{alg:preprocess}
 \begin{algorithmic}[1]
-\Require Histórico y capturas completas, periodo y grupos de fuente.
-\Ensure Comentarios sin duplicados, procedencia y orden de usuarios verificables.
-\ForAll{observación de comentario}
-\State Verificar identidades y fechas de video y comentario.
-\State Conservar texto, autor, hilo y procedencia editorial.
-\State Excluir fechas fuera del periodo; registrar la exclusión.
-\State Deduplicar por comentario; conservar versiones y conflictos.
+\Require Historical records, complete captures, period, and source groups.
+\Ensure Deduplicated comments, provenance, and verifiable user order.
+\ForAll{comment observation}
+\State Identifiers and video and comment dates were checked.
+\State Text, author, thread, and editorial provenance were retained.
+\State Out-of-period dates were excluded; exclusions were recorded.
+\State Comments were deduplicated; versions and conflicts were preserved.
 \EndFor
-\State Construir unión y comprobar integridad de historiales.
-\State Fijar los comentarios y el registro de objetivos; guardar sus huellas digitales.
-\State Construir marco elegible y muestras separadas.
+\State The union was built and history integrity was checked.
+\State Comments and the target registry were frozen; hashes were recorded.
+\State The eligible frame and separate samples were constructed.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Objetivos políticos y construcción de muestras}
-La unidad de valoración es el par comentario--objetivo con mención explícita. El registro de actores fijado para el estudio contiene 124 identidades: 22 con bloque documentado de izquierda o derecha y 102 con bloque desconocido. Se distinguen cinco etiquetas: favorable, desfavorable, neutral, mixta y no evaluable. Una mención neutral no es ausencia de objetivo; una mezcla o una referencia desconocida no se convierte en neutral. Las referencias resueltas únicamente por título o comentario padre no entran al principal de evidencia explícita. Los objetivos omitidos durante la extracción pueden incorporarse a la anotación conservando su bloque desconocido cuando no hay clasificación documental.
+\subsection{Political targets and sampling}
+The evaluation unit was an explicitly mentioned comment--target pair. The frozen actor registry contained 124 identities: 22 with a documented left/right bloc and 102 with unknown bloc. Five labels were distinguished: favorable, unfavorable, neutral, mixed, and not evaluable. A neutral mention was not target absence; mixed evaluations and unknown actors were not relabeled as neutral. References resolved only from the title or parent comment were outside the primary explicit-evidence analysis. Targets omitted by extraction could be added during annotation; their bloc remained unknown when documentary evidence was insufficient.
 
-Las valoraciones hacia objetivos de un mismo comentario se agrupan por bloque. Si hay valoraciones favorables y desfavorables simultáneas hacia ese bloque, el evento es mixto. Solo eventos favorables, desfavorables y neutrales con bloque conocido aportan a los balances; un comentario puede aportar un evento a cada bloque.
+Evaluations of targets within the same comment were aggregated by bloc. Simultaneous favorable and unfavorable evaluations of one bloc produced a mixed event. Only favorable, unfavorable, and neutral events with a known target bloc contributed to balances; a comment could contribute one event to each bloc.
 
-La selección inicial reúne 4\,443 usuarios potencialmente comparables, ordenados por SHA-256 de una clave fija con semilla 57. Se examinan los primeros 300 usuarios del orden fijado, en lotes de 100, conservando todos sus comentarios disponibles en los datos del estudio. El cierre usa el número examinado, no el signo de la brecha normalizada ni la significación. Las condiciones afectivas se comprueban después; elegibilidad estructural no equivale a comparabilidad confirmada.
+The initial frame contained 4\,443 potentially comparable users, ordered by SHA-256 of a fixed key with seed 57. The first 300 users were examined in batches of 100, retaining all their available comments in the study collection. Stopping depended on the number examined, not the gap\textquotesingle s sign or statistical significance. Affective eligibility was checked subsequently; structural eligibility alone did not establish comparability.
 
-La muestra de evaluación, separada de los datos de desarrollo, contiene 3\,000 comentarios: 1\,000 con candidatos de izquierda, 1\,000 de derecha, 500 solo con candidatos desconocidos y 500 sin candidatos. Las menciones a ambos bloques se asignan por hash a una cuota; dentro de cada cuota se estratifica por fuente, mes y tipo de comentario. Se conservan probabilidades de inclusión y se excluyen videos y textos utilizados en desarrollo anterior. Esta muestra evalúa clasificadores; no reemplaza los historiales utilizados para medir polarización.
+The evaluation sample was separate from development data and contained 3\,000 comments: 1\,000 with left-bloc extraction candidates, 1\,000 with right-bloc candidates, 500 with unknown-bloc candidates only, and 500 without candidates. Comments mentioning both blocs were assigned to a quota by hash. Within quotas, sampling was stratified by source, month, and comment type. Inclusion probabilities were retained, and videos and texts used in earlier development were excluded. This sample evaluated classifiers; it did not replace the histories used to measure polarization.
 
-\subsection{Clasificación de sentimiento dirigido con Transformers}
-Se seleccionan cinco bases complementarias: RoBERTuito, BETO, XLM-RoBERTa-base, MrBERT-es y mDeBERTa-v3-base. RoBERTuito se preentrenó con 500 millones de tuits y aporta una referencia adaptada al lenguaje generado por usuarios en español \cite{robertuito}. BETO proporciona una referencia monolingüe generalista, preentrenada con enmascaramiento de palabras completas, que permite contrastar el lenguaje social con una base de español de propósito general \cite{BETOResource}. XLM-RoBERTa-base incorpora una referencia multilingüe preentrenada con textos de 100 idiomas; su inclusión responde a ese alcance lingüístico, sin presuponer un rendimiento inferior \cite{XLMR2020}.
+\subsection{Targeted sentiment classification with Transformers}
+Five complementary pretrained models were considered: RoBERTuito, BETO, XLM-RoBERTa-base, MrBERT-es, and mDeBERTa-v3-base. RoBERTuito was pretrained on 500 million tweets and provided a reference adapted to user-generated Spanish \cite{robertuito}. BETO supplied a general Spanish reference pretrained with whole-word masking, allowing comparison with a social-language model \cite{BETOResource}. XLM-RoBERTa-base provided a multilingual reference pretrained on texts in 100 languages; its inclusion reflected that linguistic scope without presuming inferior performance \cite{XLMR2020}.
 
-MrBERT-es incorpora una base español/inglés de 150 millones de parámetros sobre ModernBERT, con adaptación de vocabulario y preentrenamiento bilingüe \cite{MrBERT2026,MrBERTesResource}. mDeBERTa-v3-base aporta una arquitectura multilingüe con detección de unidades de texto (tokens) reemplazadas y uso compartido de representaciones vectoriales con gradientes desacoplados \cite{DeBERTaV32023,mDeBERTaResource}. Su elección también se apoya en un antecedente de uso de mDeBERTa para sentimiento dirigido en titulares financieros en español \cite{SINAI2023FinancES}; ese dominio y sus resultados no se transfieren a comentarios políticos peruanos. Las dos bases se incorporan como candidatos adicionales, mientras que las otras tres conservan sus ajustes y predicciones existentes.
+MrBERT-es was a 150-million-parameter Spanish/English model based on ModernBERT, with vocabulary adaptation and bilingual pretraining \cite{MrBERT2026,MrBERTesResource}. mDeBERTa-v3-base provided a multilingual architecture using replaced-token detection and gradient-disentangled embedding sharing \cite{DeBERTaV32023,mDeBERTaResource}. Previous use of mDeBERTa for targeted sentiment in Spanish financial headlines also motivated its inclusion \cite{SINAI2023FinancES}; that domain and its results did not transfer to Peruvian political comments. These two models were additional candidates; the other three retained their existing fits and predictions.
 
-Cada modelo recibe el nombre del objetivo y el comentario, y estima probabilidades de las cinco clases. La adaptación es específica para valoración dirigida: no se reutiliza como medición dirigida la predicción triclase del antiguo modelo de sentimiento general.
+Each model received a target name and comment and estimated probabilities for five classes, as represented in Eq.~\eqref{eq:robertuito}. Adaptation was specific to targeted evaluation; the historical three-class general-sentiment predictions were not reused as targeted measurements.
 \begin{equation}
-\boldsymbol{p}_{c,t}=f_{\theta}(\text{objetivo }t,\text{comentario }c).
+\boldsymbol{p}_{c,t}=f_{\theta}(\text{target }t,\text{comment }c).
 \label{eq:robertuito}
 \end{equation}
-El desarrollo etiquetado contiene 1\,291/278 pares de entrenamiento/validación antes del filtro de contexto. El conjunto común fijado en la comparación inicial contiene 1\,148/264 pares completos; las dos incorporaciones utilizan exactamente esos pares, etiquetas y pesos. RoBERTuito admite efectivamente 128 de estas unidades de texto y las otras bases se limitan a 512 en este experimento. La capacidad máxima publicada de MrBERT-es es mayor, pero no se utiliza para ampliar la ventana de esta comparación. Las etiquetas del nuevo grupo de usuarios y de la muestra de evaluación no entran al entrenamiento; las 500 observaciones de prueba histórica se mantienen apartadas.
+Labeled development data contained 1\,291/278 training/validation pairs before context filtering. The common set fixed in the initial comparison contained 1\,148/264 complete pairs; both additional models used exactly those pairs, labels, and weights. RoBERTuito effectively accepted 128 tokens (model input units), while the other models were limited to 512 in this experiment. MrBERT-es supported a larger published window, which was not used to expand this comparison. Labels from the new user histories and evaluation sample were excluded from training; the 500 historical test observations remained reserved.
 
-La comparación inicial completó doce ajustes en GPU en Kaggle, con tres semillas (42, 43, 44) por base. Se conservan los ajustes de las tres referencias y se ejecuta una ampliación de seis ajustes para MrBERT-es y mDeBERTa-v3-base, sin repetir entrenamientos anteriores. La receta común usa AdamW, tasa $2\times10^{-5}$, decaimiento .01, lote efectivo 16, máximo ocho épocas y detención cuando la validación no mejora durante dos épocas. Se promedian probabilidades por semilla; temperatura y umbrales por clase se ajustan solo en validación. Se exige precisión aceptada .85 y al menos diez predicciones para habilitar un umbral; en otro caso se deshabilita la clase. Las entradas sin contexto completo se abstienen. La confianza se emplea para aceptar predicciones y no como intensidad afectiva del usuario.
+The initial comparison completed twelve GPU fits on Kaggle, using three seeds (42, 43, 44) per model. Fits of the three reference models were preserved, and a six-fit extension for MrBERT-es and mDeBERTa-v3-base was completed. The common recipe used AdamW, learning rate $2\times10^{-5}$, weight decay .01, effective batch size 16, at most eight epochs, and early stopping after two epochs without validation improvement. Probabilities were averaged across seeds, and temperature scaling was fitted only on validation data \cite{Guo2017Calibration}. The acceptance policy used abstention to trade coverage for lower error among retained predictions, following the general selective-classification framework \cite{Geifman2017Selective}. Class-specific confidence thresholds were selected to achieve weighted validation precision of at least 0.85 on at least ten accepted comment--target pairs. These study-defined heuristic criteria prioritized precision and avoided enabling classes on the basis of very few predictions. Their numerical values were pragmatic choices rather than literature-prescribed or statistically derived cutoffs. Classes without an eligible threshold were disabled. Inputs without complete context triggered abstention. Confidence controlled prediction acceptance, not the intensity of a user\textquotesingle s affect.
 
-La evaluación distingue extracción integral, con omisiones, y clasificación condicional a candidatos de contexto completo común. El macro-F1 promedia las clases favorable, desfavorable y neutral antes de abstención. La cobertura integral es la proporción ponderada de objetivos evaluables anotados que reciben una predicción aceptada evaluable. La cobertura condicional restringe el denominador al subconjunto común de evaluación. Se usan los pesos inversos de inclusión de comentarios; la muestra de evaluación no se interpreta como una muestra simple de todo el conjunto de comentarios.
+Evaluation distinguished the full extraction-and-classification task, including omitted targets, from classification conditional on common complete-context candidates. Macro-F1 averaged favorable, unfavorable, and neutral classes before abstention. End-to-end coverage was the weighted proportion of annotated evaluable targets receiving an accepted evaluable prediction. Conditional coverage restricted its denominator to the common evaluation subset. Inverse comment-inclusion weights were used; the evaluation sample was not treated as a simple random sample of the full comment collection.
 
-\subsection{Modelado de métricas de favorabilidad y polarización afectiva}
-Con el objetivo de caracterizar la valoración hacia actores y la polarización individual, se distingue el balance dirigido de las diferencias entre bloques. La fuente editorial no determina el destino de la valoración.
+\subsection{Targeted balances and affective polarization}
+Targeted balances and differences between blocs were distinguished to characterize evaluations of actors and individual polarization. Editorial provenance did not determine the recipient of an evaluation.
 
-\subsubsection{Afinidad y balances dirigidos}
-La afinidad política observada se asigna a partir del apoyo expresado por el usuario en sus comentarios. Los videos se separan por hash en A y B con semilla 42. En A, el bloque de afinidad $g_i$ es el de mayoría positiva única, con al menos dos positivos en al menos dos videos y cuota dominante $\geq2/3$ de los positivos a ambos bloques. Empates o evidencia insuficiente producen afinidad indeterminada; no implican una preferencia electoral específica.
+\subsubsection{Affinity and targeted balances}
+Observed political affinity was assigned from support expressed in comments. Videos were split by hash into A and B with seed 42. In A, affinity bloc $g_i$ was required to have a unique positive majority, at least two positive events in at least two videos, and a dominant share $\geq2/3$ of positive events toward both blocs. Ties or insufficient evidence produced undetermined affinity, without establishing a specific electoral preference. Equation~\eqref{eq:ingroup} specified the assignment rule adopted for this study, subject to those support requirements.
 \begin{equation}
 g_i=\operatorname*{argmax}_{g\in\{L,R\}}\Pos^A_{ig}
-\quad\text{si satisface los mínimos de afinidad.}
+\quad\text{if affinity criteria hold.}
 \label{eq:ingroup}
 \end{equation}
-La lectura comienza por A, por videos de menor tamaño y desempate por identificador. Solo se omite el resto de un historial cuando una cota demuestra que ningún bloque alcanzaría los mínimos, aun suponiendo cada comentario pendiente como posible apoyo. Las omisiones se conservan como tales, sin anotarlas como ausencia de objetivos. Para quienes califican, A y B requieren lectura completa.
+Reading started with A, ordering videos by size and breaking ties by identifier. Remaining comments were skipped only when a bound proved that neither bloc could meet the minimum requirements, even if every unread comment was treated as possible support. Skipped observations remained missing rather than being annotated as target absence. Qualifying users required complete reading of A and B.
 
-La evaluación utiliza B. Se exige evidencia evaluable hacia ambos bloques, al menos tres eventos en total y dos videos. Para cada usuario comparable y bloque $g$, se define
+Evaluation used B and required evaluable evidence toward both blocs, at least three events in total, and two videos. Equation~\eqref{eq:favorabilidad_neta} defined the number of evaluable events and the net balance for each comparable user and bloc $g$:
 \begin{equation}
 N^B_{ig}=\Pos^B_{ig}+\Neg^B_{ig}+\Neu^B_{ig},\qquad b^B_{ig}=\Pos^B_{ig}-\Neg^B_{ig}.
 \label{eq:favorabilidad_neta}
 \end{equation}
-El balance normalizado $b^B_{ig}/N^B_{ig}$ está en $[-1,1]$ e incluye los neutrales evaluables en su denominador.
+The normalized balance $b^B_{ig}/N^B_{ig}$ lay in $[-1,1]$ and included evaluable neutral events in its denominator.
 
-\subsubsection{Indicador de polarización afectiva individual y dispersión}
+\subsubsection{Individual affective polarization and dispersion}
 \label{subsubsec:ap_individual}
-El indicador individual adapta la formulación de Martínez-España et al. \cite{polariz}, distinguiendo afinidad política observada y valoración en videos separados. Si $\bar g_i$ es el bloque opuesto,
+The individual indicator was adapted from the approach of Martínez-España et al. \cite{polariz}, separating observed affinity and evaluation across videos. Equations~\eqref{eq:ap_in}, \eqref{eq:ap_out}, and \eqref{eq:ap_final} defined the ingroup balance, outgroup balance, and their difference, respectively, with $\bar g_i$ denoting the opposing bloc:
 \begin{align}
 \mathrm{AP}_{In,i}&=b^B_{i,g_i},\label{eq:ap_in}\\
 \mathrm{AP}_{Out,i}&=b^B_{i,\bar g_i},\label{eq:ap_out}\\
 \mathrm{AP}_i&=\mathrm{AP}_{In,i}-\mathrm{AP}_{Out,i}.\label{eq:ap_final}
 \end{align}
-El grupo externo es el bloque político opuesto; no incluye las fuentes neutrales como destino adicional. AP conserva balances de conteos y depende de actividad.
+The outgroup was the opposing political bloc; neutral sources were not an additional target group. AP retained count-based balances and depended on activity. Dispersion was calculated using Eq.~\eqref{eq:spread}.
 \begin{equation}
 \mathrm{spread}_i=\sqrt{\frac{(b^B_{iL})^2+(b^B_{iR})^2}{N^B_{iL}+N^B_{iR}}}.
 \label{eq:spread}
 \end{equation}
-El denominador cuenta eventos comentario--bloque evaluables, incluidos neutrales. Esta adaptación de dispersión \cite{wagner2021affective,polariz} no elimina toda dependencia del volumen ni constituye una escala psicológica equivalente a una encuesta. No se asignan niveles universales bajo, medio o alto.
+The denominator counted evaluable comment--bloc events, including neutral events. This adaptation of dispersion \cite{wagner2021affective,polariz} did not remove all dependence on volume and was not a psychological scale equivalent to a survey. No universal low, medium, or high levels were assigned.
 
-La brecha normalizada, denotada por $\mathrm{gap}_i$, es el contraste principal y se calcula como la diferencia entre los balances normalizados:
+The normalized gap, denoted by $\mathrm{gap}_i$, was the primary contrast and was calculated using Eq.~\eqref{eq:gap} as the difference between normalized balances:
 \begin{equation}
 \mathrm{gap}_i=\frac{\mathrm{AP}_{In,i}}{N^B_{i,g_i}}-\frac{\mathrm{AP}_{Out,i}}{N^B_{i,\bar g_i}}\in[-2,2].
 \label{eq:gap}
 \end{equation}
-Su promedio atribuye igual contribución a cada usuario comparable. Una brecha normalizada positiva indica favoritismo relativo, pero no exige un balance externo negativo; este se examina por separado.
+The mean gave equal weight to every comparable user. A positive normalized gap indicated relative favoritism but did not require a negative outgroup balance; that component was examined separately. Algorithm~\ref{alg:polarization} summarized the sequence used to assign affinity, verify comparability, and calculate the indicators.
 
 \begin{algorithm}[t]
-\caption{Cómputo de polarización afectiva individual y dispersión}
+\caption{Individual polarization and dispersion measurement}
 \label{alg:polarization}
 \begin{algorithmic}[1]
-\Require Comentarios fijados para el estudio, objetivos anotados y orden fijado.
-\Ensure Usuarios comparables, métricas y motivos de exclusión.
-\ForAll{usuario entre los primeros 300 del orden fijado}
-\State Conservar su historial y agrupar las valoraciones por bloque.
-\State Asignar videos a A/B y comprobar afinidad en A.
-\State Certificar exclusiones según la cota de pendientes.
-\State Para afinidad válida, completar A/B y comprobar cobertura B.
-\If{afinidad válida, ambos bloques, tres eventos y dos videos en B}
-\State Calcular AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersión y brecha normalizada.
+\Require Frozen comments, annotated targets, and fixed user order.
+\Ensure Comparable users, metrics, and exclusion reasons.
+\ForAll{user among the first 300 in the fixed order}
+\State History was retained and evaluations were grouped by political bloc.
+\State Videos were assigned to A/B and affinity in A was checked.
+\State Early exclusions were justified using the unread-comment bound.
+\State For valid affinity, A/B reading was completed and B support was checked.
+\If{valid affinity, both blocs, three events and two videos in B}
+\State AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersion, and normalized gap were calculated.
 \Else
-\State Registrar motivo de exclusión, sin reemplazar al usuario.
+\State The exclusion reason was recorded without replacing the user.
 \EndIf
 \EndFor
-\State Promediar por usuario y calcular intervalos y análisis de sensibilidad.
+\State User averages, intervals, and sensitivities were calculated.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Incertidumbre y sensibilidad}
-Se ejecutan 2\,000 remuestreos cruzados de usuarios y canales, con canales estratificados por fuente, recalculando afinidad y elegibilidad en cada réplica. Los intervalos percentiles del 95\% requieren al menos 80\% de réplicas válidas. La brecha normalizada global es el contraste principal; Holm se aplica a los contrastes secundarios. Estos intervalos describen variación dentro del marco observado.
+\subsection{Uncertainty and sensitivity}
+The analysis used 2\,000 crossed bootstrap replicates of users and channels, stratifying channels by source group and recalculating affinity and eligibility in every replicate. Percentile 95\% confidence intervals (CIs) required at least 80\% valid replicates. The overall normalized gap was the primary contrast; Holm adjustment applied to secondary contrasts. These intervals described variation within the observed frame.
 
-Los análisis de sensibilidad mantienen los usuarios primarios y recalculan comparabilidad con A/B invertido, contribución equilibrada por video, exclusión individual de los tres actores más frecuentes y uso del componente histórico sin ampliación. Cada variante informa cuántos usuarios conservan comparabilidad. Son comprobaciones de estabilidad, no seis estudios independientes.
+Sensitivity analyses retained the original comparable-user frame and reassessed comparability after reversing A/B, balancing contributions by video, excluding each of the three most frequent actors, and using the historical component without expanded capture. Each variant reported retained users. These were stability checks rather than six independent studies.
 
-\section{Resultados e interpretación}
-Esta sección presenta la composición del conjunto de comentarios, las métricas calculadas sobre los usuarios comparables y la evaluación separada de clasificadores. El tamaño del conjunto de comentarios no es el denominador del contraste individual.
+Complementary analyses defined after the primary result added robust statistics, proportions with a positive gap and with simultaneous positive ingroup/negative outgroup balances, an affinity--target matrix, and observable comparisons of included and excluded users. Their intervals and those of the six variants used the same bootstrap design. A fixed grid of 12 combinations varied minimum B events $\{2,3,5\}$, dominant A share $\{2/3,3/4\}$, and minimum A positives $\{2,3\}$, retaining the requirement of two positive A videos. This grid resampled the 300 examined users and left skipped readings missing; labels were not imputed. Further variants required $\{1,2,3,5\}$ events per bloc, removed neutrals from denominators, or restricted B by source group while retaining A affinity. Retention and changes against the original definition on the same users were reported. Mixed events had already been excluded from balances.
 
-\subsection{Composición y cobertura de la medición}
-La Tabla~\ref{tab:sentimiento_favorabilidad} distingue el conjunto de comentarios disponible de las unidades efectivamente examinadas. Los historiales de los primeros 300 usuarios reúnen 13\,888 comentarios; 13\,179 tienen anotaciones y 709 quedaron omitidos mediante certificado de exclusión por afinidad. Estos últimos no se contabilizan como comentarios sin objetivos.
+Individual stability was examined by retaining A affinity and randomly splitting B videos into two halves 200 times with seed 57. Each half required both blocs and two events; correlations compared gaps for users measurable in both halves. Pearson and Spearman correlations were presented with retention; variation across partitions was not interpreted as a population CI \cite{Pronk2022SplitHalf}. A and B were also compared on matched users, without assuming that reusing A necessarily produced significant inflation.
+
+Error sensitivity changed a fixed budget of B evaluations in the most adverse directions, prioritizing events with the largest influence on the mean. Affinities, targets, users, and denominators were held fixed, yielding a conditional bound rather than an expected error rate. Directly transferring a global confusion matrix to selected histories would have required unverified assumptions about errors, omissions, and abstention \cite{Egami2023Surrogates}. Classifier diagnostics added a training-majority baseline, per-class F1, confusion matrices, between-seed variability, and coverage decomposition. Substantive validation of text measurement required examining these error sources alongside aggregate performance \cite{GrimmerStewart2013}. Complete tables appeared in the supplementary material. Seeds, versions, and data hashes were retained for reproducibility. Public tables contained aggregates rather than user identifiers or individual affinities.
+
+\section{Results and Interpretation}
+The results addressed three questions: whether evaluations distinguished the user's own political bloc from its opponent, whether this pattern survived changes in measurement, and how reliably the available classifiers could automate it. The full comment collection supplied histories and sampling frames; the individual contrast concerned comparable users.
+
+\subsection{Observed sample and selection}
+Comparability selected an active subset of the observed discussion. Table~\ref{tab:sentimiento_favorabilidad} separated available comments from examined histories: the first 300 users contributed 13\,888 comments, of which 13\,179 were annotated and 709 were left unread after early exclusions based on the affinity criteria. Skipped readings were not counted as comments without targets.
 
 \begin{table}[t]
 \centering\small
-\caption{Conjunto de comentarios, historiales y muestra de evaluación.}
+\caption{Comment collection, user histories, and evaluation sample.}
 \label{tab:sentimiento_favorabilidad}
 \begin{tabular}{lr}\toprule
-Conjunto & Tamaño\\\midrule
-Comentarios disponibles & 1\,012\,515\\
-Usuarios inicialmente elegibles & 4\,443\\
-Usuarios examinados & 300\\
-Comentarios de los usuarios examinados & 13\,888\\
-Usuarios comparables & 122\\
-Historiales comparables (comentarios) & 6\,696\\
-Muestra de evaluación (comentarios) & 3\,000\\\bottomrule
+Collection & Size\\\midrule
+Available comments & 1\,012\,515\\
+Initially eligible users & 4\,443\\
+Examined users & 300\\
+Comments from examined users & 13\,888\\
+Comparable users & 122\\
+Comments in comparable histories & 6\,696\\
+Evaluation comments & 3\,000\\\bottomrule
 \end{tabular}
 \end{table}
 
-Los 122 comparables constituyen el 40.67\% de los usuarios examinados; los otros 178 no cumplen todos los criterios. Sus historiales completos contienen 6\,696 comentarios, incluidos los de A y B y aquellos sin objetivos evaluables. Las fuentes neutrales aportan 2\,601 de estos comentarios: su presencia es procedencia del contenido, no un tercer bloque objetivo. El análisis de polarización no asigna el resultado de los 122 a todos los autores del conjunto de comentarios.
+The 122 comparable users accounted for 40.67\% of those examined. Their complete histories contained 6\,696 comments across A and B, including comments without evaluable targets. Neutral sources contributed 2\,601 of these comments, demonstrating their role in the observation frame without assigning them a third political bloc. The results described this selected group of participants rather than all authors in the collection.
 
-\subsection{Polarización afectiva individual y dispersión}
-La Tabla~\ref{tab:ap_spread} presenta los promedios por afinidad política observada. Los balances de conteos y la brecha normalizada describen escalas distintas; no se interpretan sus magnitudes como intercambiables.
+The selection funnel was 4\,443 structural candidates, 300 examined users, 126 with determined A affinity, and 122 comparable in B. Among the 178 excluded users, 174 failed the affinity requirements. Of the other four, one lacked ingroup evidence, two lacked outgroup evidence, and one had insufficient B events. This hierarchy made reasons mutually exclusive; one outgroup absence also coincided with insufficient events. The 709 skipped comments belonged to 56 excluded histories. All comparable-user histories were read completely.
+
+Included users were somewhat more active and participated across more sources. Median histories contained 33.5 comments compared with 28 among excluded users, with 24 versus 21 videos and seven versus six channels. The corresponding standardized mean differences were .271, .225, and .271. This observable selection helped define whose expressions were measured; it did not correct unobserved selection. Full distributions and event composition by affinity and target bloc appeared in the supplement.
+
+\subsection{Expressed affective polarization}
+Evaluations distinguished political destinations rather than expressing undirected dissatisfaction alone. Table~\ref{tab:ap_spread} reported metrics by observed affinity. Count-based balances and the normalized gap operated on different scales; larger raw AP could reflect greater activity as well as different evaluations.
 
 \begin{table}[t]
 \centering\small
-\caption{Métricas sobre los usuarios comparables en B.}
+\caption{Metrics for comparable users in evaluation partition B.}
 \label{tab:ap_spread}
 \begin{tabular}{lrr}\toprule
-Métrica & Derecha & Izquierda\\\midrule
-Usuarios & 54 & 68\\
-AP$_{In}$ medio & 3.6481 & 3.0735\\
-AP$_{Out}$ medio & -4.2778 & -7.5294\\
-AP medio & 7.9259 & 10.6029\\
-Dispersión media & 1.8067 & 2.1710\\
-Brecha media & 1.4131 & 1.4656\\
+Metric & Right & Left\\\midrule
+Users & 54 & 68\\
+Mean AP$_{In}$ & 3.6481 & 3.0735\\
+Mean AP$_{Out}$ & -4.2778 & -7.5294\\
+Mean AP & 7.9259 & 10.6029\\
+Mean dispersion & 1.8067 & 2.1710\\
+Mean gap & 1.4131 & 1.4656\\
 \bottomrule\end{tabular}
 \end{table}
 
-La brecha normalizada global es 1.4424, IC95\% [1.2733, 1.6827]. El balance interno normalizado es 0.5829 [0.4430, 0.7700] y el externo $-0.8594$ [$-0.9480$, $-0.7919$]. La brecha positiva se acompaña, por tanto, de valoración interna favorable y externa desfavorable dentro del marco observado. Los tres intervalos utilizan 2\,000 réplicas válidas.
+Comparable users evaluated actors from their own bloc more favorably than actors from the opposing bloc. The mean normalized gap was 1.4424, 95\% CI [1.2733, 1.6827]. The mean ingroup balance was positive, 0.5829 [0.4430, 0.7700], and the outgroup balance was negative, $-0.8594$ [$-0.9480$, $-0.7919$], using 2\,000 valid replicates. Thus, relative favoritism accompanied rejection of opposing actors within the observed discussion, rather than arising solely from different degrees of general negativity.
 
-Las brechas normalizadas por afinidad son 1.4656 [1.1977, 1.7420] en izquierda y 1.4131 [1.1506, 1.7643] en derecha. La diferencia derecha menos izquierda es $-0.0526$, IC95\% [$-0.4624$, 0.3868], con $p$ ajustado por Holm de .7845 y 1\,999 réplicas válidas. No se obtiene evidencia concluyente de una diferencia entre afinidades. Las diferencias de AP bruto no sustituyen este contraste normalizado.
+Both affinity groups exhibited this direction of evaluation, but their difference remained inconclusive. The right-minus-left gap contrast was $-0.0526$, 95\% CI [$-0.4624$, 0.3868], with Holm-adjusted $p=.7845$ and 1\,999 valid replicates. The group means in Table~\ref{tab:ap_spread} therefore did not establish which bloc was more polarized, and the uncertainty did not demonstrate equality.
 
-Las Figuras~\ref{fig:ap_in}--\ref{fig:spread} muestran las distribuciones individuales actuales, con frecuencias relativas para comparar los tamaños distintos de los grupos. Los intervalos de cada histograma se comparten entre afinidades; las colas representan variación de actividad y balances, no niveles clínicos o psicológicos de polarización.
+The pattern extended beyond the average user: 120 of 122 had a positive gap, or 98.36\% [91.67\%, 100\%]. In 93 users, favorable ingroup and unfavorable outgroup balances occurred together, or 76.23\% [66.67\%, 93.75\%]. These results distinguished relative favoritism from simultaneous support and rejection. Both proportions were conditional on sufficient evidence toward both blocs; they were not estimates of the share of Peruvians who were polarized.
+
+The distribution in Figure~\ref{fig:gap_support} showed that the aggregate contrast was not produced by a few unusually large gaps. The median was 1.6000, with an interquartile range of [1.0000, 2.0000]; the 10\% trimmed mean was 1.5111 [1.3255, 1.7528]. Figure~\ref{fig:event_support} separately showed the unequal event support behind individual measurements. Median B support was eight events [5, 13] across six videos [4, 9.75], so a consistent aggregate direction could coexist with uncertain individual scores.
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{docs/figures/observational_gap_distribution.pdf}
+\caption{Distribution of the individual normalized gap among comparable users. Each user contributed equally to the primary mean.}
+\label{fig:gap_support}\end{figure}
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{docs/figures/observational_event_support.pdf}
+\caption{Evaluable events per user in partition B, shown separately for the user's own bloc and the opposing bloc. The logarithmic scale preserved high-activity observations.}
+\label{fig:event_support}\end{figure}
+
+\begin{table*}[t]\centering\small
+\caption{Summary statistics for comparable users.}
+\label{tab:robustos}
+\begin{tabular}{lrrrrr}\toprule
+Metric & Mean & SD & Median & IQR & 10\% trimmed mean\\\midrule
+AP$_{In}$ & 3.328 & 8.609 & 2.000 & [1.000, 4.000] & 2.541\\
+AP$_{Out}$ & -6.090 & 9.600 & -3.000 & [-5.750, -2.000] & -4.000\\
+AP & 9.418 & 14.296 & 6.000 & [4.000, 10.000] & 6.837\\
+Dispersion & 2.010 & 1.156 & 1.789 & [1.414, 2.236] & 1.817\\
+Normalized gap & 1.442 & 0.547 & 1.600 & [1.000, 2.000] & 1.511\\
+\bottomrule\end{tabular}
+\par\smallskip\footnotesize SD: standard deviation. IQR was reported as [25th, 75th percentile]. The trimmed mean removed 10\% of observations from each tail.
+\end{table*}
+
+High activity affected count-based balances more than the normalized primary contrast. Removing the right-affinity user with AP$_{In}=80$ reduced that group's mean AP$_{In}$ from 3.6481 to 2.2075, while the overall gap changed only from 1.4424 to 1.4410. Removing each user in turn left mean gaps between 1.4378 and 1.4543. Table~\ref{tab:robustos} summarized the skewed count distributions. The aggregate finding survived the extreme case, although individual measurements did not become equally precise.
+
+\begin{figure}[t]\centering
+\includegraphics[width=\columnwidth]{docs/figures/observational_balance_matrix.pdf}
+\caption{Normalized balances by observed affinity and target bloc, with 95\% CIs. Cells averaged users; positive values indicated net favorable evaluation.}
+\label{fig:balance_matrix}\end{figure}
+
+Figure~\ref{fig:balance_matrix} made the political direction of the contrast explicit: each affinity group had a favorable balance toward its own bloc and an unfavorable balance toward the other, with all four intervals retaining their signs. The same evaluative direction appeared in both groups. This was consistent with expressed affective differentiation toward political actors; it did not establish hostility toward every person who supported the opposing bloc.
+
+Figures~\ref{fig:ap_in}, \ref{fig:ap_out}, \ref{fig:ap}, and \ref{fig:spread} showed individual distributions with relative frequencies to accommodate unequal group sizes. Bin boundaries were shared across affinities. Their tails reflected variation in activity and balances rather than clinical or psychological levels of polarization.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={$\mathrm{AP}_{In}$},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+xlabel={$\mathrm{AP}_{In}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-29,0.014705882) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0) (-1.75,0.64705882) (3.7,0.27941176) (9.15,0.044117647) (14.6,0) (20.05,0) (25.5,0) (30.95,0.014705882) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0) (80,0)};
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-29,0) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0.055555556) (-1.75,0.66666667) (3.7,0.24074074) (9.15,0.018518519) (14.6,0) (20.05,0) (25.5,0) (30.95,0) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0.018518519) (80,0)};
-\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
-\caption{Distribución de AP$_{In}$ por afinidad política observada. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\caption{Distribution of AP$_{In}$ by observed political affinity, using 20 common bins and relative frequencies within groups.}
 \label{fig:ap_in}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={$\mathrm{AP}_{Out}$},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+xlabel={$\mathrm{AP}_{Out}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-62,0.029411765) (-58.9,0) (-55.8,0) (-52.7,0.014705882) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0) (-27.9,0.014705882) (-24.8,0) (-21.7,0.014705882) (-18.6,0.014705882) (-15.5,0.058823529) (-12.4,0.058823529) (-9.3,0.058823529) (-6.2,0.26470588) (-3.1,0.47058824) (0,0)};
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-62,0) (-58.9,0) (-55.8,0) (-52.7,0) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0.018518519) (-27.9,0) (-24.8,0) (-21.7,0.018518519) (-18.6,0) (-15.5,0) (-12.4,0.018518519) (-9.3,0.074074074) (-6.2,0.27777778) (-3.1,0.59259259) (0,0)};
-\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
-\caption{Distribución de AP$_{Out}$ por afinidad política observada. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\caption{Distribution of AP$_{Out}$ by observed political affinity, using 20 common bins and relative frequencies within groups.}
 \label{fig:ap_out}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={AP},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+xlabel={AP},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-1,0.30882353) (4.55,0.35294118) (10.1,0.19117647) (15.65,0.058823529) (21.2,0.044117647) (26.75,0.014705882) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0.014705882) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0.014705882) (98.9,0) (104.45,0) (110,0)};
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-1,0.38888889) (4.55,0.5) (10.1,0.074074074) (15.65,0.018518519) (21.2,0) (26.75,0) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0) (98.9,0) (104.45,0.018518519) (110,0)};
-\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
-\caption{Distribución de AP por afinidad política observada. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\caption{Distribution of AP by observed political affinity, using 20 common bins and relative frequencies within groups.}
 \label{fig:ap}
 \end{figure}
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={Dispersión},ylabel={Frecuencia relativa},ymin=0,tick label style={font=\scriptsize},label style={font=\small},legend style={font=\scriptsize,at={(.98,.98)},anchor=north east},scaled ticks=false]
+xlabel={Dispersion},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(0.40824829,0.044117647) (0.75436047,0.058823529) (1.1004726,0.11764706) (1.4465848,0.20588235) (1.792697,0.23529412) (2.1388092,0.058823529) (2.4849214,0.073529412) (2.8310335,0.11764706) (3.1771457,0) (3.5232579,0.014705882) (3.8693701,0.014705882) (4.2154823,0) (4.5615944,0.014705882) (4.9077066,0) (5.2538188,0) (5.599931,0.014705882) (5.9460432,0) (6.2921553,0) (6.6382675,0.014705882) (6.9843797,0.014705882) (7.3304919,0)};
 \addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(0.40824829,0) (0.75436047,0.18518519) (1.1004726,0.16666667) (1.4465848,0.24074074) (1.792697,0.2037037) (2.1388092,0.11111111) (2.4849214,0.037037037) (2.8310335,0) (3.1771457,0.018518519) (3.5232579,0) (3.8693701,0) (4.2154823,0.018518519) (4.5615944,0) (4.9077066,0) (5.2538188,0) (5.599931,0) (5.9460432,0) (6.2921553,0) (6.6382675,0) (6.9843797,0.018518519) (7.3304919,0)};
-\legend{Izquierda ($n=68$),Derecha ($n=54$)}
+\legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
-\caption{Distribución del indicador de dispersión por afinidad política observada. Veinte intervalos comunes y frecuencia normalizada por grupo.}
+\caption{Distribution of dispersion by observed political affinity, using 20 common bins and relative frequencies within groups.}
 \label{fig:spread}
 \end{figure}
 
-\subsection{Análisis de sensibilidad}
-La Tabla~\ref{tab:sensibilidades} muestra que las seis estimaciones conservan una brecha normalizada positiva. El equilibrio por video mantiene los 122 comparables; las demás variantes reducen el tamaño efectivo. No se atribuyen a estas estimaciones puntuales intervalos que no fueron calculados.
-\begin{table}[t]
-\centering\small
-\caption{Análisis de sensibilidad sobre los usuarios del análisis principal.}
+\subsection{Robustness across specifications}
+The aggregate direction survived changes in actor composition and contribution by video. All six intervals in Table~\ref{tab:sensibilidades} retained a positive gap. Balancing by video retained all 122 users; other variants reduced the sample. Paired changes against the original definition on the same retained users all included zero in their intervals. Preserving direction supported robustness within these variants without demonstrating equivalence between specifications.
+\begin{table}[t]\centering\small
+\caption{Original sensitivity variants and 95\% CIs.}
 \label{tab:sensibilidades}
-\begin{tabular}{lrr}\toprule
-Variante & Usuarios & Brecha\\\midrule
-A/B invertido & 76 & 1.5203\\
-Equilibrio por video & 122 & 1.4727\\
-Sin Keiko Fujimori & 80 & 1.5054\\
-Sin Roberto Sánchez & 90 & 1.4470\\
-Sin Rafael López Aliaga & 98 & 1.5059\\
-Histórico sin ampliación & 100 & 1.4928\\
-\bottomrule\end{tabular}
-\end{table}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrr}\toprule
+Variant & Users & Gap & 95\% CI\\\midrule
+Reversed A/B & 76 & 1.520 & [1.227, 1.674]\\
+Video-balanced & 122 & 1.473 & [1.284, 1.698]\\
+Without Keiko Fujimori & 80 & 1.505 & [1.238, 1.709]\\
+Without Roberto Sánchez & 90 & 1.447 & [1.294, 1.684]\\
+Without Rafael López Aliaga & 98 & 1.506 & [1.318, 1.717]\\
+Historical data only & 100 & 1.493 & [1.308, 1.755]\\
+\bottomrule\end{tabular}\end{table}
 
-\subsection{Comparación de clasificadores}
-La Tabla~\ref{tab:clasificadores} distingue dos subconjuntos de la muestra de evaluación de 3\,000 comentarios: la evaluación integral incorpora objetivos omitidos y candidatos adicionales, mientras que el subconjunto común disponible corresponde a los candidatos con contexto completo de la evaluación inicial. Los dos modelos incorporados se identificarán por separado hasta disponer de predicciones verificadas; su inclusión no altera los resultados ya obtenidos. El primero reúne 5\,165 pares de la unión anotación--predicción y el segundo 3\,222; los pesos provienen del diseño de muestreo, no del número bruto de pares.
+Requiring more evidence per user reduced the observed sample without reversing the pattern. The fixed 12-combination grid retained 66--123 users, with gaps of 1.4306--1.5176 and entirely positive intervals. Requiring three events per bloc retained 66 users, gap 1.4059 [1.2032, 1.6715]; five per bloc retained 30, gap 1.3954 [1.0908, 1.6829]. These checks showed a tradeoff between individual support and breadth of observation. They were defined after the primary result and did not replace the main eligibility criteria.
 
-\begin{table*}[t]
-\centering\small
-\caption{Resultados disponibles y bases incorporadas. Macro-F1 y cobertura tienen denominadores distintos; la cobertura se calcula tras abstención. El contexto común corresponde a la evaluación inicial; --- indica evaluación aún no disponible.}
+Neutral evaluations moderated the normalized contrast. Removing them from denominators left 114 users with a gap of 1.6687 [1.5070, 1.8853], compared with 1.4827 under the original definition on those same users: change .1859 [.0897, .2883]. Eight users lost valid denominators and received no imputed score. The primary definition retained neutral evidence; the alternative examined how its treatment changed magnitude. The supplement reported all specifications.
+
+The pattern was also observable under neutral news sources, rather than being confined to explicitly aligned sources. Restricting B by editorial provenance yielded gaps of 1.4969 [1.1876, 1.7877] under left-wing sources ($n=63$), 1.3809 [.7845, 1.9208] under right-wing sources ($n=16$), and 1.4676 [1.0788, 1.7772] under neutral sources ($n=52$). Users were required to retain both target blocs within each subset and could appear under several source groups. The smaller right-source sample had greater uncertainty. These conditional findings described settings of expression; they did not estimate channel effects.
+
+\subsection{Individual stability and error sensitivity}
+The A/B comparison did not establish that reusing affinity evidence necessarily inflated the observed contrast. Among 113 users measurable in both partitions, mean gaps were 1.5810 in A and 1.4152 in B; A minus B was .1658, 95\% CI [$-.0494$, .3290]. The point estimate was compatible with optimism from reusing A, but the interval included zero. Separating evidence remained a design precaution rather than a conclusion derived from this test.
+
+Individual rankings were substantially less stable than the aggregate direction. Across 200 B-video splits, 51--74 users were measurable in both halves (median 63). Median Pearson correlation was .3667, IQR [.3032, .4203]; median Spearman correlation was .3806 [.3272, .4448]. These IQRs described variation across partitions, not 95\% CIs. The scores characterized observed expressions, but their limited half-sample stability did not support treating each user as having a precisely measured, persistent psychological trait.
+
+Targeted errors could eventually overturn the mean even when moderate error budgets preserved its sign. With affinities, comparability, targets, and denominators fixed, adversarially changing 80 of 1\,609 B events (5\% budget) left a minimum gap of .6391; 160 changes (10\%) left .1801; 321 changes (20\%) yielded $-.5407$. The first nonpositive mean required 193 directed changes (12.00\%). This conditional bound examined the most influential B evaluations. It estimated neither actual annotation error nor errors in affinity, extraction, or selection, and did not validate a classifier.
+
+\subsection{Classifier performance}
+\begin{table*}[t]\centering\small
+\caption{Targeted sentiment classification before abstention. Intervals used video bootstrap resampling; the panels retained different evaluation denominators.}
 \label{tab:clasificadores}
 \begin{tabular}{lrrrr}\toprule
-& \multicolumn{2}{c}{Evaluación integral} & \multicolumn{2}{c}{Candidatos con contexto común}\\
-Modelo & Macro-F1 & Cobertura (\%) & Macro-F1 & Cobertura (\%)\\\midrule
-RoBERTuito & 0.3836 & 10.33 & 0.5979 & 26.17\\
-BETO & 0.3237 & 21.21 & 0.4993 & 47.26\\
-XLM-RoBERTa & 0.2832 & 3.32 & 0.4309 & 8.27\\
-MrBERT-es & --- & --- & --- & ---\\
-mDeBERTa-v3-base & --- & --- & --- & ---\\
-\bottomrule\end{tabular}
-\end{table*}
+& \multicolumn{2}{c}{End-to-end evaluation} & \multicolumn{2}{c}{Common complete context}\\
+Model & Macro-F1 & 95\% CI & Macro-F1 & 95\% CI\\\midrule
+RoBERTuito & 0.3836 & [0.3578, 0.4118] & 0.5979 & [0.5771, 0.6174]\\
+BETO & 0.3237 & [0.3014, 0.3477] & 0.4993 & [0.4814, 0.5173]\\
+XLM-RoBERTa & 0.2832 & [0.2620, 0.3059] & 0.4309 & [0.4143, 0.4477]\\
+MrBERT-es & 0.3225 & [0.3010, 0.3460] & 0.5025 & [0.4838, 0.5202]\\
+mDeBERTa-v3-base & 0.3086 & [0.2871, 0.3320] & 0.4733 & [0.4564, 0.4905]\\
+\bottomrule\end{tabular}\end{table*}
 
-RoBERTuito obtiene el mayor macro-F1 integral (0.3836) y BETO la mayor cobertura integral (21.21\%). El desempeño sobre candidatos de contexto completo es superior al integral; restringir el denominador omite una parte relevante del problema de extracción. La precisión y recuperación ponderadas de extracción son 96.85\% y 44.53\%, respectivamente, sobre todos los objetivos de la referencia, incluidos desconocidos. No son medidas de recuperación exclusiva de actores con bloque conocido.
+Table~\ref{tab:clasificadores} compared five models on 5\,165 annotation--prediction pairs in the end-to-end evaluation and 3\,222 shared complete-context candidates. End-to-end scores included extraction omissions, whereas the common panel isolated classification on available inputs. RoBERTuito had the highest end-to-end macro-F1 (0.3836). The larger scores on complete-context inputs showed why classifier performance and the ability to recover all political targets had to be distinguished.
+RoBERTuito exceeded each alternative in end-to-end macro-F1 under video-bootstrap contrasts with Holm adjustment. The two additional pretrained bases did not improve on that reference in this sample.
+The comparison detected no clear difference between BETO and MrBERT-es; this did not establish equivalence. Model differences combined architecture, pretraining, and tokenization rather than identifying a causal effect of any one component.
+Accepted predictions covered 3.2--21.2\% of evaluable target weight across models, limiting automatic expansion; the supplement reported model-specific coverage, accepted precision, and extraction and abstention diagnostics. The polarization estimates came from annotated user histories and retained their own users and denominators; classifier outputs were not assigned to the full comment collection.
 
-En desarrollo, RoBERTuito alcanzó macro-F1 0.6439 y BETO cobertura condicional 37.16\% sobre los 264 pares comunes. Esas cifras corresponden a otro subconjunto de datos y no equivalen al desempeño integral de la muestra de evaluación. Ningún modelo habilita inferencia automática del conjunto de comentarios completo. Los resultados de polarización anteriores proceden de historiales anotados, no de aplicar estos clasificadores al millón de comentarios.
+\subsection{Interpretation in Peru's 2026 election}
+In Peru's 2026 electoral setting, the measured contrast captured a concrete form of political differentiation: participants with observable affinity tended to support actors from that bloc while rejecting actors from its opponent. The affinity--target matrix distinguished this direction from general criticism of politics. It extended the conceptual use of ingroup and outgroup balances in Martínez-España et al. \cite{polariz} to comments about political actors, without equating observed affinity with declared party identity.
 
-\subsection{Comparación e interpretación de los resultados}
-Al contrastar estos patrones con los de Martínez-España et al. \cite{polariz}, se conserva una relación conceptual: los balances internos y externos permiten distinguir favoritismo relativo y valoración hacia el bloque opuesto. En los usuarios comparables aquí observados, el balance interno normalizado es positivo y el externo negativo. Esta configuración es compatible con polarización afectiva expresada, sin convertir la afinidad política observada en identidad partidaria declarada.
+This interpretation could be situated within the campaign, but the external context was not an explanation estimated by the model. The JNE documented a runoff between Fuerza Popular and Juntos por el Perú after the April election \cite{JNE11352026}. The Defensoría del Pueblo recorded electoral disputes and rejection of candidacies during the study window \cite{Defensoria2842026}. The findings were compatible with an electoral discussion organized partly around opposing political actors. They did not show that those disputes caused the measured gap, that the gap increased during the runoff, or that it determined the election outcome. January--June comments were pooled; no event-effect or temporal-change estimate was reported.
 
-Las diferencias de plataforma, actores, selección de usuarios y denominadores impiden interpretar AP o el indicador de dispersión como escalas directamente equivalentes entre estudios. Tampoco el signo del sentimiento de un comentario bajo una fuente informa por sí solo de su postura hacia esa fuente \cite{BestvaterMonroe2023,Miehling2025}. La evidencia dirigida permite evitar esa transferencia y conservar comentarios bajo fuentes neutrales sin tratarlas como un grupo rival.
+Earlier Peruvian research provided a substantive comparison rather than a numerical benchmark. Ponte Torrel \cite{Ponte2022} examined emotionally differentiated messages about the rival 2021 candidacies; Mejía Navarrete \cite{Mejia2024} situated antagonism within a longer history of political conflict. Different elections, platforms, actors, and sampling rules prevented claims that polarization increased or decreased between those studies and this one. The positive ingroup and negative outgroup balances concerned the observed actors and users, not the full electorate.
 
-La ausencia de una diferencia concluyente entre afinidades no significa igualdad demostrada. Del mismo modo, una afinidad indeterminada o una exclusión por cobertura insuficiente no permite identificar abstencionistas, votos nulos o desafección. Los hallazgos describen expresiones de usuarios con evidencia suficiente en ambos bloques, no el desenlace electoral ni sus causas.
+The persistence of the direction under neutral sources indicated that affective differentiation could be expressed within general news discussions as well as aligned-source discussions. It did not show that neutral sources polarized their audiences. Likewise, commenting about both political blocs could coexist with unfavorable evaluations of opponents; cross-bloc exposure alone was not evidence of tolerance or deliberation. Neither the signs of general sentiment nor channel provenance identified the target of an evaluation without directed evidence \cite{BestvaterMonroe2023,Miehling2025}.
 
-\section{Limitaciones}
-Esta versión se presenta como preprint y sus resultados son provisionales. Las anotaciones de los historiales y de la muestra de evaluación requieren todavía confirmación o corrección individual mediante revisión humana. La comparación de clasificadores expresa concordancia con esas anotaciones iniciales, no exactitud frente a una referencia humana independiente. Las correcciones pueden reabrir lecturas antes omitidas, cambiar la comparabilidad de usuarios y modificar estimaciones. La incertidumbre del remuestreo no incluye este error de anotación; el desarrollo reutilizado tampoco constituye una prueba independiente. No se estima acuerdo entre dos revisores.
+An inconclusive difference between affinities established neither equal polarization nor greater polarization on one side. Undetermined affinity and insufficient evidence identified measurement exclusions rather than abstention, invalid votes, or political disengagement. The study's strongest inference concerned a robust aggregate pattern of expressed evaluation among users with evidence toward both blocs; its limited individual stability and selection prevented treating that pattern as a national psychological profile.
 
-La ampliación de modelos se decidió después de examinar los resultados de las referencias en la muestra de evaluación. Aunque sus etiquetas no se emplean para entrenar ni calibrar las nuevas bases, esta comparación adicional no constituye una evaluación final independiente. Las diferencias entre modelos combinan arquitectura, preentrenamiento y tokenización; no aíslan el efecto causal de usar una base monolingüe o multilingüe.
+\section{Limitations}
+This study examined expressed evaluations among active YouTube participants with evidence toward both political blocs. Its scope was defined by the selected channels, explicit mentions, and actors with documented bloc assignments (22 of 124 identities). The findings therefore characterized this observed discussion; population-level estimates for the Peruvian electorate were outside the sampling design.
 
-La selección editorial de canales, la captura posterior de contenidos públicos y los actores de bloque desconocido limitan la transferencia. No se reconstruyen comentarios eliminados ni el estado textual exacto de todas las publicaciones al momento de su emisión. Los usuarios comparables son una subpoblación activa del marco y no representan a los votantes peruanos; la partición A/B reduce la reutilización directa de evidencia, pero no elimina dependencia entre expresiones de un mismo autor.
+Video partitions A and B separated affinity assignment from evaluation, while expressions by the same author remained related. The normalized gap reduced dependence on activity and was interpreted as an aggregate contrast. The split-half results called for caution when interpreting individual scores as persistent attributes.
 
-El límite de 300 usuarios se fijó por recursos tras conocer el avance de anotación, incluidos 79 comparables entre los primeros 200. Esta enmienda sustituyó la planificación original de 800 comparables y no debe presentarse como una decisión previa al inicio del estudio. La justificación de precisión distingue planificación y tamaño disponible \cite{lakens2022sample}: la referencia de .20 para la mitad de la amplitud del intervalo no es un umbral universal de publicación. La mitad de la amplitud observada del IC95\% de la brecha normalizada es .2047, ligeramente mayor, y se conserva sin ampliar el muestreo por el resultado.
+The cohort was capped at 300 examined users for resource reasons after annotation progress was known, replacing the initial target of 800 comparable users. The observed confidence intervals were used to assess the precision achieved by this sample \cite{lakens2022sample}. Additional models and complementary checks were chosen after initial results had been examined, so their findings were interpreted as comparisons within this sample. Full sampling and diagnostic details were reported in the supplement.
 
-AP y el indicador de dispersión dependen del volumen y de los eventos evaluables disponibles. La brecha normalizada reduce esa dependencia mediante normalización, pero no mide toda la experiencia psicológica del afecto. La cobertura y el desempeño de los clasificadores impiden extender automáticamente esta medición al conjunto de comentarios completo. La lectura dirigida, las decisiones de clasificación de actores y las limitaciones de evidencia explícita deberán considerarse al interpretar las magnitudes.
+Classifier performance defined the scope of automation, which did not extend to the full comment collection. At the time this preprint was prepared, annotations remained pending individual human confirmation; classifier scores reflected agreement with initial annotations. The intervals described sampling variation and did not incorporate annotation error. Agreement between human reviewers was not estimated.
 
-\section{Conclusiones y trabajo futuro}
-Este trabajo adapta la medición de polarización afectiva expresada a comentarios y respuestas de YouTube, separando el origen editorial del contenido, el objetivo valorado y la afinidad política observada del autor. El conjunto de comentarios ampliado permite construir historiales y una muestra diferenciada para evaluar clasificadores; sus funciones no se confunden con el denominador de la medición individual.
+\section{Conclusions and Future Work}
+This study adapted the measurement of expressed affective polarization to YouTube comments and replies while distinguishing editorial provenance, evaluated targets, and the author's observed political affinity. The expanded collection supported user histories and a separate classifier-evaluation sample; these roles remained distinct from the denominator of user-level measurement.
 
-Entre los 122 usuarios comparables, la brecha media normalizada de 1.4424 se acompaña de un balance interno favorable y externo desfavorable. Los análisis de sensibilidad mantienen una brecha positiva; no se obtiene una diferencia concluyente entre afinidades de izquierda y derecha. Los clasificadores evaluados muestran que el desempeño y la cobertura de objetivos requieren consideración conjunta; la incorporación de MrBERT-es y mDeBERTa-v3-base amplía esa comparación, sin presuponer mejoras. El aporte es un procedimiento trazable para estudiar valoraciones dirigidas y distinguir sus resultados de las posibilidades de automatización. El trabajo futuro comprende ampliar la evidencia de medición y examinar errores de extracción, ambigüedad y contexto sin equiparar actividad discursiva con intención de voto.
+Among comparable users, favorable evaluations of their own bloc coexisted with unfavorable evaluations of the opposing bloc. The direction persisted across actor exclusions, video balancing, and stronger event-support requirements, supporting an aggregate pattern of expressed affective polarization within the observed 2026 electoral discussion. Individual stability was limited and the affinity-group difference remained inconclusive. These findings characterized the studied participants rather than the electorate or the causes of the electoral outcome. The separate classifier comparison clarified the current limits of automating this measurement. Extending measurement evidence and examining ambiguity, extraction, and context were identified as directions for future work, while retaining the distinction between expressed evaluation and voting intention.
 
 % %
 % % <OR> manually copy in the resultant .bbl file

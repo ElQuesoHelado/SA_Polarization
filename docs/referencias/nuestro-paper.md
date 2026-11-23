@@ -1,10 +1,12 @@
 # Manuscrito propio — estudio dirigido en preparación
 
+> Nota del 2026-11-22: este registro describe la versión histórica del 18 de noviembre. El documento activo es `docs/doc_a_modificar.tex`; el estado actual y la edición bilingüe se documentan en `docs/resultados_observacionales.md` y `AGENTS.md`. Los resultados y metas históricos siguientes no se presentan como estado vigente.
+
 **Documento:** `docs/doc.tex`. **Actualizado:** 2026-11-18 tras autorización explícita de reescritura. **Título:** *Medición de polarización afectiva expresada en comentarios políticos de YouTube: historiales de usuarios y evaluación de clasificadores en el contexto peruano de 2026*. **Autor:** Jose Alva Cornejo, UNSA. Español; clase IEEEtran conservada, cabecera ficticia IJACSA/2024 retirada.
 
 ## Enfoque y estado
 
-El manuscrito separa medición por historiales anotados y evaluación de clasificadores. La comparación de desarrollo terminó; captura ampliada, cohorte y benchmark nuevo siguen pendientes. Los resultados históricos de sentimiento general y AP exploratorio fueron retirados del artículo por decisión del usuario, sin borrar sus datos, figuras ni registros. Ya no aparecen como resultados ni en apéndice.
+El manuscrito separa medición por historiales anotados y evaluación de clasificadores. **Actualización del 22 de noviembre:** captura cerrada, análisis observacional provisional completo y comparación de cinco modelos importada y verificada. La revisión humana individual sigue pendiente. La tabla principal muestra macro-F1 e IC95% en dos ámbitos; la cobertura se resume una vez y se detalla en el suplemento. PDFs vigentes bajo `outputs/manuscrito/threshold_rationale_20261122/`. Las secciones de planificación siguientes conservan el estado histórico del rediseño. Los resultados históricos de sentimiento general y AP exploratorio fueron retirados del artículo por decisión del usuario, sin borrar sus datos, figuras ni registros. Ya no aparecen como resultados ni en apéndice.
 
 La fuente metodológica vigente es [estudio publicable](../estudio_publicable.md), estudio `ap_publication_20261117_v1`, configurado en `config/targeted_publication.toml`. La reescritura no modifica la ejecución ni consume la prueba de 500 comentarios.
 
@@ -44,3 +46,14 @@ Copia previa, hashes y PDF de revisión se conservan localmente bajo `outputs/ma
 ## Ajuste de presentación autorizado el 2026-11-18
 
 Por instrucción posterior del usuario, el manuscrito y su PDF omiten menciones explícitas a IA/asistencia y describen anotaciones preliminares, confirmación o corrección individual por un revisor y revisión ciega prevista. Es un ajuste de redacción: el procedimiento, su asistencia efectiva y la procedencia siguen conservados en los registros internos. Las anotaciones preliminares no se convierten en referencias humanas; validación reutilizada y pendientes se mantienen.
+
+## Edición activa del 22 de noviembre de 2026
+
+El registro anterior se conserva como histórico. El artículo activo es
+`docs/doc_a_modificar.tex`, con el título del estudio observacional en español.
+Título, abstract y estado del arte permanecen en español; el resto del artículo,
+las figuras y las tablas van en inglés. Las reglas están en `AGENTS.md` y el
+estado científico vigente en `docs/resultados_observacionales.md`. La revisión
+bilingüe conserva resultados y anotaciones, con contexto electoral documentado
+y figuras independientes para brecha y soporte. Los PDFs están en
+`outputs/manuscrito/english_revision_20261122/`.

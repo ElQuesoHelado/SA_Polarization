@@ -5,35 +5,35 @@
  leftbox/.style={box,text width=6cm,draw=blue!50!black,fill=blue!3},
  rightbox/.style={box,text width=6cm,draw=teal!65!black,fill=teal!3},
  flow/.style={->,line width=.8pt,draw=black!65},
- lab/.style={font=\sffamily\scriptsize,fill=white,inner sep=2pt}]
+ lab/.style={font=\sffamily\small,fill=white,inner sep=2pt}]
 \node[box] (api) at (2.5,0) {\includegraphics[height=6mm]{docs/figures/youtube_icon.pdf}\\
-  \textbf{Extracción de datos}\\YouTube Data API · comentarios y respuestas};
+  \textbf{Data extraction}\\YouTube Data API · comments and replies};
 \node[box] (prep) at (8.5,0) {{\Large\faFilter}\\
-  \textbf{Preparación}\\Fechas, procedencia y deduplicación};
+  \textbf{Preparation}\\Dates, provenance, and deduplication};
 \node[box] (corpus) at (14.5,0) {{\Large\faDatabase}\\
-  \textbf{Conjunto de comentarios}\\Datos fijados para el estudio};
+  \textbf{Comment collection}\\Frozen study data};
 \draw[flow] (api)--(prep); \draw[flow] (prep)--(corpus);
 \node[leftbox] (users) at (4.2,-2.6) {{\Large\faUsers}\\
-  \textbf{Historiales de 300 usuarios}\\Primeros usuarios del orden fijado; todos sus comentarios};
+  \textbf{Histories of 300 users}\\First users in the fixed order; all their comments};
 \node[rightbox] (benchmark) at (12.8,-2.6) {{\Large\faClipboardList}\\
-  \textbf{Muestra de evaluación}\\3,000 comentarios; objetivos y valoraciones anotados};
+  \textbf{Evaluation sample}\\3,000 comments; annotated targets and evaluations};
 \draw[flow] (corpus.south)--++(0,-.3)-|(users.north);
 \draw[flow] (corpus.south)--++(0,-.3)-|(benchmark.north);
 \node[leftbox] (targets) at (4.2,-4.9) {{\Large\faTags}\\
-  \textbf{Valoración comentario--objetivo}\\Menciones explícitas y eventos por bloque};
+  \textbf{Comment--target evaluation}\\Explicit mentions and events by political bloc};
 \node[rightbox] (train) at (12.8,-4.9) {{\Large\faMicrochip}\\
-  \textbf{Entrenamiento · Kaggle GPU}\\Tres referencias y dos bases nuevas\\Tres semillas por base};
+  \textbf{Training · Kaggle GPU}\\Three references and two additional models\\Three seeds per model};
 \draw[flow] (users)--(targets);
 \node[leftbox] (ab) at (4.2,-7.2) {{\Large\faProjectDiagram}\\
-  \textbf{Separación de videos A/B}\\A: afinidad política observada\\B: comparación afectiva};
+  \textbf{A/B video split}\\A: observed political affinity\\B: affective comparison};
 \node[rightbox] (eval) at (12.8,-7.2) {{\Large\faBalanceScale}\\
-  \textbf{Evaluación de clasificadores}\\Extracción integral y contexto común};
+  \textbf{Classifier evaluation}\\End-to-end extraction and common context};
 \draw[flow] (targets)--(ab);
-\draw[flow] (train)--node[lab,right]{Predicciones}(eval);
-\draw[flow] (benchmark.east)--++(.65,0)|-node[lab,pos=.65,right]{Referencia}(eval.east);
-\node[leftbox] (measure) at (4.2,-10.1) {{\Large\faChartBar}\\
-  \textbf{Medición por usuario}\\AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersión\\Brecha normalizada e intervalos\\Análisis de sensibilidad};
-\node[rightbox] (models) at (12.8,-10.1) {{\Large\faChartLine}\\
-  \textbf{Comparación de modelos}\\Macro-F1, cobertura y errores};
+\draw[flow] (train)--node[lab,right]{Predictions}(eval);
+\draw[flow] (benchmark.east)--++(.65,0)|-node[lab,pos=.65,right]{Reference}(eval.east);
+\node[leftbox] (measure) at (4.2,-10.7) {{\Large\faChartBar}\\
+  \textbf{Observational measurement}\\AP\textsubscript{In}, AP\textsubscript{Out}, AP, dispersion\\Normalized gap, intervals, and support\\Sensitivity and individual stability};
+\node[rightbox] (models) at (12.8,-10.7) {{\Large\faChartLine}\\
+  \textbf{Model comparison}\\Per-class F1, coverage, and errors};
 \draw[flow] (ab)--(measure); \draw[flow] (eval)--(models);
 \end{tikzpicture}

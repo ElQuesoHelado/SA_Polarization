@@ -1,0 +1,23 @@
+{
+  "downloaded_at": "2026-11-23T02:09:48.194697+00:00",
+  "sources": [
+    {
+      "id": "geifman-selective-2017",
+      "url": "https://proceedings.neurips.cc/paper/2017/file/4a8423d5e91fda00bb7e46540e2b0cf1-Paper.pdf",
+      "resolved_url": "https://proceedings.neurips.cc/paper/2017/file/4a8423d5e91fda00bb7e46540e2b0cf1-Paper.pdf",
+      "version": "Advances in Neural Information Processing Systems 30, 2017; publisher PDF",
+      "path": "pdfs/contexto/geifman-selective-2017.pdf",
+      "bytes": 414761,
+      "sha256": "167ed5f7292edd07b90c27b2711dea70947ccb024681af020f4bfc4fbbad2e40"
+    },
+    {
+      "id": "guo-calibration-2017",
+      "url": "https://proceedings.mlr.press/v70/guo17a/guo17a.pdf",
+      "resolved_url": "https://proceedings.mlr.press/v70/guo17a/guo17a.pdf",
+      "version": "PMLR 70:1321–1330, 2017; publisher PDF",
+      "path": "pdfs/contexto/guo-calibration-2017.pdf",
+      "bytes": 828420,
+      "sha256": "df7c93f97204f8a3c2b10f6d5bf5265baac25f00c1ae3b473a3e1dbc102dacb2"
+    }
+  ]
+}

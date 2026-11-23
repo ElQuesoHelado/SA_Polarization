@@ -1,0 +1,39 @@
+[
+  {
+    "id": "jne-1135-2026",
+    "file": "jne-1135-2026.pdf",
+    "url": "https://portal.jne.gob.pe/portal_documentos/files/325d180f-68a4-49d2-8fd3-c8d8a1e67b9f.pdf",
+    "publisher": "Jurado Nacional de Elecciones",
+    "published": "2026-05-17",
+    "pages_used": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "role": "Election chronology and first-round results; not a measure of affective polarization",
+    "path": "pdfs/contexto/jne-1135-2026.pdf",
+    "sha256": "e4f37da8253c551fe77fd96f99e188976c446e04438880aaa217cf7462a636a6",
+    "bytes": 297112,
+    "accessed": "2026-11-22"
+  },
+  {
+    "id": "defensoria-284-2026",
+    "file": "defensoria-284-2026.pdf",
+    "url": "https://www.defensoria.gob.pe/wp-content/uploads/2026/06/id_conflictos_electoral-1.pdf",
+    "publisher": "Defensoria del Pueblo",
+    "published": "2026-06",
+    "pages_used": [
+      5,
+      6,
+      12,
+      16,
+      24
+    ],
+    "role": "Observed electoral disputes and documented rejection; projections are not observed outcomes",
+    "path": "pdfs/contexto/defensoria-284-2026.pdf",
+    "sha256": "dacfc8cf783326699f71ad843713d0b44e28c8bdd2483a254fc4452afe201f1b",
+    "bytes": 3845871,
+    "accessed": "2026-11-22"
+  }
+]

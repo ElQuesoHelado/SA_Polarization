@@ -91,22 +91,23 @@ def report(settings, study):
         completed_fits=expected_fits, production_enabled=False, independent_evaluation=False, reserved_test_opened=False,
         training_manifest_sha256=sha256(root / "manifest.json"),
         coverage_scope="conditional_on_extracted_shared_candidate_pairs; not end-to-end target coverage"))
-    lines = [f"# Comparación de desarrollo: {len(models)} modelos", "",
-        "Validación reutilizada y asistida; no es evaluación independiente ni habilita producción.", "",
-        f"Contexto completo común: {context['train_shared']}/{context['train_total']} pares de entrenamiento y "
-        f"{context['validation_shared']}/{context['validation_total']} de validación. {expected_fits} ajustes completados.", "",
-        "| Modelo | Macro-F1 ponderado | Precisión positiva aceptada | Precisión negativa aceptada | Cobertura de pares candidatos |",
+    lines = [f"# Development comparison: {len(models)} models", "",
+        "Reused, assisted validation; this is not an independent evaluation and does not enable production.", "",
+        f"Shared complete context: {context['train_shared']}/{context['train_total']} training pairs and "
+        f"{context['validation_shared']}/{context['validation_total']} validation pairs. {expected_fits} completed fits.", "",
+        "| Model | Weighted macro-F1 | Accepted favorable precision | Accepted unfavorable precision | Candidate-pair coverage |",
         "|---|---:|---:|---:|---:|"]
-    percent = lambda value: "Sin predicciones" if value is None else f"{value:.2%}"
+    percent = lambda value: "No predictions" if value is None else f"{value:.2%}"
     for row in rows:
         lines.append(f"| {row['model']} | {row['macro_f1']:.4f} | {percent(row['positive_precision'])} | "
             f"{percent(row['negative_precision'])} | {percent(row['candidate_pair_coverage'])} |")
-    lines += ["", "Macro-F1 promedia positive/negative/neutral y usa todos los pares comunes, antes de abstener. "
-        "Las precisiones corresponden solo a predicciones aceptadas con la calibración guardada. "
-        "La cobertura es el peso de predicciones aceptadas positive/negative/neutral dividido por el peso de todos los pares candidatos comunes. "
-        "Excluye objetivos omitidos por el extractor: no equivale a cobertura integral ni a los diagnósticos históricos con otro denominador.", "",
-        "Temperatura, umbrales, precisión neutral, conteos de abstención y métricas por semilla están en comparison.json. "
-        "No se selecciona ni promueve automáticamente ningún modelo. Continúan pendientes captura, nuevas muestras y referencia independiente.", ""]
+    lines += ["", "Macro-F1 averages positive/negative/neutral on all common pairs before abstention. "
+        "Precision uses accepted predictions under the stored calibration. "
+        "Candidate-pair coverage divides the weight of accepted positive/negative/neutral predictions by all common candidate-pair weight. "
+        "It excludes extraction omissions and is not end-to-end target coverage or a historical score with another denominator.", "",
+        "Temperature, thresholds, neutral precision, abstention counts, and per-seed metrics are in comparison.json. "
+        "No model is automatically selected or promoted. Evaluation-sample predictions and confirmation of the new annotations "
+        "remain separate from development diagnostics.", ""]
     (destination / "comparison.md").write_text("\n".join(lines))
     seal(destination, ["comparison.csv", "comparison.json", "comparison.md"], diagnostic_only=True)
     verify(study)
