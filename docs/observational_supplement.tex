@@ -12,6 +12,11 @@ This material expanded the observational study's tables and diagnostics. Measure
 \section{Selection and measurement evidence}
 The 4\,443 structural candidates were not already comparable users. Of the first 300 examined in the fixed order, 174 failed affinity requirements, 126 met them, and 122 also qualified in B. Among the four remaining exclusions, one lacked ingroup evidence, two lacked outgroup evidence, and one had insufficient B events. This hierarchy gave mutually exclusive reasons; one outgroup absence also coincided with insufficient events. Early exclusions based on the affinity criteria left 709 comments unread in 56 excluded histories, rather than annotating them as target absence. Comparable-user histories were read completely.
 
+Videos were assigned by hash with seed 42 to disjoint sets A (affinity assignment) and B (evaluation); the sets were not chronological periods. Reading started with A, ordering videos by size and breaking ties by identifier. Remaining comments were skipped only when a conservative bound proved that neither bloc could meet the affinity requirements, even if every unread comment was counted as possible support. Skipped observations remained missing rather than being labeled as target absence. Users meeting the affinity criteria required complete reading of both A and B.
+
+The shared training recipe used seeds 42, 43, and 44, AdamW with learning rate $2\times10^{-5}$, weight decay 0.01, effective batch size 16, at most eight epochs, and early stopping after two epochs without validation improvement. These settings remained fixed in the encoder extension. Probabilities were averaged across the three seeds before calibration on validation data.
+
+
 
 Table~\ref{tab:supp_selection} compared observable participation between included and excluded users.
 
@@ -322,11 +327,11 @@ XLM-RoBERTa & 55.93 & 0.93 & 39.82 & 3.32\\
 Recall across all targets, including unknown-bloc actors, was 44.53\%. By actor bloc, recall was 86.36\% for right, 82.09\% for left, and 22.76\% for unknown. Unknown bloc and omitted mention were distinct: some unknown actors were extracted and some known actors omitted. For evaluable targets, the extraction ceiling was 44.07\%; requiring complete context reduced RoBERTuito\textquotesingle s ceiling to 39.47\%. Thus 40\% end-to-end coverage was unattainable for that reference with the current inputs.
 
 \begin{figure}[H]\centering
-\includegraphics[width=.9\textwidth]{docs/figures/observational_risk_coverage.pdf}
+\includegraphics[width=0.9\textwidth]{docs/figures/observational_risk_coverage.pdf}
 \caption{Weighted error among selected predictions versus end-to-end coverage when candidates were ranked by confidence. This was a diagnostic, not operational threshold recalibration.}\label{fig:supp_risk_coverage}\end{figure}
 Figure~\ref{fig:supp_risk_coverage} illustrated the error--coverage tradeoff. Confidence could not recover absent targets: accepting all candidates still left substantial coverage losses. These curves examined quality and reach together, without choosing a new threshold based on favorable evaluation performance.
 \section{Scope and status of this edition}
-The limit of 300 examined users was set for resource reasons after annotation progress was known, including 79 comparable users among the first 200. It replaced the original target of 800 comparable users and was not fixed before the study began. The observed gap's 95\% CI half-width was .2047, compared with the planned .20. The planning target was treated as a precision assumption rather than a universal publication threshold \cite{lakens2022sample}; sampling was not extended in response to the result.
+The limit of 300 examined users was set for resource reasons after annotation progress was known, including 79 comparable users among the first 200. It replaced the original target of 800 comparable users and was not fixed before the study began. The observed gap's 95\% CI half-width was 0.2047, compared with the planned 0.20. The planning target was treated as a precision assumption rather than a universal publication threshold \cite{lakens2022sample}; sampling was not extended in response to the result.
 
 This material accompanied a preprint with provisional results. At the time this version was prepared, history and evaluation annotations remained pending individual human review. Intervals did not include annotation error, and classifier results expressed agreement with initial annotations. Adversarial sensitivity did not replace their confirmation. Model expansion was chosen after examining this sample and was not an independent final evaluation.
 

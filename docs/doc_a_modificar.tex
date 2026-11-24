@@ -1,391 +1,51 @@
-
-%% bare_conf.tex
-%% V1.3
-%% 2007/01/11
-%% by Michael Shell
-%% See:
-%% http://www.michaelshell.org/
-%% for current contact information.
-%%
-%% This is a skeleton file demonstrating the use of IEEEtran.cls
-%% (requires IEEEtran.cls version 2.7 or later) with an IEEE conference paper.
-
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
-%% and
-%% http://www.ieee.org/
-
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE!
-%% User assumes all risk.
-%% In no event shall IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%
-%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
-%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
-%%*************************************************************************
-
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices can trigger bugs that do  ***
-% *** not appear when using other class files.                            ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
-
-% Note that the a4paper option is mainly intended so that authors in
-% countries using A4 can easily print to A4 and see how their papers will
-% look in print - the typesetting of the document will not typically be
-% affected with changes in paper size (but the bottom and side margins will).
-% Use the testflow package mentioned above to verify correct handling of
-% both paper sizes by the user's LaTeX system.
-%
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
-%
-\documentclass[conference, letterpaper]{IEEEtran}
-\usepackage{amsmath}
-\usepackage{booktabs}
-% Add the compsoc option for Computer Society conferences.
-%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[conference]{../sty/IEEEtran}
-
-
-
-
-
-% Some very useful LaTeX packages include:
-% (uncomment the ones you want to load)
-
-
-% *** MISC UTILITY PACKAGES ***
-%
-%\usepackage{ifpdf}
-% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
-% compilation based on whether the output is pdf or dvi.
-% usage:
-% \ifpdf
-%   % pdf code
-% \else
-%   % dvi code
-% \fi
-% The latest version of ifpdf.sty can be obtained from:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
-% Also, note that IEEEtran.cls V1.7 and later provides a builtin
-% \ifCLASSINFOpdf conditional that works the same way.
-% When switching from latex to pdflatex and vice-versa, the compiler may
-% have to be run twice to clear warning/error messages.
-
-
-
-
-
-
-% *** CITATION PACKAGES ***
-%
-%\usepackage{cite}
-% cite.sty was written by Donald Arseneau
-% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
-% \cite{} output to follow that of IEEE. Loading the cite package will
-% result in citation numbers being automatically sorted and properly
-% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
-% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
-% \cite will automatically add leading space, if needed. Use cite.sty's
-% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
-% cite.sty is already installed on most LaTeX systems. Be sure and use
-% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
-% not currently provide for hyperlinked citations.
-% The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
-% The documentation is contained in the cite.sty file itself.
-
-
-
-
-
-
-% *** GRAPHICS RELATED PACKAGES ***
-%
-\ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-\else
-  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
-  % will default to the driver specified in the system graphics.cfg if no
-  % driver is specified.
-  % \usepackage[dvips]{graphicx}
-  % declare the path(s) where your graphic files are
-  % \graphicspath{{../eps/}}
-  % and their extensions so you won't have to specify these with
-  % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.eps}
-\fi
-% graphicx was written by David Carlisle and Sebastian Rahtz. It is
-% required if you want graphics, photos, etc. graphicx.sty is already
-% installed on most LaTeX systems. The latest version and documentation can
-% be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
-% Another good source of documentation is "Using Imported Graphics in
-% LaTeX2e" by Keith Reckdahl which can be found as epslatex.ps or
-% epslatex.pdf at: http://www.ctan.org/tex-archive/info/
-%
-% latex, and pdflatex in dvi mode, support graphics in encapsulated
-% postscript (.eps) format. pdflatex in pdf mode supports graphics
-% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
-% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
-% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
-% which can result in "jaggedy"/blurry rendering of lines and letters as
-% well as large increases in file sizes.
-%
-% You can find documentation about the pdfTeX application at:
-% http://www.tug.org/applications/pdftex
-
-
-
-
-
-% *** MATH PACKAGES ***
-%
-%\usepackage[cmex10]{amsmath}
-% A popular package from the American Mathematical Society that provides
-% many useful and powerful commands for dealing with mathematics. If using
-% it, be sure to load this package with the cmex10 option to ensure that
-% only type 1 fonts will utilized at all point sizes. Without this option,
-% it is possible that some math symbols, particularly those within
-% footnotes, will be rendered in bitmap form which will result in a
-% document that can not be IEEE Xplore compliant!
-%
-% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
-% thus preventing page breaks from occurring within multiline equations. Use:
-%\interdisplaylinepenalty=2500
-% after loading amsmath to restore such page breaks as IEEEtran.cls normally
-% does. amsmath.sty is already installed on most LaTeX systems. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
-
-
-
-
-
-% *** SPECIALIZED LIST PACKAGES ***
-%
-%\usepackage{algorithmic}
-% algorithmic.sty was written by Peter Williams and Rogerio Brito.
-% This package provides an algorithmic environment fo describing algorithms.
-% You can use the algorithmic environment in-text or within a figure
-% environment to provide for a floating algorithm. Do NOT use the algorithm
-% floating environment provided by algorithm.sty (by the same authors) or
-% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
-% algorithm float types and packages that provide these will not provide
-% correct IEEE style captions. The latest version and documentation of
-% algorithmic.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
-% There is also a support site at:
-% http://algorithms.berlios.de/index.html
-% Also of interest may be the (relatively newer and more customizable)
-% algorithmicx.sty package by Szasz Janos:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
-
-
-
-
-% *** ALIGNMENT PACKAGES ***
-%
-%\usepackage{array}
-% Frank Mittelbach's and David Carlisle's array.sty patches and improves
-% the standard LaTeX2e array and tabular environments to provide better
-% appearance and additional user controls. As the default LaTeX2e table
-% generation code is lacking to the point of almost being broken with
-% respect to the quality of the end results, all users are strongly
-% advised to use an enhanced (at the very least that provided by array.sty)
-% set of table tools. array.sty is already installed on most systems. The
-% latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/required/tools/
-
-
-%\usepackage{mdwmath}
-%\usepackage{mdwtab}
-% Also highly recommended is Mark Wooding's extremely powerful MDW tools,
-% especially mdwmath.sty and mdwtab.sty which are used to format equations
-% and tables, respectively. The MDWtools set is already installed on most
-% LaTeX systems. The lastest version and documentation is available at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
-
-
-% IEEEtran contains the IEEEeqnarray family of commands that can be used to
-% generate multiline equations as well as matrices, tables, etc., of high
-% quality.
-
-
-%\usepackage{eqparbox}
-% Also of notable interest is Scott Pakin's eqparbox package for creating
-% (automatically sized) equal width boxes - aka "natural width parboxes".
-% Available at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
-
-
-
-
-
-% *** SUBFIGURE PACKAGES ***
-%\usepackage[tight,footnotesize]{subfigure}
-% subfigure.sty was written by Steven Douglas Cochran. This package makes it
-% easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
-% work, it is a good idea to load it with the tight package option to reduce
-% the amount of white space around the subfigures. subfigure.sty is already
-% installed on most LaTeX systems. The latest version and documentation can
-% be obtained at:
-% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
-% subfigure.sty has been superceeded by subfig.sty.
-
-
-
-%\usepackage[caption=false]{caption}
-%\usepackage[font=footnotesize]{subfig}
-% subfig.sty, also written by Steven Douglas Cochran, is the modern
-% replacement for subfigure.sty. However, subfig.sty requires and
-% automatically loads Axel Sommerfeldt's caption.sty which will override
-% IEEEtran.cls handling of captions and this will result in nonIEEE style
-% figure/table captions. To prevent this problem, be sure and preload
-% caption.sty with its "caption=false" package option. This is will preserve
-% IEEEtran.cls handing of captions. Version 1.3 (2005/06/28) and later
-% (recommended due to many improvements over 1.2) of subfig.sty supports
-% the caption=false option directly:
-%\usepackage[caption=false,font=footnotesize]{subfig}
-%
-% The latest version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
-% The latest version and documentation of caption.sty can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
-
-
-
-
-% *** FLOAT PACKAGES ***
-%
-%\usepackage{fixltx2e}
-% fixltx2e, the successor to the earlier fix2col.sty, was written by
-% Frank Mittelbach and David Carlisle. This package corrects a few problems
-% in the LaTeX2e kernel, the most notable of which is that in current
-% LaTeX2e releases, the ordering of single and double column floats is not
-% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
-% single column figure to be placed prior to an earlier double column
-% figure. The latest version and documentation can be found at:
-% http://www.ctan.org/tex-archive/macros/latex/base/
-
-
-
-%\usepackage{stfloats}
-% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
-% the ability to do double column floats at the bottom of the page as well
-% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
-% LaTeX2e). It also provides a command:
-%\fnbelowfloat
-% to enable the placement of footnotes below bottom floats (the standard
-% LaTeX2e kernel puts them above bottom floats). This is an invasive package
-% which rewrites many portions of the LaTeX2e float routines. It may not work
-% with other packages that modify the LaTeX2e float routines. The latest
-% version and documentation can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-% Documentation is contained in the stfloats.sty comments as well as in the
-% presfull.pdf file. Do not use the stfloats baselinefloat ability as IEEE
-% does not allow \baselineskip to stretch. Authors submitting work to the
-% IEEE should note that IEEE rarely uses double column equations and
-% that authors should try to avoid such use. Do not be tempted to use the
-% cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
-% not format its papers in such ways.
-
-
-
-
-
-% *** PDF, URL AND HYPERLINK PACKAGES ***
-%
-%\usepackage{url}
-% url.sty was written by Donald Arseneau. It provides better support for
-% handling and breaking URLs. url.sty is already installed on most LaTeX
-% systems. The latest version can be obtained at:
-% http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
-% Read the url.sty source comments for usage information. Basically,
-% \url{my_url_here}.
-
-
-
-
-
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
-
-
-% correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
-
-% *** GRAPHICS RELATED PACKAGES ***
-%
-\ifCLASSINFOpdf
-   \usepackage[pdftex]{graphicx}
-   \usepackage[export]{adjustbox}
-\else
-\fi
-
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-% *** MATH PACKAGES ***
-%
-\usepackage{color}
-%
+% Migrated from the user-supplied IJACSA 2026 Paper_format.tex.
+% The supplied IEEEtran.cls is used without modifications.
+% Original template: bare_conf.tex, Michael Shell; LPPL notices retained
+% in SAI_Paper_Format_Latex/Paper_format.tex and IEEEtran.cls.
+\documentclass[conference,letterpaper]{IEEEtran}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish,english,es-tabla,es-noshorthands]{babel}
-\usepackage{array,amssymb,amsfonts,float,url}
+\usepackage[english]{babel}
+\usepackage[cmex10]{amsmath}
+\usepackage{array,amssymb,amsfonts,color,float}
+\usepackage{graphicx,adjustbox}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{flushend}
+\captionsetup[table]{justification=centering,labelsep=period,font={footnotesize,sc}}
+\captionsetup[figure]{justification=centering,labelsep=period,font={footnotesize}}
+\usepackage{booktabs,threeparttable}
+\usepackage{algorithm,algpseudocode}
 \usepackage{tikz,pgfplots,fontawesome5}
 \usetikzlibrary{arrows.meta,positioning,babel}
 \pgfplotsset{compat=1.18}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
 \floatname{algorithm}{Algorithm}
 \algrenewcommand{\algorithmicrequire}{\textbf{Input:}}
 \algrenewcommand{\algorithmicensure}{\textbf{Output:}}
-\addto\captionsspanish{\renewcommand{\figurename}{Figure}\renewcommand{\tablename}{Table}}
 \newcommand{\Pos}{\mathrm{Pos}}
 \newcommand{\Neg}{\mathrm{Neg}}
 \newcommand{\Neu}{\mathrm{Neu}}
-
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{24pt}
+\setlength{\footskip}{20pt}
+\fancyhead[R]{\textit{(IJACSA) International Journal of Advanced Computer Science and Applications, \\
+Vol. XXX, No. XXX, 2026}}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{www.ijacsa.thesai.org}
+\renewcommand{\footrulewidth}{0.5pt}
+\fancyfoot[R]{\thepage\ $|$ P a g e}
+\setcounter{page}{1}
 \begin{document}
+
 
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Expressed Affective Polarization in YouTube Comments During the 2026 Peruvian Presidential Election: An Observational Study}
+\title{Expressed Affective Polarization in YouTube Comments During the 2026 Peruvian Presidential Election}
 
 
 % author names and affiliations
@@ -399,10 +59,9 @@
 }
 \makeatother
 \author{
-    Jose Alva Cornejo\\
-    % ,Esdras D. Vasquez, Jose Calizaya Quispe, Roxana Flores-Quispe, Yuber Velazco-Paredes\\
-    Universidad Nacional de San Agustín de Arequipa, Arequipa, Perú\\
-    %Emails: jalvac@unsa.edu.pe, ediazva@unsa.edu.pe, jcalizayaq@unsa.edu.pe, \\rfloresqu@unsa.edu.pe, yvelazco@unsa.edu.pe
+\IEEEauthorblockN{Jose Alva Cornejo, Roxana Flores-Quispe, Yuber Velazco-Paredes}
+\IEEEauthorblockA{Universidad Nacional de San Agustín de Arequipa, Arequipa, Perú}
+%Emails: jalvac@unsa.edu.pe, rfloresqu@unsa.edu.pe, yvelazco@unsa.edu.pe
 }
 
 
@@ -415,10 +74,10 @@
 
 % for over three affiliations, or if they all won't fit within the width
 % of the page, use this alternative format:
-%
+% 
 %\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
 %Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3},
+%James Kirk\IEEEauthorrefmark{3}, 
 %Montgomery Scott\IEEEauthorrefmark{3} and
 %Eldon Tyrell\IEEEauthorrefmark{4}}
 %\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
@@ -438,14 +97,14 @@
 
 
 % make the title area
-\selectlanguage{english}
 \maketitle
+\thispagestyle{fancy}
 
 
 \begin{abstract}
-Electoral campaigns provided opportunities to observe how support for a political option coexisted with rejection of its opponents, but general comment sentiment did not identify the recipient of an evaluation. This study examined expressed affective polarization on YouTube during the 2026 Peruvian presidential election through explicit evaluations of political actors. Observed political affinity was identified in one partition of videos, while evaluations across blocs were compared in another, separating the evaluated target from the channel's editorial orientation. Among 122 users with sufficient evidence toward both blocs, the mean normalized gap was 1.44 (95\% CI [1.27, 1.68]). This contrast combined favorable evaluations of aligned actors with unfavorable evaluations of opponents, indicating affective differentiation between political options alongside general criticism. The aggregate pattern persisted across changes in event support, video contributions, and the presence of frequently mentioned actors, although individual scores showed limited stability. Within the observed community, the findings characterized expressions of support and rejection toward rival actors without representing the electorate or explaining the election outcome. The study provided a reproducible way to distinguish these expressions in Peruvian electoral discussion, while a separate classifier evaluation established the scope for automating their measurement.
+Electoral campaigns provided opportunities to observe how support for a political option coexisted with rejection of its opponents, but general comment sentiment did not identify the recipient of an evaluation. This study examined expressed affective polarization on YouTube during the 2026 Peruvian presidential election through explicit evaluations of political actors. Observed political affinity was identified in one partition of videos, while evaluations across blocs were compared in another, separating the evaluated target from the channel's editorial orientation. Among 122 users with sufficient evidence toward both blocs, the mean normalized gap was 1.44 (95\% CI [1.27, 1.68]). The positive contrast persisted across changes in event support, video contributions, and the presence of frequently mentioned actors. A complementary comparison of five classifiers distinguished target identification from sentiment classification in the evaluation of automated measurement. The findings documented a consistent pattern of expressed affective polarization among the studied users: support for aligned political actors coexisted with rejection of opponents, including in discussions hosted by neutral news sources. The study contributed a reproducible approach to identifying how political alignment was expressed through evaluations of rival actors in Peru's electoral discussion.
+
 \end{abstract}
-\selectlanguage{english}
 
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -458,7 +117,7 @@ Electoral campaigns provided opportunities to observe how support for a politica
 
 
 \begin{IEEEkeywords}
-Affective polarization, targeted sentiment, YouTube, Transformer, observed political affinity, Peru.
+Sentiment analysis; Natural language processing; Social computing; Targeted sentiment analysis; Affective polarization; Social media; Transformer models; YouTube; Peruvian elections.
 \end{IEEEkeywords}
 
 
@@ -476,9 +135,17 @@ Affective polarization, targeted sentiment, YouTube, Transformer, observed polit
 
 \section{Introduction}
 
-Social media had become prominent spaces for political discussion and the expression of citizens' opinions. Platforms such as Facebook, Twitter/X, and YouTube hosted posts, comments, and exchanges about candidates, parties, and public policy \cite{statista2026}. These records provided material for studying political communication with natural language processing (NLP) \cite{ref1}. Engagement with political content had also been associated with more polarized opinions: Afyare \cite{afyare2025socialmedia} described platforms as spaces for both mobilization and confrontation. Analyzing public comments could therefore reveal how political options were discussed, while the people who commented remained distinct from the population of voters.
+Social media had become prominent spaces for political discussion and the expression of citizens' opinions. 
+Platforms such as Facebook, Twitter/X, and YouTube hosted posts, comments, and exchanges about candidates, 
+parties, and public policy \cite{statista2026}. These records provided material for studying political 
+communication with natural language processing (NLP) \cite{ref1}. Engagement with political content had also 
+been associated with more polarized opinions: Afyare \cite{afyare2025socialmedia} described platforms as spaces 
+for both mobilization and confrontation. Analyzing public comments could therefore reveal how political options 
+were discussed, while the people who commented remained distinct from the population of voters.
 
-Sentiment analysis usually classified the polarity of a text as positive, negative, or neutral. Advances in deep learning and Transformer models had improved contextual text classification \cite{Singh2026}. These methods had also informed computational research on affective polarization. Martínez-España et al. \cite{polariz} proposed an individual measure derived from social media posts; Bor et al. \cite{bor2023} examined sentiment across political groups and policy issues. In Peru, earlier elections and political discussions had been studied using both conventional representations and deep models \cite{Ayma2024,Carrera2026}. Ponte Torrel \cite{Ponte2022} examined affective expressions during the 2021 presidential runoff, while Mejía Navarrete \cite{Mejia2024} analyzed political polarization over 2000--2023.
+Sentiment analysis usually classified the polarity of a text as positive, negative, or neutral. Advances in 
+deep learning and Transformer models had improved contextual text classification \cite{Singh2026}. These 
+methods had also informed computational research on affective polarization. Martínez-España et al. \cite{polariz} proposed an individual measure derived from social media posts; Bor et al. \cite{bor2023} examined sentiment across political groups and policy issues. In Peru, earlier elections and political discussions had been studied using both conventional representations and deep models \cite{Ayma2024,Carrera2026}. Ponte Torrel \cite{Ponte2022} examined affective expressions during the 2021 presidential runoff, while Mejía Navarrete \cite{Mejia2024} analyzed political polarization over 2000--2023.
 
 The 2026 election provided a relevant setting for studying these expressions. The first presidential round took place on April 12, followed by a June 7 runoff between Fuerza Popular and Juntos por el Perú, as documented by the national electoral authority \cite{JNE11352026}. The Defensoría del Pueblo recorded disputes over the electoral process and opposition to political candidacies during this period \cite{Defensoria2842026}. These records established the context in which the comments were produced; they did not show that the same disputes caused any pattern measured here. The study's January--June window covered multiple stages of the contest, rather than a single electoral event.
 
@@ -511,7 +178,6 @@ More recent studies examined polarization and sentiment specifically on YouTube.
 
 Together, these studies demonstrated the usefulness of Transformer models for analyzing political discourse and sentiment. They also motivated extending these methods to audiovisual platforms such as YouTube, distinguishing editorial provenance from political targets, and adapting representations to regional slang and dialectal variation.
 
-
 \section{Proposed Method}
 
 \begin{figure*}[t]
@@ -524,12 +190,13 @@ Together, these studies demonstrated the usefulness of Transformer models for an
 Figure~\ref{fig:metodo} summarized acquisition through YouTube Data API v3, preprocessing with editorial provenance, separate user-history and evaluation samples, and metric computation. User-level measurement and classifier evaluation had different inputs and denominators. Affective polarization was operationalized as differential evaluation of political actors across blocs; reply counts and survey-based ideological distance were separate constructs.
 
 \subsection{Data acquisition}
+
 YouTube was selected as the primary data source given access restrictions on other platforms \cite{ANTONAKAKI2021114006}. Its official API organized observations into channels and videos, allowing comments to retain traceable editorial provenance.
 
 Editorial groups were documented using external sources on media ownership, party affiliation, and editorial orientation. The observed union contained 40 channels: ten right-wing, eight left-wing, and 22 neutral sources. This included historical records and the expanded capture and did not imply balanced source representation. The \textit{party} field identified source provenance only, not the author's affiliation or the target's bloc. Neutral sources were not an experimental control.
 
 To delimit the 2026 Peruvian presidential election period, both video and comment dates were required to fall within January--June 2026. The expanded capture completed 11\,280 videos by paginating comments and retrieving missing replies through parent identifiers \cite{YoutubeThreads}. After integrating eligible historical observations and deduplicating identifiers, the frozen study collection contained 1\,012\,515 comments from 11\,361 videos. Recaptured videos and videos present in the union served different roles. A reply link identified the API thread and did not necessarily identify the person or actor addressed in the text.
-
+ 
 \subsection{Preprocessing}
 Preprocessing standardized records and consolidated temporal, linguistic, and participation attributes: original text; author, comment, video, and channel identifiers; comment and video dates; title; reactions; replies; and editorial provenance. Emojis, capitalization, and colloquial forms relevant to interpretation were preserved. Model-specific tokenization was applied in the classification branch.
 
@@ -563,6 +230,7 @@ The initial frame contained 4\,443 potentially comparable users, ordered by SHA-
 The evaluation sample was separate from development data and contained 3\,000 comments: 1\,000 with left-bloc extraction candidates, 1\,000 with right-bloc candidates, 500 with unknown-bloc candidates only, and 500 without candidates. Comments mentioning both blocs were assigned to a quota by hash. Within quotas, sampling was stratified by source, month, and comment type. Inclusion probabilities were retained, and videos and texts used in earlier development were excluded. This sample evaluated classifiers; it did not replace the histories used to measure polarization.
 
 \subsection{Targeted sentiment classification with Transformers}
+
 Five complementary pretrained models were considered: RoBERTuito, BETO, XLM-RoBERTa-base, MrBERT-es, and mDeBERTa-v3-base. RoBERTuito was pretrained on 500 million tweets and provided a reference adapted to user-generated Spanish \cite{robertuito}. BETO supplied a general Spanish reference pretrained with whole-word masking, allowing comparison with a social-language model \cite{BETOResource}. XLM-RoBERTa-base provided a multilingual reference pretrained on texts in 100 languages; its inclusion reflected that linguistic scope without presuming inferior performance \cite{XLMR2020}.
 
 MrBERT-es was a 150-million-parameter Spanish/English model based on ModernBERT, with vocabulary adaptation and bilingual pretraining \cite{MrBERT2026,MrBERTesResource}. mDeBERTa-v3-base provided a multilingual architecture using replaced-token detection and gradient-disentangled embedding sharing \cite{DeBERTaV32023,mDeBERTaResource}. Previous use of mDeBERTa for targeted sentiment in Spanish financial headlines also motivated its inclusion \cite{SINAI2023FinancES}; that domain and its results did not transfer to Peruvian political comments. These two models were additional candidates; the other three retained their existing fits and predictions.
@@ -574,23 +242,29 @@ Each model received a target name and comment and estimated probabilities for fi
 \end{equation}
 Labeled development data contained 1\,291/278 training/validation pairs before context filtering. The common set fixed in the initial comparison contained 1\,148/264 complete pairs; both additional models used exactly those pairs, labels, and weights. RoBERTuito effectively accepted 128 tokens (model input units), while the other models were limited to 512 in this experiment. MrBERT-es supported a larger published window, which was not used to expand this comparison. Labels from the new user histories and evaluation sample were excluded from training; the 500 historical test observations remained reserved.
 
-The initial comparison completed twelve GPU fits on Kaggle, using three seeds (42, 43, 44) per model. Fits of the three reference models were preserved, and a six-fit extension for MrBERT-es and mDeBERTa-v3-base was completed. The common recipe used AdamW, learning rate $2\times10^{-5}$, weight decay .01, effective batch size 16, at most eight epochs, and early stopping after two epochs without validation improvement. Probabilities were averaged across seeds, and temperature scaling was fitted only on validation data \cite{Guo2017Calibration}. The acceptance policy used abstention to trade coverage for lower error among retained predictions, following the general selective-classification framework \cite{Geifman2017Selective}. Class-specific confidence thresholds were selected to achieve weighted validation precision of at least 0.85 on at least ten accepted comment--target pairs. These study-defined heuristic criteria prioritized precision and avoided enabling classes on the basis of very few predictions. Their numerical values were pragmatic choices rather than literature-prescribed or statistically derived cutoffs. Classes without an eligible threshold were disabled. Inputs without complete context triggered abstention. Confidence controlled prediction acceptance, not the intensity of a user\textquotesingle s affect.
+The initial comparison completed twelve GPU fits on Kaggle, using three different seeds per model. Fits of the three reference models were preserved, and a six-fit extension for MrBERT-es and mDeBERTa-v3-base was completed. Probabilities were averaged across seeds, and temperature scaling was fitted only on validation data \cite{Guo2017Calibration}. The acceptance policy used abstention to trade coverage for lower error among retained predictions, following the general selective-classification framework \cite{Geifman2017Selective}. Class-specific confidence thresholds were selected to achieve weighted validation precision of at least 0.85 on at least ten accepted comment--target pairs. These study-defined heuristic criteria prioritized precision and avoided enabling classes on the basis of very few predictions. Their numerical values were pragmatic choices rather than literature-prescribed or statistically derived cutoffs. Classes without an eligible threshold were disabled. Inputs without complete context triggered abstention. Confidence controlled prediction acceptance, not the intensity of a user\textquotesingle s affect. 
 
 Evaluation distinguished the full extraction-and-classification task, including omitted targets, from classification conditional on common complete-context candidates. Macro-F1 averaged favorable, unfavorable, and neutral classes before abstention. End-to-end coverage was the weighted proportion of annotated evaluable targets receiving an accepted evaluable prediction. Conditional coverage restricted its denominator to the common evaluation subset. Inverse comment-inclusion weights were used; the evaluation sample was not treated as a simple random sample of the full comment collection.
 
 \subsection{Targeted balances and affective polarization}
+
 Targeted balances and differences between blocs were distinguished to characterize evaluations of actors and individual polarization. Editorial provenance did not determine the recipient of an evaluation.
 
 \subsubsection{Affinity and targeted balances}
-Observed political affinity was assigned from support expressed in comments. Videos were split by hash into A and B with seed 42. In A, affinity bloc $g_i$ was required to have a unique positive majority, at least two positive events in at least two videos, and a dominant share $\geq2/3$ of positive events toward both blocs. Ties or insufficient evidence produced undetermined affinity, without establishing a specific electoral preference. Equation~\eqref{eq:ingroup} specified the assignment rule adopted for this study, subject to those support requirements.
+
+Videos were split reproducibly into disjoint sets A and B. A identified observed affinity; B compared evaluations of aligned and opposing blocs in other videos. This avoided reusing expressions for both tasks. The split was not chronological, and an author's expressions remained related.
+
+For user $i$, affinity $g_i$ required at least two favorable events across two or more A videos and at least two thirds of all favorable events toward both blocs. Insufficient support or ties left affinity undetermined. Eq.~\eqref{eq:ingroup} used $L/R$ for left/right and $\Pos^A_{ig}$ for favorable events toward bloc $g$:
+
 \begin{equation}
 g_i=\operatorname*{argmax}_{g\in\{L,R\}}\Pos^A_{ig}
 \quad\text{if affinity criteria hold.}
 \label{eq:ingroup}
 \end{equation}
-Reading started with A, ordering videos by size and breaking ties by identifier. Remaining comments were skipped only when a bound proved that neither bloc could meet the minimum requirements, even if every unread comment was treated as possible support. Skipped observations remained missing rather than being annotated as target absence. Qualifying users required complete reading of A and B.
 
-Evaluation used B and required evaluable evidence toward both blocs, at least three events in total, and two videos. Equation~\eqref{eq:favorabilidad_neta} defined the number of evaluable events and the net balance for each comparable user and bloc $g$:
+Comparable users required complete A/B readings, evidence toward both blocs in B, at least three B events, and two B videos. Early-exclusion procedures were detailed in the supplement.
+
+In Eq.~\eqref{eq:favorabilidad_neta}, $\Pos^B_{ig}$, $\Neg^B_{ig}$, and $\Neu^B_{ig}$ counted favorable, unfavorable, and neutral B events. Their sum gave $N^B_{ig}$; favorable minus unfavorable events gave balance $b^B_{ig}$:
 \begin{equation}
 N^B_{ig}=\Pos^B_{ig}+\Neg^B_{ig}+\Neu^B_{ig},\qquad b^B_{ig}=\Pos^B_{ig}-\Neg^B_{ig}.
 \label{eq:favorabilidad_neta}
@@ -599,7 +273,7 @@ The normalized balance $b^B_{ig}/N^B_{ig}$ lay in $[-1,1]$ and included evaluabl
 
 \subsubsection{Individual affective polarization and dispersion}
 \label{subsubsec:ap_individual}
-The individual indicator was adapted from the approach of Martínez-España et al. \cite{polariz}, separating observed affinity and evaluation across videos. Equations~\eqref{eq:ap_in}, \eqref{eq:ap_out}, and \eqref{eq:ap_final} defined the ingroup balance, outgroup balance, and their difference, respectively, with $\bar g_i$ denoting the opposing bloc:
+The individual indicator was adapted from the approach of Martínez-España et al. \cite{polariz}, separating observed affinity and evaluation across videos. Eqs.~\eqref{eq:ap_in}, \eqref{eq:ap_out}, and \eqref{eq:ap_final} defined the ingroup balance, outgroup balance, and their difference, respectively, with $\bar g_i$ denoting the opposing bloc:
 \begin{align}
 \mathrm{AP}_{In,i}&=b^B_{i,g_i},\label{eq:ap_in}\\
 \mathrm{AP}_{Out,i}&=b^B_{i,\bar g_i},\label{eq:ap_out}\\
@@ -627,7 +301,7 @@ The mean gave equal weight to every comparable user. A positive normalized gap i
 \Ensure Comparable users, metrics, and exclusion reasons.
 \ForAll{user among the first 300 in the fixed order}
 \State History was retained and evaluations were grouped by political bloc.
-\State Videos were assigned to A/B and affinity in A was checked.
+\State Affinity was identified in video set A; evaluations were measured in set B.
 \State Early exclusions were justified using the unread-comment bound.
 \State For valid affinity, A/B reading was completed and B support was checked.
 \If{valid affinity, both blocs, three events and two videos in B}
@@ -641,7 +315,7 @@ The mean gave equal weight to every comparable user. A positive normalized gap i
 \end{algorithm}
 
 \subsection{Uncertainty and sensitivity}
-The analysis used 2\,000 crossed bootstrap replicates of users and channels, stratifying channels by source group and recalculating affinity and eligibility in every replicate. Percentile 95\% confidence intervals (CIs) required at least 80\% valid replicates. The overall normalized gap was the primary contrast; Holm adjustment applied to secondary contrasts. These intervals described variation within the observed frame.
+The analysis used 2\,000 crossed bootstrap replicates of users and channels, stratifying channels by source group and recalculating affinity and eligibility in every replicate. Percentile 95\% confidence intervals (CIs) required at least 80\% valid replicates. The overall normalized gap was the primary contrast; p-values for secondary contrasts were adjusted using Holm's procedure \cite{Holm1979}. These intervals described variation within the observed frame.
 
 Sensitivity analyses retained the original comparable-user frame and reassessed comparability after reversing A/B, balancing contributions by video, excluding each of the three most frequent actors, and using the historical component without expanded capture. Each variant reported retained users. These were stability checks rather than six independent studies.
 
@@ -652,10 +326,16 @@ Individual stability was examined by retaining A affinity and randomly splitting
 Error sensitivity changed a fixed budget of B evaluations in the most adverse directions, prioritizing events with the largest influence on the mean. Affinities, targets, users, and denominators were held fixed, yielding a conditional bound rather than an expected error rate. Directly transferring a global confusion matrix to selected histories would have required unverified assumptions about errors, omissions, and abstention \cite{Egami2023Surrogates}. Classifier diagnostics added a training-majority baseline, per-class F1, confusion matrices, between-seed variability, and coverage decomposition. Substantive validation of text measurement required examining these error sources alongside aggregate performance \cite{GrimmerStewart2013}. Complete tables appeared in the supplementary material. Seeds, versions, and data hashes were retained for reproducibility. Public tables contained aggregates rather than user identifiers or individual affinities.
 
 \section{Results and Interpretation}
-The results addressed three questions: whether evaluations distinguished the user's own political bloc from its opponent, whether this pattern survived changes in measurement, and how reliably the available classifiers could automate it. The full comment collection supplied histories and sampling frames; the individual contrast concerned comparable users.
+
+The results addressed three questions: whether evaluations distinguished the user's own political bloc 
+from its opponent, whether this pattern survived changes in measurement, and how reliably the 
+available classifiers could automate it. The full comment collection supplied histories and 
+sampling frames; the individual contrast concerned comparable users.
 
 \subsection{Observed sample and selection}
-Comparability selected an active subset of the observed discussion. Table~\ref{tab:sentimiento_favorabilidad} separated available comments from examined histories: the first 300 users contributed 13\,888 comments, of which 13\,179 were annotated and 709 were left unread after early exclusions based on the affinity criteria. Skipped readings were not counted as comments without targets.
+Comparability selected an active subset of the observed discussion. Table~\ref{tab:sentimiento_favorabilidad}
+separated available comments from examined histories: the first 300 users contributed 13\,888 comments,
+of which 13\,179 were annotated and 709 were left unread after early exclusions based on the affinity criteria. Skipped readings were not counted as comments without targets.
 
 \begin{table}[t]
 \centering\small
@@ -673,14 +353,17 @@ Evaluation comments & 3\,000\\\bottomrule
 \end{tabular}
 \end{table}
 
-The 122 comparable users accounted for 40.67\% of those examined. Their complete histories contained 6\,696 comments across A and B, including comments without evaluable targets. Neutral sources contributed 2\,601 of these comments, demonstrating their role in the observation frame without assigning them a third political bloc. The results described this selected group of participants rather than all authors in the collection.
+The 122 comparable users accounted for 40.67\% of those examined. Their complete histories contained 6\,696 
+comments across A and B, including comments without evaluable targets. Neutral sources contributed 2\,601 of 
+these comments, demonstrating their role in the observation frame without assigning them a third political bloc.
+The results described this selected group of participants rather than all authors in the collection.
 
 The selection funnel was 4\,443 structural candidates, 300 examined users, 126 with determined A affinity, and 122 comparable in B. Among the 178 excluded users, 174 failed the affinity requirements. Of the other four, one lacked ingroup evidence, two lacked outgroup evidence, and one had insufficient B events. This hierarchy made reasons mutually exclusive; one outgroup absence also coincided with insufficient events. The 709 skipped comments belonged to 56 excluded histories. All comparable-user histories were read completely.
 
-Included users were somewhat more active and participated across more sources. Median histories contained 33.5 comments compared with 28 among excluded users, with 24 versus 21 videos and seven versus six channels. The corresponding standardized mean differences were .271, .225, and .271. This observable selection helped define whose expressions were measured; it did not correct unobserved selection. Full distributions and event composition by affinity and target bloc appeared in the supplement.
+Included users were somewhat more active and participated across more sources. Median histories contained 33.5 comments compared with 28 among excluded users, with 24 versus 21 videos and seven versus six channels. The corresponding standardized mean differences were 0.271, 0.225, and 0.271. This observable selection helped define whose expressions were measured; it did not correct unobserved selection. Full distributions and event composition by affinity and target bloc appeared in the supplement.
 
 \subsection{Expressed affective polarization}
-Evaluations distinguished political destinations rather than expressing undirected dissatisfaction alone. Table~\ref{tab:ap_spread} reported metrics by observed affinity. Count-based balances and the normalized gap operated on different scales; larger raw AP could reflect greater activity as well as different evaluations.
+The observed evaluations exhibited a consistent aggregate pattern of expressed affective polarization: favorable assessments of aligned actors accompanied unfavorable assessments of opposing actors. Table~\ref{tab:ap_spread} reported metrics by observed affinity. Count-based balances and the normalized gap operated on different scales; larger raw AP could reflect greater activity as well as different evaluations.
 
 \begin{table}[t]
 \centering\small
@@ -697,13 +380,15 @@ Mean gap & 1.4131 & 1.4656\\
 \bottomrule\end{tabular}
 \end{table}
 
-Comparable users evaluated actors from their own bloc more favorably than actors from the opposing bloc. The mean normalized gap was 1.4424, 95\% CI [1.2733, 1.6827]. The mean ingroup balance was positive, 0.5829 [0.4430, 0.7700], and the outgroup balance was negative, $-0.8594$ [$-0.9480$, $-0.7919$], using 2\,000 valid replicates. Thus, relative favoritism accompanied rejection of opposing actors within the observed discussion, rather than arising solely from different degrees of general negativity.
+Comparable users evaluated actors from their own bloc more favorably than actors from the opposing bloc. The mean normalized gap was 1.4424, 95\% CI [1.2733, 1.6827]. The mean ingroup balance was positive, 0.5829 [0.4430, 0.7700], and the outgroup balance was negative, $-0.8594$ [$-0.9480$, $-0.7919$], using 2\,000 valid replicates. Together, these balances identified both components of the observed differentiation: support for aligned actors and rejection of opponents. The political destination of an evaluation therefore mattered to the interpretation of its sentiment.
 
-Both affinity groups exhibited this direction of evaluation, but their difference remained inconclusive. The right-minus-left gap contrast was $-0.0526$, 95\% CI [$-0.4624$, 0.3868], with Holm-adjusted $p=.7845$ and 1\,999 valid replicates. The group means in Table~\ref{tab:ap_spread} therefore did not establish which bloc was more polarized, and the uncertainty did not demonstrate equality.
+Both affinity groups exhibited this direction of evaluation, but their difference remained inconclusive. The right-minus-left gap contrast was $-0.0526$, 95\% CI [$-0.4624$, 0.3868], with Holm-adjusted $p=0.7845$ and 1\,999 valid replicates. The group means in Table~\ref{tab:ap_spread} therefore did not establish which bloc was more polarized, and the uncertainty did not demonstrate equality.
 
-The pattern extended beyond the average user: 120 of 122 had a positive gap, or 98.36\% [91.67\%, 100\%]. In 93 users, favorable ingroup and unfavorable outgroup balances occurred together, or 76.23\% [66.67\%, 93.75\%]. These results distinguished relative favoritism from simultaneous support and rejection. Both proportions were conditional on sufficient evidence toward both blocs; they were not estimates of the share of Peruvians who were polarized.
+The pattern extended beyond the average user: 120 of 122 had a positive gap, or 98.36\% [91.67\%, 100\%]. In 93 users, favorable ingroup and unfavorable outgroup balances occurred together, or 76.23\% [66.67\%, 93.75\%]. The near-universal positive direction among comparable users showed that the aggregate contrast was broadly shared. Simultaneous support and rejection characterized a smaller, still substantial majority, distinguishing that joint pattern from relative favoritism alone. Both proportions were conditional on sufficient evidence toward both blocs; they were not estimates of the share of Peruvians who were polarized.
 
-The distribution in Figure~\ref{fig:gap_support} showed that the aggregate contrast was not produced by a few unusually large gaps. The median was 1.6000, with an interquartile range of [1.0000, 2.0000]; the 10\% trimmed mean was 1.5111 [1.3255, 1.7528]. Figure~\ref{fig:event_support} separately showed the unequal event support behind individual measurements. Median B support was eight events [5, 13] across six videos [4, 9.75], so a consistent aggregate direction could coexist with uncertain individual scores.
+Figure~\ref{fig:gap_support} showed that relative favoritism was broadly distributed among comparable participants: their evaluations differentiated aligned actors from opponents in videos separate from those used to identify affinity. The median was 1.6000, with an interquartile range of [1.0000, 2.0000]; the 10\% trimmed mean was 1.5111 [1.3255, 1.7528]. These summaries supported a shared direction of political evaluation rather than an aggregate contrast driven by a few unusually large gaps. Values near the upper bound indicated pronounced separation between evaluations of the two blocs within the available evidence, although sparse histories could also yield extreme normalized scores.
+
+Figure~\ref{fig:event_support} showed that this electoral discussion included participants with markedly different volumes of evaluable expression. Median B support was eight events [5, 13] across six videos [4, 9.75]. Giving equal weight to each user prevented the most prolific commenters from directly dominating the primary mean through their comment counts. The unequal support nevertheless meant that individual scores rested on different amounts of evidence, helping explain why a consistent aggregate direction could coexist with uncertain individual measurements. Participation volume alone did not identify activism, organized campaigning, or coordinated accounts.
 
 \begin{figure}[t]\centering
 \includegraphics[width=\columnwidth]{docs/figures/observational_gap_distribution.pdf}
@@ -729,23 +414,27 @@ Normalized gap & 1.442 & 0.547 & 1.600 & [1.000, 2.000] & 1.511\\
 \par\smallskip\footnotesize SD: standard deviation. IQR was reported as [25th, 75th percentile]. The trimmed mean removed 10\% of observations from each tail.
 \end{table*}
 
-High activity affected count-based balances more than the normalized primary contrast. Removing the right-affinity user with AP$_{In}=80$ reduced that group's mean AP$_{In}$ from 3.6481 to 2.2075, while the overall gap changed only from 1.4424 to 1.4410. Removing each user in turn left mean gaps between 1.4378 and 1.4543. Table~\ref{tab:robustos} summarized the skewed count distributions. The aggregate finding survived the extreme case, although individual measurements did not become equally precise.
+High activity affected count-based balances more than the normalized primary contrast. Removing the right-affinity user with AP$_{In}=80$ reduced that group's mean AP$_{In}$ from 3.6481 to 2.2075, while the overall gap changed only from 1.4424 to 1.4410. Removing each user in turn left mean gaps between 1.4378 and 1.4543. Table~\ref{tab:robustos} summarized the skewed count distributions. The stability of the normalized gap under these exclusions showed that the primary finding did not depend on the most active user or on any single history.
 
 \begin{figure}[t]\centering
 \includegraphics[width=\columnwidth]{docs/figures/observational_balance_matrix.pdf}
 \caption{Normalized balances by observed affinity and target bloc, with 95\% CIs. Cells averaged users; positive values indicated net favorable evaluation.}
 \label{fig:balance_matrix}\end{figure}
 
-Figure~\ref{fig:balance_matrix} made the political direction of the contrast explicit: each affinity group had a favorable balance toward its own bloc and an unfavorable balance toward the other, with all four intervals retaining their signs. The same evaluative direction appeared in both groups. This was consistent with expressed affective differentiation toward political actors; it did not establish hostility toward every person who supported the opposing bloc.
+Figure~\ref{fig:balance_matrix} showed the political structure of the aggregate contrast: each affinity group had a favorable balance toward its own bloc and an unfavorable balance toward the other, with all four intervals retaining their signs. Support for aligned actors and rejection of opponents therefore coexisted in both groups, locating the observed differentiation in evaluations of competing political options. This pattern linked the measured gap to the study's electoral setting. It concerned political actors rather than hostility toward their supporters, and did not establish which affinity group was more polarized.
 
-Figures~\ref{fig:ap_in}, \ref{fig:ap_out}, \ref{fig:ap}, and \ref{fig:spread} showed individual distributions with relative frequencies to accommodate unequal group sizes. Bin boundaries were shared across affinities. Their tails reflected variation in activity and balances rather than clinical or psychological levels of polarization.
+Figures~\ref{fig:ap_in} and~\ref{fig:ap_out} detailed the two components of that pattern. The presence of negative ingroup balances showed that observed affinity did not imply uniform approval: some participants expressed more unfavorable than favorable evaluations of their own bloc in B. This was evidence of internal criticism alongside political alignment, not an estimated change in voting preference; A and B were separate video sets rather than successive electoral periods. The predominantly negative outgroup balances showed the place of adversary-directed rejection in the discussion. Their extended negative tails represented accumulated unfavorable evaluations whose magnitudes also depended on participation. They did not establish stronger hostility or greater polarization in one affinity group.
+
+Figure~\ref{fig:ap} combined these components into the count-based contrast. Its positive concentration showed how favorable differentiation accumulated across the observed histories, while large values could combine repeated participation with divergent evaluations of the two blocs. This distinction mattered politically: a prolific expression of opposition did not by itself indicate a stronger relative preference than that expressed by a less active participant. Reading this figure alongside the normalized gap in Figure~\ref{fig:gap_support} separated accumulated expression from the relative direction of evaluations.
+
+Figure~\ref{fig:spread} summarized heterogeneity in balance magnitudes within each affinity group. The spread measure squared the balances and therefore discarded their signs; a high value alone did not identify support for aligned actors combined with rejection of opponents. Its political interpretation depended on the signed balances in Figures~\ref{fig:balance_matrix}--\ref{fig:ap_out}. The distributions showed that participants sharing an observed affinity did not express evaluations uniformly. Relative frequencies and common bin boundaries in Figures~\ref{fig:ap_in}--\ref{fig:spread} accommodated unequal group sizes. These figures provided complementary views of the same histories, rather than independent tests of polarization.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={$\mathrm{AP}_{In}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-29,0.014705882) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0) (-1.75,0.64705882) (3.7,0.27941176) (9.15,0.044117647) (14.6,0) (20.05,0) (25.5,0) (30.95,0.014705882) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0) (80,0)};
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-29,0) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0.055555556) (-1.75,0.66666667) (3.7,0.24074074) (9.15,0.018518519) (14.6,0) (20.05,0) (25.5,0) (30.95,0) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0.018518519) (80,0)};
+\begin{tikzpicture}\begin{axis}[width=0.95\columnwidth,height=4.3cm,
+xlabel={$\mathrm{AP}_{In}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(0.98,0.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-29,0.014705882) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0) (-1.75,0.64705882) (3.7,0.27941176) (9.15,0.044117647) (14.6,0) (20.05,0) (25.5,0) (30.95,0.014705882) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0) (80,0)};
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-29,0) (-23.55,0) (-18.1,0) (-12.65,0) (-7.2,0.055555556) (-1.75,0.66666667) (3.7,0.24074074) (9.15,0.018518519) (14.6,0) (20.05,0) (25.5,0) (30.95,0) (36.4,0) (41.85,0) (47.3,0) (52.75,0) (58.2,0) (63.65,0) (69.1,0) (74.55,0.018518519) (80,0)};
 \legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
 \caption{Distribution of AP$_{In}$ by observed political affinity, using 20 common bins and relative frequencies within groups.}
@@ -754,10 +443,10 @@ xlabel={$\mathrm{AP}_{In}$},ylabel={Relative frequency},ymin=0,tick label style=
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={$\mathrm{AP}_{Out}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-62,0.029411765) (-58.9,0) (-55.8,0) (-52.7,0.014705882) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0) (-27.9,0.014705882) (-24.8,0) (-21.7,0.014705882) (-18.6,0.014705882) (-15.5,0.058823529) (-12.4,0.058823529) (-9.3,0.058823529) (-6.2,0.26470588) (-3.1,0.47058824) (0,0)};
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-62,0) (-58.9,0) (-55.8,0) (-52.7,0) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0.018518519) (-27.9,0) (-24.8,0) (-21.7,0.018518519) (-18.6,0) (-15.5,0) (-12.4,0.018518519) (-9.3,0.074074074) (-6.2,0.27777778) (-3.1,0.59259259) (0,0)};
+\begin{tikzpicture}\begin{axis}[width=0.95\columnwidth,height=4.3cm,
+xlabel={$\mathrm{AP}_{Out}$},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(0.98,0.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-62,0.029411765) (-58.9,0) (-55.8,0) (-52.7,0.014705882) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0) (-27.9,0.014705882) (-24.8,0) (-21.7,0.014705882) (-18.6,0.014705882) (-15.5,0.058823529) (-12.4,0.058823529) (-9.3,0.058823529) (-6.2,0.26470588) (-3.1,0.47058824) (0,0)};
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-62,0) (-58.9,0) (-55.8,0) (-52.7,0) (-49.6,0) (-46.5,0) (-43.4,0) (-40.3,0) (-37.2,0) (-34.1,0) (-31,0.018518519) (-27.9,0) (-24.8,0) (-21.7,0.018518519) (-18.6,0) (-15.5,0) (-12.4,0.018518519) (-9.3,0.074074074) (-6.2,0.27777778) (-3.1,0.59259259) (0,0)};
 \legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
 \caption{Distribution of AP$_{Out}$ by observed political affinity, using 20 common bins and relative frequencies within groups.}
@@ -766,10 +455,10 @@ xlabel={$\mathrm{AP}_{Out}$},ylabel={Relative frequency},ymin=0,tick label style
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={AP},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-1,0.30882353) (4.55,0.35294118) (10.1,0.19117647) (15.65,0.058823529) (21.2,0.044117647) (26.75,0.014705882) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0.014705882) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0.014705882) (98.9,0) (104.45,0) (110,0)};
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-1,0.38888889) (4.55,0.5) (10.1,0.074074074) (15.65,0.018518519) (21.2,0) (26.75,0) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0) (98.9,0) (104.45,0.018518519) (110,0)};
+\begin{tikzpicture}\begin{axis}[width=0.95\columnwidth,height=4.3cm,
+xlabel={AP},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(0.98,0.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=blue!70!black,fill=blue!70!black] coordinates {(-1,0.30882353) (4.55,0.35294118) (10.1,0.19117647) (15.65,0.058823529) (21.2,0.044117647) (26.75,0.014705882) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0.014705882) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0.014705882) (98.9,0) (104.45,0) (110,0)};
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=orange!80!black,fill=orange!80!black] coordinates {(-1,0.38888889) (4.55,0.5) (10.1,0.074074074) (15.65,0.018518519) (21.2,0) (26.75,0) (32.3,0) (37.85,0) (43.4,0) (48.95,0) (54.5,0) (60.05,0) (65.6,0) (71.15,0) (76.7,0) (82.25,0) (87.8,0) (93.35,0) (98.9,0) (104.45,0.018518519) (110,0)};
 \legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
 \caption{Distribution of AP by observed political affinity, using 20 common bins and relative frequencies within groups.}
@@ -778,10 +467,10 @@ xlabel={AP},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotes
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}\begin{axis}[width=.95\columnwidth,height=4.3cm,
-xlabel={Dispersion},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(.98,.98)},anchor=north east},scaled ticks=false]
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=blue!70!black,fill=blue!70!black] coordinates {(0.40824829,0.044117647) (0.75436047,0.058823529) (1.1004726,0.11764706) (1.4465848,0.20588235) (1.792697,0.23529412) (2.1388092,0.058823529) (2.4849214,0.073529412) (2.8310335,0.11764706) (3.1771457,0) (3.5232579,0.014705882) (3.8693701,0.014705882) (4.2154823,0) (4.5615944,0.014705882) (4.9077066,0) (5.2538188,0) (5.599931,0.014705882) (5.9460432,0) (6.2921553,0) (6.6382675,0.014705882) (6.9843797,0.014705882) (7.3304919,0)};
-\addplot+[ybar interval,mark=none,fill opacity=.25,draw=orange!80!black,fill=orange!80!black] coordinates {(0.40824829,0) (0.75436047,0.18518519) (1.1004726,0.16666667) (1.4465848,0.24074074) (1.792697,0.2037037) (2.1388092,0.11111111) (2.4849214,0.037037037) (2.8310335,0) (3.1771457,0.018518519) (3.5232579,0) (3.8693701,0) (4.2154823,0.018518519) (4.5615944,0) (4.9077066,0) (5.2538188,0) (5.599931,0) (5.9460432,0) (6.2921553,0) (6.6382675,0) (6.9843797,0.018518519) (7.3304919,0)};
+\begin{tikzpicture}\begin{axis}[width=0.95\columnwidth,height=4.3cm,
+xlabel={Dispersion},ylabel={Relative frequency},ymin=0,tick label style={font=\footnotesize},label style={font=\small},legend style={font=\footnotesize,at={(0.98,0.98)},anchor=north east},scaled ticks=false]
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=blue!70!black,fill=blue!70!black] coordinates {(0.40824829,0.044117647) (0.75436047,0.058823529) (1.1004726,0.11764706) (1.4465848,0.20588235) (1.792697,0.23529412) (2.1388092,0.058823529) (2.4849214,0.073529412) (2.8310335,0.11764706) (3.1771457,0) (3.5232579,0.014705882) (3.8693701,0.014705882) (4.2154823,0) (4.5615944,0.014705882) (4.9077066,0) (5.2538188,0) (5.599931,0.014705882) (5.9460432,0) (6.2921553,0) (6.6382675,0.014705882) (6.9843797,0.014705882) (7.3304919,0)};
+\addplot+[ybar interval,mark=none,fill opacity=0.25,draw=orange!80!black,fill=orange!80!black] coordinates {(0.40824829,0) (0.75436047,0.18518519) (1.1004726,0.16666667) (1.4465848,0.24074074) (1.792697,0.2037037) (2.1388092,0.11111111) (2.4849214,0.037037037) (2.8310335,0) (3.1771457,0.018518519) (3.5232579,0) (3.8693701,0) (4.2154823,0.018518519) (4.5615944,0) (4.9077066,0) (5.2538188,0) (5.599931,0) (5.9460432,0) (6.2921553,0) (6.6382675,0) (6.9843797,0.018518519) (7.3304919,0)};
 \legend{Left ($n=68$),Right ($n=54$)}
 \end{axis}\end{tikzpicture}
 \caption{Distribution of dispersion by observed political affinity, using 20 common bins and relative frequencies within groups.}
@@ -789,7 +478,7 @@ xlabel={Dispersion},ylabel={Relative frequency},ymin=0,tick label style={font=\f
 \end{figure}
 
 \subsection{Robustness across specifications}
-The aggregate direction survived changes in actor composition and contribution by video. All six intervals in Table~\ref{tab:sensibilidades} retained a positive gap. Balancing by video retained all 122 users; other variants reduced the sample. Paired changes against the original definition on the same retained users all included zero in their intervals. Preserving direction supported robustness within these variants without demonstrating equivalence between specifications.
+The aggregate direction survived changes in actor composition and contribution by video. All six intervals in Table~\ref{tab:sensibilidades} retained a positive gap. Balancing by video retained all 122 users; other variants reduced the sample. Paired changes against the original definition on the same retained users all included zero in their intervals. This convergence supported the direction of the aggregate finding across the examined specifications; it did not establish equivalence between their magnitudes.
 \begin{table}[t]\centering\small
 \caption{Original sensitivity variants and 95\% CIs.}
 \label{tab:sensibilidades}
@@ -806,16 +495,16 @@ Historical data only & 100 & 1.493 & [1.308, 1.755]\\
 
 Requiring more evidence per user reduced the observed sample without reversing the pattern. The fixed 12-combination grid retained 66--123 users, with gaps of 1.4306--1.5176 and entirely positive intervals. Requiring three events per bloc retained 66 users, gap 1.4059 [1.2032, 1.6715]; five per bloc retained 30, gap 1.3954 [1.0908, 1.6829]. These checks showed a tradeoff between individual support and breadth of observation. They were defined after the primary result and did not replace the main eligibility criteria.
 
-Neutral evaluations moderated the normalized contrast. Removing them from denominators left 114 users with a gap of 1.6687 [1.5070, 1.8853], compared with 1.4827 under the original definition on those same users: change .1859 [.0897, .2883]. Eight users lost valid denominators and received no imputed score. The primary definition retained neutral evidence; the alternative examined how its treatment changed magnitude. The supplement reported all specifications.
+Neutral evaluations moderated the normalized contrast. Removing them from denominators left 114 users with a gap of 1.6687 [1.5070, 1.8853], compared with 1.4827 under the original definition on those same users: change 0.1859 [0.0897, 0.2883]. Eight users lost valid denominators and received no imputed score. The primary definition retained neutral evidence; the alternative examined how its treatment changed magnitude. The supplement reported all specifications.
 
-The pattern was also observable under neutral news sources, rather than being confined to explicitly aligned sources. Restricting B by editorial provenance yielded gaps of 1.4969 [1.1876, 1.7877] under left-wing sources ($n=63$), 1.3809 [.7845, 1.9208] under right-wing sources ($n=16$), and 1.4676 [1.0788, 1.7772] under neutral sources ($n=52$). Users were required to retain both target blocs within each subset and could appear under several source groups. The smaller right-source sample had greater uncertainty. These conditional findings described settings of expression; they did not estimate channel effects.
+The pattern was also observable under neutral news sources, rather than being confined to explicitly aligned sources. Restricting B by editorial provenance yielded gaps of 1.4969 [1.1876, 1.7877] under left-wing sources ($n=63$), 1.3809 [0.7845, 1.9208] under right-wing sources ($n=16$), and 1.4676 [1.0788, 1.7772] under neutral sources ($n=52$). Users were required to retain both target blocs within each subset and could appear under several source groups. The smaller right-source sample had greater uncertainty. These conditional findings described settings of expression; they did not estimate channel effects.
 
 \subsection{Individual stability and error sensitivity}
-The A/B comparison did not establish that reusing affinity evidence necessarily inflated the observed contrast. Among 113 users measurable in both partitions, mean gaps were 1.5810 in A and 1.4152 in B; A minus B was .1658, 95\% CI [$-.0494$, .3290]. The point estimate was compatible with optimism from reusing A, but the interval included zero. Separating evidence remained a design precaution rather than a conclusion derived from this test.
+The A/B comparison did not establish that reusing affinity evidence necessarily inflated the observed contrast. Among 113 users measurable in both partitions, mean gaps were 1.5810 in A and 1.4152 in B; A minus B was 0.1658, 95\% CI [$-0.0494$, 0.3290]. The point estimate was compatible with optimism from reusing A, but the interval included zero. Separating evidence remained a design precaution rather than a conclusion derived from this test.
 
-Individual rankings were substantially less stable than the aggregate direction. Across 200 B-video splits, 51--74 users were measurable in both halves (median 63). Median Pearson correlation was .3667, IQR [.3032, .4203]; median Spearman correlation was .3806 [.3272, .4448]. These IQRs described variation across partitions, not 95\% CIs. The scores characterized observed expressions, but their limited half-sample stability did not support treating each user as having a precisely measured, persistent psychological trait.
+Individual rankings were substantially less stable than the aggregate direction. Across 200 B-video splits, 51--74 users were measurable in both halves (median 63). Median Pearson correlation was 0.3667, IQR [0.3032, 0.4203]; median Spearman correlation was 0.3806 [0.3272, 0.4448]. These IQRs described variation across partitions, not 95\% CIs. The scores characterized observed expressions, but their limited half-sample stability did not support treating each user as having a precisely measured, persistent psychological trait.
 
-Targeted errors could eventually overturn the mean even when moderate error budgets preserved its sign. With affinities, comparability, targets, and denominators fixed, adversarially changing 80 of 1\,609 B events (5\% budget) left a minimum gap of .6391; 160 changes (10\%) left .1801; 321 changes (20\%) yielded $-.5407$. The first nonpositive mean required 193 directed changes (12.00\%). This conditional bound examined the most influential B evaluations. It estimated neither actual annotation error nor errors in affinity, extraction, or selection, and did not validate a classifier.
+The aggregate direction remained positive under the examined adversarial error budgets of up to 10\%, conditional on fixed affinities, comparability, targets, and denominators. With affinities, comparability, targets, and denominators fixed, adversarially changing 80 of 1\,609 B events (5\% budget) left a minimum gap of 0.6391; 160 changes (10\%) left 0.1801; 321 changes (20\%) yielded $-0.5407$. The first nonpositive mean required 193 directed changes (12.00\%). This conditional bound examined the most influential B evaluations. It estimated neither actual annotation error nor errors in affinity, extraction, or selection, and did not validate a classifier.
 
 \subsection{Classifier performance}
 \begin{table*}[t]\centering\small
@@ -837,30 +526,98 @@ The comparison detected no clear difference between BETO and MrBERT-es; this did
 Accepted predictions covered 3.2--21.2\% of evaluable target weight across models, limiting automatic expansion; the supplement reported model-specific coverage, accepted precision, and extraction and abstention diagnostics. The polarization estimates came from annotated user histories and retained their own users and denominators; classifier outputs were not assigned to the full comment collection.
 
 \subsection{Interpretation in Peru's 2026 election}
-In Peru's 2026 electoral setting, the measured contrast captured a concrete form of political differentiation: participants with observable affinity tended to support actors from that bloc while rejecting actors from its opponent. The affinity--target matrix distinguished this direction from general criticism of politics. It extended the conceptual use of ingroup and outgroup balances in Martínez-España et al. \cite{polariz} to comments about political actors, without equating observed affinity with declared party identity.
+The results identified a consistent pattern of expressed affective polarization among the comparable users: political affinity differentiated favorable evaluations of aligned actors from unfavorable evaluations of opponents. This distinction gave substantive meaning to the positive normalized gap. The affinity--target matrix showed whom participants supported and rejected, while the distribution across users and the sensitivity analyses established that the aggregate direction was not confined to a few extreme histories or a single prominent actor.
 
-This interpretation could be situated within the campaign, but the external context was not an explanation estimated by the model. The JNE documented a runoff between Fuerza Popular and Juntos por el Perú after the April election \cite{JNE11352026}. The Defensoría del Pueblo recorded electoral disputes and rejection of candidacies during the study window \cite{Defensoria2842026}. The findings were compatible with an electoral discussion organized partly around opposing political actors. They did not show that those disputes caused the measured gap, that the gap increased during the runoff, or that it determined the election outcome. January--June comments were pooled; no event-effect or temporal-change estimate was reported.
+This direction agreed with the positive ingroup balances and predominantly negative outgroup evaluations reported by Martínez-España et al. \cite{polariz}. The present study extended that measurement approach to YouTube electoral comments by distinguishing channel provenance, evaluated actors, and observed affinity, and by evaluating expressions in videos separate from those used to assign affinity. Normalization and sensitivity analyses addressed the influence of activity and actor composition on the aggregate contrast. Different group definitions, denominators, and sampling rules precluded a numerical ranking of polarization across the two studies.
 
-Earlier Peruvian research provided a substantive comparison rather than a numerical benchmark. Ponte Torrel \cite{Ponte2022} examined emotionally differentiated messages about the rival 2021 candidacies; Mejía Navarrete \cite{Mejia2024} situated antagonism within a longer history of political conflict. Different elections, platforms, actors, and sampling rules prevented claims that polarization increased or decreased between those studies and this one. The positive ingroup and negative outgroup balances concerned the observed actors and users, not the full electorate.
+The findings also complemented earlier evidence from Peru. Ponte Torrel \cite{Ponte2022} documented emotionally differentiated support and rejection toward the rival presidential candidacies in Twitter discussions of the 2021 election. The present analysis added a within-user contrast between evaluations of aligned and opposing blocs in another platform and electoral period. This comparison linked the observed pattern to an established concern in Peruvian electoral communication, also situated within the longer political conflict discussed by Mejía Navarrete \cite{Mejia2024}; it did not estimate change between elections.
 
-The persistence of the direction under neutral sources indicated that affective differentiation could be expressed within general news discussions as well as aligned-source discussions. It did not show that neutral sources polarized their audiences. Likewise, commenting about both political blocs could coexist with unfavorable evaluations of opponents; cross-bloc exposure alone was not evidence of tolerance or deliberation. Neither the signs of general sentiment nor channel provenance identified the target of an evaluation without directed evidence \cite{BestvaterMonroe2023,Miehling2025}.
+The electoral context provided a concrete setting for this interpretation. The JNE documented a runoff between Fuerza Popular and Juntos por el Perú after the April election \cite{JNE11352026}. The Defensoría del Pueblo recorded rejection of candidacies and opposing demands concerning the electoral process, describing polarized political confrontations \cite{Defensoria2842026}. The directed support and rejection observed on YouTube were consistent with this documented context of electoral antagonism. The institutional report supplied contextual evidence, while the present study characterized evaluations in the observed digital discussion. Because January--June comments were pooled, the analysis did not attribute the gap to particular events or estimate its evolution during the runoff.
 
-An inconclusive difference between affinities established neither equal polarization nor greater polarization on one side. Undetermined affinity and insufficient evidence identified measurement exclusions rather than abstention, invalid votes, or political disengagement. The study's strongest inference concerned a robust aggregate pattern of expressed evaluation among users with evidence toward both blocs; its limited individual stability and selection prevented treating that pattern as a national psychological profile.
+The persistence of the contrast under neutral news sources further located these expressions within general news discussions. Political differentiation was observable even where channel provenance did not assign the discussion to either political bloc. Moreover, users with evaluable comments about both blocs still expressed relative favoritism, showing that evidence concerning opposing actors could coexist with affective differentiation. This finding concerned expressed evaluations; commenting about an actor did not establish direct interaction with that actor's supporters or an effect of the hosting channel.
+
+The value of identifying the evaluated target also connected this study to the aspect-based analysis of YouTube comments by Miehling et al. \cite{Miehling2025}. Target-specific analysis distinguished evaluations that a single comment-level sentiment label could combine, consistent with the distinction between sentiment and political stance \cite{BestvaterMonroe2023}. Here, that distinction enabled an explicit comparison between aligned and opposing actors. Together, the results supported an aggregate interpretation of expressed affective polarization within the observed users, while the inconclusive affinity-group contrast and limited individual stability defined the level at which that interpretation was supported.
 
 \section{Limitations}
+
 This study examined expressed evaluations among active YouTube participants with evidence toward both political blocs. Its scope was defined by the selected channels, explicit mentions, and actors with documented bloc assignments (22 of 124 identities). The findings therefore characterized this observed discussion; population-level estimates for the Peruvian electorate were outside the sampling design.
 
 Video partitions A and B separated affinity assignment from evaluation, while expressions by the same author remained related. The normalized gap reduced dependence on activity and was interpreted as an aggregate contrast. The split-half results called for caution when interpreting individual scores as persistent attributes.
 
 The cohort was capped at 300 examined users for resource reasons after annotation progress was known, replacing the initial target of 800 comparable users. The observed confidence intervals were used to assess the precision achieved by this sample \cite{lakens2022sample}. Additional models and complementary checks were chosen after initial results had been examined, so their findings were interpreted as comparisons within this sample. Full sampling and diagnostic details were reported in the supplement.
 
-Classifier performance defined the scope of automation, which did not extend to the full comment collection. At the time this preprint was prepared, annotations remained pending individual human confirmation; classifier scores reflected agreement with initial annotations. The intervals described sampling variation and did not incorporate annotation error. Agreement between human reviewers was not estimated.
-
 \section{Conclusions and Future Work}
-This study adapted the measurement of expressed affective polarization to YouTube comments and replies while distinguishing editorial provenance, evaluated targets, and the author's observed political affinity. The expanded collection supported user histories and a separate classifier-evaluation sample; these roles remained distinct from the denominator of user-level measurement.
+The study identified a consistent pattern of expressed affective polarization among 122 comparable YouTube users during Peru's 2026 electoral period. Favorable evaluations of aligned political actors coexisted with unfavorable evaluations of opposing actors, yielding a mean normalized gap of 1.44 (95\% CI [1.27, 1.68]). A positive gap occurred in 120 of the 122 users, showing that relative favoritism was broadly shared within this observed group. The central empirical contribution was the identification of the political direction of support and rejection within users' comment histories.
 
-Among comparable users, favorable evaluations of their own bloc coexisted with unfavorable evaluations of the opposing bloc. The direction persisted across actor exclusions, video balancing, and stronger event-support requirements, supporting an aggregate pattern of expressed affective polarization within the observed 2026 electoral discussion. Individual stability was limited and the affinity-group difference remained inconclusive. These findings characterized the studied participants rather than the electorate or the causes of the electoral outcome. The separate classifier comparison clarified the current limits of automating this measurement. Extending measurement evidence and examining ambiguity, extraction, and context were identified as directions for future work, while retaining the distinction between expressed evaluation and voting intention.
+The positive aggregate direction persisted under actor exclusions, video balancing, and stricter evidence requirements, supporting the finding across the examined alternatives. Its presence under neutral news sources showed that affective differentiation also appeared in general news discussions. These findings complemented earlier evidence of candidate-directed affect in Peruvian electoral communication and were consistent with the documented context of electoral confrontation. The observed internal criticism also showed that alignment did not entail uniform approval of actors from the same bloc. Together, these findings characterized an electoral discussion in which differentiation between political options coexisted with diversity of evaluations within each affinity group.
 
+The methodological contribution separated the source hosting a comment, the actor evaluated, and the author's observed affinity. Disjoint video sets separated affinity assignment from evaluation, while normalized balances and equal user weighting distinguished relative evaluation from the volume of participation. This design provided a reproducible way to examine directed political evaluations with explicit checks of sensitivity and measurement support. The complementary comparison of five classifiers identified RoBERTuito as the strongest evaluated model in end-to-end macro-F1 and distinguished target-recovery losses from classification performance. The user-history findings remained grounded in their annotations rather than extrapolated classifier predictions.
+
+The conclusions concerned aggregate expressions among the studied users; persistent individual attributes and differences between affinity groups required further evidence. Future research priorities included broader target coverage, more evidence per user, improved resolution of ambiguous references, and comparisons across electoral periods. Within its observed scope, the study established a measurable pattern of support for aligned actors and rejection of opponents, and clarified how that pattern could be examined separately from general comment sentiment and channel orientation.
+
+
+% \section{Conclusiones y trabajo futuro}
+
+% En este trabajo se aplicó un enfoque simplificado, inspirado en la metodología de
+% Martínez-España et al. \cite{polariz}, para analizar el sentimiento político
+% expresado en comentarios de TikTok durante la segunda vuelta de las elecciones
+% presidenciales peruanas de 2026, utilizando el modelo RoBERTuito sobre un conjunto
+% de 2743 comentarios.
+
+% Los resultados evidenciaron un comportamiento consistente con un \textit{echo
+% chamber}: las publicaciones asociadas a ambos candidatos registraron favorabilidad
+% neta positiva y de magnitud muy similar entre sí, en contraste con el clima
+% levemente negativo de las publicaciones neutrales. Esta similitud entre bloques
+% políticos, sumada al hecho de que el resultado electoral fue sumamente cerrado,
+% refuerza la idea de que el sentimiento expresado en redes sociales debe entenderse
+% como un reflejo del clima emocional de la conversación digital, y no como un
+% predictor directo de la intención de voto.
+
+% La principal limitación del estudio fue la escasa recurrencia de los usuarios: la
+% gran mayoría comentó una única vez y prácticamente ninguno interactuó con
+% publicaciones de más de una categoría política. Esto impidió calcular un indicador
+% de polarización afectiva individual (\textit{ingroup}/\textit{outgroup}) equivalente
+% al de la metodología de referencia \cite{polariz}, restringiendo los resultados a
+% una medida de favorabilidad agregada por categoría.
+
+% Como trabajo futuro se plantea ampliar el volumen y la diversidad de las fuentes de
+% datos para captar usuarios recurrentes entre distintas orientaciones políticas,
+% explorar la detección de menciones a otros candidatos dentro de un mismo comentario
+% como señal adicional de polarización, e incorporar una validación manual del modelo
+% de clasificación que permita cuantificar su desempeño sobre el dominio específico de
+% comentarios políticos en español peruano.
+
+% % conference papers do not normally have an appendix
+
+
+% % use section* for acknowledgement
+% % \section*{Acknowledgment}
+
+
+% % The authors would like to thank...
+
+
+
+
+
+% % trigger a \newpage just before the given reference
+% % number - used to balance the columns on the last page
+% % adjust value as needed - may need to be readjusted if
+% % the document is modified later
+% %\IEEEtriggeratref{8}
+% % The "triggered" command can be changed if desired:
+% %\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% % references section
+
+% % can use a bibliography generated by BibTeX as a .bbl file
+% % BibTeX documentation can be easily obtained at:
+% % http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% % The IEEEtran BibTeX style support page is at:
+% % http://www.michaelshell.org/tex/ieeetran/bibtex/
+% %\bibliographystyle{IEEEtran}
+% % argument is your BibTeX string definitions and bibliography database(s)
+% %\bibliography{IEEEabrv,../bib/paper}
 % %
 % % <OR> manually copy in the resultant .bbl file
 % % set second argument of \begin to the number of references
@@ -871,3 +628,4 @@ Among comparable users, favorable evaluations of their own bloc coexisted with u
 
 
 \end{document}
+

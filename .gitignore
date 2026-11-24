@@ -16,3 +16,10 @@ ap_individual.csv
 favorabilidad_*.csv
 plot_*.png
 kaggle/kernel/.ipynb_checkpoints/
+
+# Auxiliary build files shipped with the IJACSA template (originals retained locally).
+SAI_Paper_Format_Latex/*.aux
+SAI_Paper_Format_Latex/*.bbl
+SAI_Paper_Format_Latex/*.blg
+SAI_Paper_Format_Latex/*.dvi
+SAI_Paper_Format_Latex/*.log

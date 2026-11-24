@@ -55,7 +55,7 @@ no se regeneraron ni alteraron. Las reglas persistentes están en `AGENTS.md`.
 - Tablas completas, comparación de cinco modelos y diagnósticos adicionales de las tres referencias originales: `docs/observational_supplement.tex`.
 - Bibliografía: `docs/references.bib`; nuevas fuentes y PDFs registrados en `docs/referencias/referencias.md`.
 - Figuras científicas: `docs/figures/observational_*`; flujo: `pipeline_actual.tikz`, `pipeline_actual.tex` y `docs/pipeline_actual.mmd`.
-- PDF principal y complementario vigentes: `outputs/manuscrito/threshold_rationale_20261122/`. Las ediciones anteriores se conservan.
+- PDF principal y complementario vigentes: `outputs/manuscrito/abstract_closing_20261123/`. Las ediciones anteriores se conservan.
 
 El exportador corresponde explícitamente a esta edición narrativa; rechaza otros estudios para no reutilizar explicaciones numéricas desactualizadas:
 
@@ -108,3 +108,28 @@ modificar ese archivo ni reintroducir elementos metodológicos desactualizados.
 Se preservaron resultados, Limitaciones, cifras, fórmulas y citas. El título del
 suplemento también se actualizó en su generador. El registro de decisiones,
 respaldo y verificación quedaron junto a los PDF vigentes.
+
+## Revisión externa del 23 de noviembre
+
+La versión recibida en `doc_correcciones.tex` se conservó íntegra. Se corrigieron
+autoría y afiliación; se compactó A/B manteniendo las ecuaciones; se normalizaron
+`Eq.`/`Eqs.` y decimales; y las conclusiones destacaron aportes y evidencia.
+Los detalles operativos de lectura y la receta de entrenamiento quedaron en el
+suplemento. Se añadió Holm (1979), diferenciando valores p ajustados de IC
+percentiles. La bibliografía se compiló con manejo correcto de URLs.
+
+El PDF completo incluyó figuras y referencias. Una copia de comprobación
+excluyó únicamente figuras/captions y bibliografía, manteniendo tablas,
+algoritmos y ecuaciones, para verificar el máximo de diez páginas. Conteo y
+fuentes reproducibles quedaron junto a los PDF. No se recalcularon resultados.
+
+## Migración a IJACSA 2026
+
+La fuente revisada fue `doc_correcciones.tex`; se conservaron su contenido y
+sus cambios, con ajustes mínimos de puntuación y pasado. La nueva clase local,
+la configuración de compilación y las URLs se validaron con archivos
+individuales en una carpeta aislada. La entrega no contiene ZIP.
+La [guía de Overleaf](guia_overleaf_ijacsa_2026.md) enumera qué reemplazar/subir.
+La advertencia de compatibilidad de `caption` procede de la clase de la plantilla;
+los estilos se configuraron explícitamente. No hubo desbordes de columnas ni
+referencias indefinidas en la compilación completa.

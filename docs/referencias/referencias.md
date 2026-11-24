@@ -65,6 +65,14 @@ ya examinado y no debe presentarse como prueba final independiente. PDFs y hashe
 
 PDFs locales y hashes: [procedencia de descargas](threshold-rationale-downloads.json).
 
+## Pruebas múltiples (2026-11-23)
+
+| Clave | Fuente / nota | Uso y límite |
+|---|---|---|
+| `Holm1979` | [Holm (1979)](holm-1979.md) | Ajuste de valores p en familias de contrastes; los intervalos percentiles no se presentan como simultáneos. |
+
+PDF local y hash: [procedencia](holm-1979-download.json).
+
 ## Criterio de uso
 
 - **Representación del objetivo evaluada 2026-11-15:** [Mutlu y Özgür (2022)](mutlu-ozgur-2022.md) motiva marcadores y lectura de tokens del objetivo. La ronda local de seis ajustes aumentó cobertura, pero redujo macro-F1 frente a BETO anterior; ningún candidato cumple los mínimos. No transferir su rendimiento turco a BETO ni interpretar validación reutilizada como prueba final.

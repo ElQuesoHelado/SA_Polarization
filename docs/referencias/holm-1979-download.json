@@ -1,0 +1,15 @@
+{
+  "downloaded_at": "2026-11-23T19:44:51.127565+00:00",
+  "sources": [
+    {
+      "id": "holm-1979",
+      "url": "https://sci2s.ugr.es/keel/pdf/specific/articulo/0052_001.pdf",
+      "resolved_url": "https://sci2s.ugr.es/keel/pdf/specific/articulo/0052_001.pdf",
+      "canonical_url": "https://www.jstor.org/stable/4615733",
+      "version": "Scandinavian Journal of Statistics 6(2):65–70, 1979; scan hosted by Universidad de Granada",
+      "path": "pdfs/contexto/holm-1979.pdf",
+      "bytes": 533148,
+      "sha256": "eb4b0014bcb5e8d371092035c31a873b2ee55bdcdcbbc4a7ff7b508d9787884c"
+    }
+  ]
+}

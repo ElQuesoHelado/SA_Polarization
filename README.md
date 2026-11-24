@@ -32,8 +32,13 @@ La ampliación ya terminó: entrenamiento y predicción privados importados, cin
 modelos comparados sobre los 3,000 comentarios y RoBERTuito con mayor macro-F1
 integral (.3836). No repetir esos trabajos. El artículo presenta macro-F1 e IC95%
 en la tabla principal; la cobertura por modelo y precisión aceptada quedan en el
-suplemento. PDFs vigentes: `outputs/manuscrito/threshold_rationale_20261122/`.
+suplemento. PDFs vigentes: `outputs/manuscrito/abstract_closing_20261123/`.
 La comparación sigue siendo provisional y no habilita inferencia productiva.
+
+El artículo usa la plantilla local IJACSA 2026. Compilar desde la raíz con
+`latexmk -pdf docs/doc_a_modificar.tex`; `latexmkrc` selecciona su clase local.
+La [guía de Overleaf](docs/guia_overleaf_ijacsa_2026.md) enumera los archivos
+individuales que se deben subir y la configuración del documento principal.
 
 Para mantener el trabajo independiente de la conversación, usar `targeted publication start-services --daily-api-budget 9000` y consultar `targeted publication runtime-status`. Los servicios de usuario conservan registros y se detienen ante errores; no arrancan tras reiniciar el equipo. `targeted publication audit-capture` genera el informe local del aporte de las capturas y la carga provisional de anotación. La [guía de anotación](docs/guia_anotacion_publicacion.md) explica las tandas de 50 comentarios y los modos de revisión del benchmark.
 
